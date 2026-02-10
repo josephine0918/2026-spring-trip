@@ -194,7 +194,16 @@
   const TRIP_YEAR = 2026;
   const LAST_UPDATED_ISO = "2026-02-10T00:00:00-06:00";
 
-  // ===== i18n (UI only; trip content stays Chinese) =====
+  // ===== Helper: content i18n getter =====
+  // 你之後新增翻譯：只要在對應欄位補上 es/ko/vi 即可
+  // 現在預設：如果 es/ko/vi 沒填，會 fallback 英文（再不行才中文）
+  function getL(obj, lang) {
+    if (!obj) return "";
+    if (typeof obj === "string") return obj; // 兼容
+    return obj[lang] || obj.en || obj.zh || "";
+  }
+
+  // ===== UI i18n =====
   const I18N = {
     zh: {
       copyToday: "複製今天行程",
@@ -208,14 +217,12 @@
       close: "收合",
       members: "成員",
       membersHint: "新增參與分帳的人",
-      addMember: "+ 新增成員",
       addExpense: "新增花費",
       amount: "金額",
       payer: "付款人",
       category: "分類",
       day: "日期",
       splitWith: "分攤給誰（可複選；只有參與的人才勾）",
-      add: "+ 加入",
       expenseList: "花費明細",
       settlement: "結算建議（誰欠誰）",
       localSave: "會自動存到本機（同一台裝置/瀏覽器有效）。",
@@ -251,14 +258,12 @@
       close: "Close",
       members: "Members",
       membersHint: "Add participants",
-      addMember: "+ Add member",
       addExpense: "Add expense",
       amount: "Amount",
       payer: "Payer",
       category: "Category",
       day: "Day",
       splitWith: "Split with (select participants)",
-      add: "+ Add",
       expenseList: "Expense list",
       settlement: "Settlement (who owes who)",
       localSave: "Saved locally in this browser/device.",
@@ -294,14 +299,12 @@
       close: "Cerrar",
       members: "Miembros",
       membersHint: "Añadir participantes",
-      addMember: "+ Añadir",
       addExpense: "Añadir gasto",
       amount: "Importe",
       payer: "Pagador",
       category: "Categoría",
       day: "Día",
       splitWith: "Repartir con (selecciona)",
-      add: "+ Añadir",
       expenseList: "Lista de gastos",
       settlement: "Liquidación (quién debe a quién)",
       localSave: "Guardado localmente en este navegador/dispositivo.",
@@ -337,14 +340,12 @@
       close: "닫기",
       members: "멤버",
       membersHint: "참여자 추가",
-      addMember: "+ 추가",
       addExpense: "지출 추가",
       amount: "금액",
       payer: "결제자",
       category: "카테고리",
       day: "날짜",
       splitWith: "분할 대상(선택)",
-      add: "+ 추가",
       expenseList: "지출 내역",
       settlement: "정산(누가 누구에게)",
       localSave: "이 브라우저/기기 로컬에 저장됩니다.",
@@ -380,14 +381,12 @@
       close: "Đóng",
       members: "Thành viên",
       membersHint: "Thêm người tham gia",
-      addMember: "+ Thêm",
       addExpense: "Thêm chi phí",
       amount: "Số tiền",
       payer: "Người trả",
       category: "Danh mục",
       day: "Ngày",
       splitWith: "Chia cho ai (chọn)",
-      add: "+ Thêm",
       expenseList: "Danh sách chi phí",
       settlement: "Quyết toán (ai nợ ai)",
       localSave: "Lưu cục bộ trên trình duyệt/thiết bị này.",
@@ -413,100 +412,192 @@
     }
   };
 
-  // ===== Trip data (Chinese content; you can edit times/details anytime) =====
+  // ===== Trip content (你之後要新增翻譯：補 es/ko/vi 即可) =====
+  // 目前：es/ko/vi 先給空字串會 fallback 英文
   const tripData = {
     days: [
       {
         id: "d1", month: 3, day: 7, label: "3/07 (Sat)",
-        title: "SAT → 邁阿密（MIA）＋南海灘",
+        title: {
+          zh: "SAT → 邁阿密（MIA）＋南海灘",
+          en: "SAT → Miami (MIA) + South Beach",
+          es: "",
+          ko: "",
+          vi: ""
+        },
         reminders: [
-          { level: "important", text: "抵達 MIA 後取車；Miami 停車偏貴，住宿盡量找含停車" },
-          { level: "info", text: "晚上 South Beach + Ocean Drive 散步" }
+          { level: "important", text: {
+            zh: "抵達 MIA 後取車；Miami 停車偏貴，住宿盡量找含停車",
+            en: "Pick up the rental car after landing at MIA. Parking in Miami is pricey—choose lodging with parking if possible.",
+            es: "", ko: "", vi: ""
+          }},
+          { level: "info", text: {
+            zh: "晚上 South Beach + Ocean Drive 散步",
+            en: "Evening walk at South Beach + Ocean Drive",
+            es: "", ko: "", vi: ""
+          }}
         ],
         stops: [
-          { start:"12:00", end:"14:00", name:"飛行：SAT → MIA", address:"SAT → MIA", map:"https://maps.google.com/?q=Miami+International+Airport", note:"時段可依你的航班調整（這裡先放範例）。" },
-          { travel:"30–60 min", start:"14:00", end:"15:00", name:"MIA 取車＋前往住宿", address:"Miami International Airport, 2100 NW 42nd Ave, Miami, FL 33142", phone:"+1 305-876-7000", map:"https://maps.google.com/?q=Miami+International+Airport", note:"確認 toll（電子收費）設定。" },
-          { travel:"20–30 min", start:"17:30", end:"20:30", name:"South Beach 南海灘＋Ocean Drive", address:"Ocean Dr, Miami Beach, FL 33139", map:"https://maps.google.com/?q=South+Beach+Miami", note:"夕陽散步＋晚餐；留意停車費。" }
+          { start:"12:00", end:"14:00", name:{
+              zh:"飛行：SAT → MIA", en:"Flight: SAT → MIA", es:"", ko:"", vi:""
+            }, address:"SAT → MIA", map:"https://maps.google.com/?q=Miami+International+Airport", note:{
+              zh:"時段可依你的航班調整（這裡先放範例）。",
+              en:"Adjust this time based on your actual flight (sample time shown).",
+              es:"", ko:"", vi:""
+            }
+          },
+          { travel:"30–60 min", start:"14:00", end:"15:00", name:{
+              zh:"MIA 取車＋前往住宿", en:"Pick up car at MIA + drive to hotel", es:"", ko:"", vi:""
+            }, address:"Miami International Airport, 2100 NW 42nd Ave, Miami, FL 33142", phone:"+1 305-876-7000", map:"https://maps.google.com/?q=Miami+International+Airport", note:{
+              zh:"確認 toll（電子收費）設定。", en:"Confirm toll (electronic toll) settings.", es:"", ko:"", vi:""
+            }
+          },
+          { travel:"20–30 min", start:"17:30", end:"20:30", name:{
+              zh:"South Beach 南海灘＋Ocean Drive", en:"South Beach + Ocean Drive", es:"", ko:"", vi:""
+            }, address:"Ocean Dr, Miami Beach, FL 33139", map:"https://maps.google.com/?q=South+Beach+Miami", note:{
+              zh:"夕陽散步＋晚餐；留意停車費。", en:"Sunset stroll + dinner; watch for parking fees.", es:"", ko:"", vi:""
+            }
+          }
         ]
       },
+
       {
         id: "d2", month: 3, day: 8, label: "3/08 (Sun)",
-        title: "大沼澤 Everglades（Shark Valley）",
+        title: { zh:"大沼澤 Everglades（Shark Valley）", en:"Everglades (Shark Valley)", es:"", ko:"", vi:"" },
         reminders: [
-          { level: "important", text: "防曬＋水＋帽子；早到比較不排隊" }
+          { level:"important", text:{ zh:"防曬＋水＋帽子；早到比較不排隊", en:"Sunscreen + water + hat. Arrive early to avoid lines.", es:"", ko:"", vi:"" } }
         ],
         stops: [
-          { start:"09:00", end:"12:30", name:"Shark Valley Visitor Center", address:"36000 SW 8th St, Miami, FL 33194", phone:"+1 305-221-8776", map:"https://maps.google.com/?q=Shark+Valley+Visitor+Center", note:"可租腳踏車或搭 Tram；很容易看到鱷魚。" },
-          { travel:"45–70 min", start:"16:00", end:"18:30", name:"回 Miami 自由活動（Little Havana 可選）", address:"Little Havana, Miami, FL", map:"https://maps.google.com/?q=Little+Havana+Miami", note:"咖啡＋古巴風情街區。" }
+          { start:"09:00", end:"12:30", name:{ zh:"Shark Valley Visitor Center", en:"Shark Valley Visitor Center", es:"", ko:"", vi:"" },
+            address:"36000 SW 8th St, Miami, FL 33194", phone:"+1 305-221-8776",
+            map:"https://maps.google.com/?q=Shark+Valley+Visitor+Center",
+            note:{ zh:"可租腳踏車或搭 Tram；很容易看到鱷魚。", en:"Rent bikes or take the tram—alligators are common.", es:"", ko:"", vi:"" }
+          },
+          { travel:"45–70 min", start:"16:00", end:"18:30", name:{ zh:"回 Miami 自由活動（Little Havana 可選）", en:"Back to Miami (optional: Little Havana)", es:"", ko:"", vi:"" },
+            address:"Little Havana, Miami, FL", map:"https://maps.google.com/?q=Little+Havana+Miami",
+            note:{ zh:"咖啡＋古巴風情街區。", en:"Coffee and Cuban vibes.", es:"", ko:"", vi:"" }
+          }
         ]
       },
+
       {
-        id: "d3", month: 3, day: 9, label: "3/09 (Mon)",
-        title: "墨西哥灣暖流（Gulf Stream）體驗＋開去奧蘭多",
-        reminders: [
-          { level: "important", text: "今天移動較多：建議早出發，晚上抵達 Orlando" },
-          { level: "info", text: "Gulf Stream 最有感通常是 Palm Beach/Jupiter 一帶的海上活動" }
+        id:"d3", month:3, day:9, label:"3/09 (Mon)",
+        title:{ zh:"墨西哥灣暖流（Gulf Stream）體驗＋開去奧蘭多", en:"Gulf Stream experience + drive to Orlando", es:"", ko:"", vi:"" },
+        reminders:[
+          { level:"important", text:{ zh:"今天移動較多：建議早出發，晚上抵達 Orlando", en:"More driving today—start early and arrive in Orlando at night.", es:"", ko:"", vi:"" } },
+          { level:"info", text:{ zh:"Gulf Stream 最有感通常是 Palm Beach/Jupiter 一帶的海上活動", en:"Best Gulf Stream feel is usually via boat/snorkel around Palm Beach/Jupiter.", es:"", ko:"", vi:"" } }
         ],
-        stops: [
-          { start:"09:00", end:"10:30", name:"自駕：Miami → West Palm Beach", address:"Miami to West Palm Beach", map:"https://maps.google.com/?q=Miami+to+West+Palm+Beach", note:"車程約 1.5 小時（看交通）。" },
-          { travel:"15–25 min", start:"11:30", end:"14:30", name:"Gulf Stream 近海體驗（浮潛/出海，擇一）", address:"Phil Foster Park / Peanut Island（Palm Beach）", map:"https://maps.google.com/?q=Phil+Foster+Park", note:"如果你指的是 Gulfstream Park（賽馬場/娛樂城），可改 Hallandale Beach。" },
-          { travel:"2.5–3 hr", start:"16:30", end:"19:30", name:"自駕：West Palm Beach → Orlando", address:"West Palm Beach to Orlando", map:"https://maps.google.com/?q=West+Palm+Beach+to+Orlando", note:"抵達後入住，為隔天樂園做準備。" }
+        stops:[
+          { start:"09:00", end:"10:30", name:{ zh:"自駕：Miami → West Palm Beach", en:"Drive: Miami → West Palm Beach", es:"", ko:"", vi:"" },
+            address:"Miami to West Palm Beach", map:"https://maps.google.com/?q=Miami+to+West+Palm+Beach",
+            note:{ zh:"車程約 1.5 小時（看交通）。", en:"~1.5 hours depending on traffic.", es:"", ko:"", vi:"" }
+          },
+          { travel:"15–25 min", start:"11:30", end:"14:30", name:{ zh:"Gulf Stream 近海體驗（浮潛/出海，擇一）", en:"Nearshore Gulf Stream activity (snorkel/boat—pick one)", es:"", ko:"", vi:"" },
+            address:"Phil Foster Park / Peanut Island (Palm Beach)", map:"https://maps.google.com/?q=Phil+Foster+Park",
+            note:{ zh:"如果你指的是 Gulfstream Park（賽馬場/娛樂城），可改 Hallandale Beach。", en:"If you meant Gulfstream Park (racing/casino), swap to Hallandale Beach.", es:"", ko:"", vi:"" }
+          },
+          { travel:"2.5–3 hr", start:"16:30", end:"19:30", name:{ zh:"自駕：West Palm Beach → Orlando", en:"Drive: West Palm Beach → Orlando", es:"", ko:"", vi:"" },
+            address:"West Palm Beach to Orlando", map:"https://maps.google.com/?q=West+Palm+Beach+to+Orlando",
+            note:{ zh:"抵達後入住，為隔天樂園做準備。", en:"Check in and rest for the theme park day.", es:"", ko:"", vi:"" }
+          }
         ]
       },
+
       {
-        id: "d4", month: 3, day: 10, label: "3/10 (Tue)",
-        title: "環球影城 Universal Orlando（玩整天）",
-        reminders: [
-          { level: "important", text: "想搭霍格華茲特快車需 Park-to-Park 票" },
-          { level: "important", text: "建議開園就到（排隊差很多）" }
+        id:"d4", month:3, day:10, label:"3/10 (Tue)",
+        title:{ zh:"環球影城 Universal Orlando（玩整天）", en:"Universal Orlando (full day)", es:"", ko:"", vi:"" },
+        reminders:[
+          { level:"important", text:{ zh:"想搭霍格華茲特快車需 Park-to-Park 票", en:"Hogwarts Express requires a Park-to-Park ticket.", es:"", ko:"", vi:"" } },
+          { level:"important", text:{ zh:"建議開園就到（排隊差很多）", en:"Arrive at rope drop—lines are much shorter.", es:"", ko:"", vi:"" } }
         ],
-        stops: [
-          { start:"09:00", end:"19:00", name:"Universal Orlando Resort（Studios + Islands of Adventure）", address:"6000 Universal Blvd, Orlando, FL 32819", phone:"+1 407-363-8000", map:"https://www.universalorlando.com/web/en/us", note:"兩園一日行程（可依需求調整）。" }
+        stops:[
+          { start:"09:00", end:"19:00",
+            name:{ zh:"Universal Orlando Resort（Studios + Islands of Adventure）", en:"Universal Orlando Resort (Studios + Islands of Adventure)", es:"", ko:"", vi:"" },
+            address:"6000 Universal Blvd, Orlando, FL 32819", phone:"+1 407-363-8000",
+            map:"https://www.universalorlando.com/web/en/us",
+            note:{ zh:"兩園一日行程（可依需求調整）。", en:"Two-park day plan (adjust as needed).", es:"", ko:"", vi:"" }
+          }
         ]
       },
+
       {
-        id: "d5", month: 3, day: 11, label: "3/11 (Wed)",
-        title: "Epic Universe（玩整天）",
-        reminders: [
-          { level: "important", text: "新園區人潮很猛：rope drop（開園衝第一波）" }
+        id:"d5", month:3, day:11, label:"3/11 (Wed)",
+        title:{ zh:"Epic Universe（玩整天）", en:"Epic Universe (full day)", es:"", ko:"", vi:"" },
+        reminders:[
+          { level:"important", text:{ zh:"新園區人潮很猛：rope drop（開園衝第一波）", en:"Crowds will be heavy—rope drop is key.", es:"", ko:"", vi:"" } }
         ],
-        stops: [
-          { start:"09:00", end:"19:00", name:"Universal Epic Universe", address:"Orlando, FL", map:"https://www.universalorlando.com/web/en/us/theme-parks/epic-universe", note:"先排必玩：任天堂/魔法部等。" }
+        stops:[
+          { start:"09:00", end:"19:00",
+            name:{ zh:"Universal Epic Universe", en:"Universal Epic Universe", es:"", ko:"", vi:"" },
+            address:"Orlando, FL",
+            map:"https://www.universalorlando.com/web/en/us/theme-parks/epic-universe",
+            note:{ zh:"先排必玩：任天堂/魔法部等。", en:"Prioritize must-dos: Nintendo / Ministry of Magic, etc.", es:"", ko:"", vi:"" }
+          }
         ]
       },
+
       {
-        id: "d6", month: 3, day: 12, label: "3/12 (Thu)",
-        title: "肯尼迪航天中心 KSC（固定 3/12）",
-        reminders: [
-          { level: "important", text: "Bus Tour 可能額滿：越早到越好" }
+        id:"d6", month:3, day:12, label:"3/12 (Thu)",
+        title:{ zh:"肯尼迪航天中心 KSC（固定 3/12）", en:"Kennedy Space Center (fixed on 3/12)", es:"", ko:"", vi:"" },
+        reminders:[
+          { level:"important", text:{ zh:"Bus Tour 可能額滿：越早到越好", en:"Bus Tour can sell out—arrive as early as possible.", es:"", ko:"", vi:"" } }
         ],
-        stops: [
-          { start:"08:30", end:"09:30", name:"自駕：Orlando → Kennedy Space Center", address:"Orlando to Merritt Island", map:"https://maps.google.com/?q=Orlando+to+Kennedy+Space+Center", note:"車程約 1 小時（看交通）。" },
-          { start:"10:00", end:"17:00", name:"Kennedy Space Center Visitor Complex", address:"Space Commerce Way, Merritt Island, FL 32953", phone:"+1 855-433-4210", map:"https://www.kennedyspacecenter.com/", note:"Rocket Garden / Atlantis / Bus Tour（先搶 Bus Tour）。" },
-          { travel:"1 hr", start:"17:30", end:"18:30", name:"回 Orlando", address:"Orlando, FL", map:"https://maps.google.com/?q=Orlando", note:"晚餐＋休息。" }
+        stops:[
+          { start:"08:30", end:"09:30", name:{ zh:"自駕：Orlando → Kennedy Space Center", en:"Drive: Orlando → Kennedy Space Center", es:"", ko:"", vi:"" },
+            address:"Orlando to Merritt Island", map:"https://maps.google.com/?q=Orlando+to+Kennedy+Space+Center",
+            note:{ zh:"車程約 1 小時（看交通）。", en:"~1 hour depending on traffic.", es:"", ko:"", vi:"" }
+          },
+          { start:"10:00", end:"17:00", name:{ zh:"Kennedy Space Center Visitor Complex", en:"Kennedy Space Center Visitor Complex", es:"", ko:"", vi:"" },
+            address:"Space Commerce Way, Merritt Island, FL 32953", phone:"+1 855-433-4210",
+            map:"https://www.kennedyspacecenter.com/",
+            note:{ zh:"Rocket Garden / Atlantis / Bus Tour（先搶 Bus Tour）。", en:"Rocket Garden / Atlantis / Bus Tour (secure Bus Tour first).", es:"", ko:"", vi:"" }
+          },
+          { travel:"1 hr", start:"17:30", end:"18:30", name:{ zh:"回 Orlando", en:"Return to Orlando", es:"", ko:"", vi:"" },
+            address:"Orlando, FL", map:"https://maps.google.com/?q=Orlando",
+            note:{ zh:"晚餐＋休息。", en:"Dinner + rest.", es:"", ko:"", vi:"" }
+          }
         ]
       },
+
       {
-        id: "d7", month: 3, day: 13, label: "3/13 (Fri)",
-        title: "Silver Springs（玻璃船/清泉）一日",
-        reminders: [
-          { level: "important", text: "帶防蚊液；清泉區早晚溫差可帶薄外套" }
+        id:"d7", month:3, day:13, label:"3/13 (Fri)",
+        title:{ zh:"Silver Springs（玻璃船/清泉）一日", en:"Silver Springs (glass-bottom boat / springs)", es:"", ko:"", vi:"" },
+        reminders:[
+          { level:"important", text:{ zh:"帶防蚊液；清泉區早晚溫差可帶薄外套", en:"Bring bug spray. Temperature can vary—pack a light jacket.", es:"", ko:"", vi:"" } }
         ],
-        stops: [
-          { start:"09:00", end:"10:30", name:"自駕：Orlando → Silver Springs State Park", address:"1425 NE 58th Ave, Ocala, FL 34470", phone:"+1 352-236-7148", map:"https://maps.google.com/?q=Silver+Springs+State+Park", note:"車程約 1.5 小時。" },
-          { start:"11:00", end:"14:00", name:"Glass Bottom Boat（玻璃船，建議）", address:"Silver Springs State Park", map:"https://maps.google.com/?q=Silver+Springs+Glass+Bottom+Boat", note:"依當天班次調整；也可加步道/划船。" },
-          { travel:"1.5 hr", start:"16:00", end:"17:30", name:"回 Orlando（整理行李）", address:"Orlando, FL", map:"https://maps.google.com/?q=Orlando", note:"明天要飛，建議早睡。" }
+        stops:[
+          { start:"09:00", end:"10:30", name:{ zh:"自駕：Orlando → Silver Springs State Park", en:"Drive: Orlando → Silver Springs State Park", es:"", ko:"", vi:"" },
+            address:"1425 NE 58th Ave, Ocala, FL 34470", phone:"+1 352-236-7148",
+            map:"https://maps.google.com/?q=Silver+Springs+State+Park",
+            note:{ zh:"車程約 1.5 小時。", en:"~1.5 hours drive.", es:"", ko:"", vi:"" }
+          },
+          { start:"11:00", end:"14:00", name:{ zh:"Glass Bottom Boat（玻璃船，建議）", en:"Glass-bottom boat (recommended)", es:"", ko:"", vi:"" },
+            address:"Silver Springs State Park", map:"https://maps.google.com/?q=Silver+Springs+Glass+Bottom+Boat",
+            note:{ zh:"依當天班次調整；也可加步道/划船。", en:"Adjust to schedule; add trails/kayak if you like.", es:"", ko:"", vi:"" }
+          },
+          { travel:"1.5 hr", start:"16:00", end:"17:30", name:{ zh:"回 Orlando（整理行李）", en:"Back to Orlando (pack up)", es:"", ko:"", vi:"" },
+            address:"Orlando, FL", map:"https://maps.google.com/?q=Orlando",
+            note:{ zh:"明天要飛，建議早睡。", en:"Flight tomorrow—sleep early.", es:"", ko:"", vi:"" }
+          }
         ]
       },
+
       {
-        id: "d8", month: 3, day: 14, label: "3/14 (Sat)",
-        title: "MCO → SAT 回程（還車＋登機）",
-        reminders: [
-          { level: "important", text: "還車＋安檢要留緩衝（建議起飛前 2.5～3 小時到機場）" }
+        id:"d8", month:3, day:14, label:"3/14 (Sat)",
+        title:{ zh:"MCO → SAT 回程（還車＋登機）", en:"Fly home: MCO → SAT (return car + airport)", es:"", ko:"", vi:"" },
+        reminders:[
+          { level:"important", text:{ zh:"還車＋安檢要留緩衝（建議起飛前 2.5～3 小時到機場）", en:"Buffer time for car return + security (arrive 2.5–3 hours before departure).", es:"", ko:"", vi:"" } }
         ],
-        stops: [
-          { start:"09:30", end:"11:00", name:"Orlando International Airport（MCO）還車＋辦理登機", address:"1 Jeff Fuqua Blvd, Orlando, FL 32827", phone:"+1 407-825-2001", map:"https://maps.google.com/?q=Orlando+International+Airport", note:"如果你最後要從 MIA 飛回，也可把這天改 Orlando → Miami 早移動。" },
-          { start:"12:00", end:"14:30", name:"飛行：MCO → SAT", address:"MCO → SAT", map:"https://maps.google.com/?q=San+Antonio+International+Airport", note:"時段依你的航班調整（這裡先放範例）。" }
+        stops:[
+          { start:"09:30", end:"11:00", name:{ zh:"Orlando International Airport（MCO）還車＋辦理登機", en:"MCO: return car + check-in", es:"", ko:"", vi:"" },
+            address:"1 Jeff Fuqua Blvd, Orlando, FL 32827", phone:"+1 407-825-2001",
+            map:"https://maps.google.com/?q=Orlando+International+Airport",
+            note:{ zh:"如果你最後要從 MIA 飛回，也可把這天改 Orlando → Miami 早移動。", en:"If flying out of MIA instead, change to an early Orlando → Miami drive.", es:"", ko:"", vi:"" }
+          },
+          { start:"12:00", end:"14:30", name:{ zh:"飛行：MCO → SAT", en:"Flight: MCO → SAT", es:"", ko:"", vi:"" },
+            address:"MCO → SAT", map:"https://maps.google.com/?q=San+Antonio+International+Airport",
+            note:{ zh:"時段依你的航班調整（這裡先放範例）。", en:"Adjust based on your actual flight (sample time shown).", es:"", ko:"", vi:"" }
+          }
         ]
       }
     ]
@@ -539,20 +630,22 @@
     return `${mins} 分鐘`;
   }
 
-  function buildDayText(dayObj) {
+  function buildDayText(dayObj, lang) {
+    const t = I18N[lang] || I18N.zh;
     const lines = [];
-    lines.push(`${dayObj.label} · ${dayObj.title}`);
-    lines.push(`- 重點提醒：`);
-    (dayObj.reminders||[]).forEach(r => lines.push(`  • ${r.level==="important" ? "IMPORTANT" : "INFO"}：${r.text}`));
+    lines.push(`${dayObj.label} · ${getL(dayObj.title, lang)}`);
+    lines.push(`- ${t.reminderTitle}:`);
+    (dayObj.reminders||[]).forEach(r => lines.push(`  • ${(r.level==="important" ? "IMPORTANT" : "INFO")}: ${getL(r.text, lang)}`));
     lines.push("");
     (dayObj.stops||[]).forEach(s => {
-      if (s.travel) lines.push(`🚗 交通時間：${s.travel}`);
-      if (s.start && s.end) lines.push(`${s.start}-${s.end} ${s.name}`);
-      else lines.push(`${s.name}`);
+      if (s.travel) lines.push(`🚗 ${t.travel}: ${s.travel}`);
+      const nm = getL(s.name, lang);
+      if (s.start && s.end) lines.push(`${s.start}-${s.end} ${nm}`);
+      else lines.push(`${nm}`);
       if (s.address) lines.push(`  📍 ${s.address}`);
       if (s.map) lines.push(`  🗺 ${s.map}`);
       if (s.phone) lines.push(`  ☎ ${s.phone}`);
-      if (s.note) lines.push(`  📝 ${s.note}`);
+      if (s.note) lines.push(`  📝 ${getL(s.note, lang)}`);
       lines.push("");
     });
     return lines.join("\n").trim();
@@ -591,7 +684,7 @@
             <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">${d.label}</span>
             ${isToday ? `<span class="text-[11px] bg-amber-100 text-amber-800 px-2 py-1 rounded-full"><i class="fa-solid fa-star"></i> Today</span>` : ""}
           </div>
-          <h3 class="text-xl font-bold text-slate-800">${d.title}</h3>
+          <h3 class="text-xl font-bold text-slate-800">${getL(d.title, lang)}</h3>
           <div class="mt-2 flex flex-wrap gap-2">
             <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full">
               <i class="fa-solid fa-location-dot"></i> ${(d.stops||[]).length} stops
@@ -628,7 +721,7 @@
                 <span class="inline-block px-2 py-[2px] rounded text-[11px] font-bold ${isImp ? "bg-amber-200 text-amber-900" : "bg-indigo-200 text-indigo-900"}">
                   ${isImp ? "IMPORTANT" : "INFO"}
                 </span>
-                <span class="${isImp ? "font-semibold text-amber-900" : "text-slate-700"}">${r.text}</span>
+                <span class="${isImp ? "font-semibold text-amber-900" : "text-slate-700"}">${getL(r.text, lang)}</span>
               </li>
             `;
           }).join("")}
@@ -663,12 +756,12 @@
               <div class="text-xs text-gray-500">
                 ${s.start && s.end ? `<span class="font-semibold">${s.start}–${s.end}</span> ${stayMins ? `· ${humanMins(stayMins)}` : ""}` : ""}
               </div>
-              <div class="font-bold text-indigo-900">${s.name}</div>
+              <div class="font-bold text-indigo-900">${getL(s.name, lang)}</div>
             </div>
             <div class="text-xs">${mapBtn}</div>
           </div>
 
-          ${s.note ? `<div class="mt-2 text-sm text-gray-700"><span class="font-semibold text-slate-500">${t.note}:</span> ${s.note}</div>` : ""}
+          ${s.note ? `<div class="mt-2 text-sm text-gray-700"><span class="font-semibold text-slate-500">${t.note}:</span> ${getL(s.note, lang)}</div>` : ""}
 
           <div class="mt-2 text-xs text-gray-600 space-y-1">
             ${s.address ? `<div><span class="font-semibold">${t.address}:</span> ${s.address}</div>` : ""}
@@ -701,7 +794,7 @@
         const dayId = btn.getAttribute("data-dayid");
         const dayObj = tripData.days.find(x => x.id === dayId);
         if (!dayObj) return;
-        await copyTextToClipboard(buildDayText(dayObj));
+        await copyTextToClipboard(buildDayText(dayObj, lang));
         alert((I18N[lang]||I18N.zh).alertCopied);
       });
     });
@@ -728,7 +821,7 @@
 
     // day options
     const expDay = document.getElementById("expDay");
-    expDay.innerHTML = tripData.days.map(d => `<option value="${d.id}">${d.label} · ${d.title}</option>`).join("");
+    expDay.innerHTML = tripData.days.map(d => `<option value="${d.id}">${d.label} · ${getL(d.title, "zh")}</option>`).join("");
 
     // payer options
     const expPayer = document.getElementById("expPayer");
@@ -775,13 +868,12 @@
 
     renderSettlement(state);
 
-    // wire remove member
+    // remove member
     membersList.querySelectorAll(".removeMemberBtn").forEach(btn => {
       btn.addEventListener("click", () => {
         const name = btn.dataset.name;
         const st = loadSplitState();
         if (st.members.length <= 1) return;
-
         st.members = st.members.filter(x => x !== name);
         st.expenses = st.expenses.filter(e => e.payer !== name && !(e.splitWith||[]).includes(name));
         saveSplitState(st);
@@ -789,7 +881,7 @@
       });
     });
 
-    // wire remove expense
+    // remove expense
     list.querySelectorAll(".removeExpenseBtn").forEach(btn => {
       btn.addEventListener("click", () => {
         const id = btn.dataset.id;
@@ -867,7 +959,7 @@
 
     const currency = state.currency || "USD";
     const lines = [];
-    lines.push(`<div class="text-xs text-gray-500 mb-2">正數＝應收 / 負數＝應付（每筆依「分攤對象」平均分）</div>`);
+    lines.push(`<div class="text-xs text-gray-500 mb-2">正數＝應收 / 負數＝應付（每筆只在「勾選分攤的人」之間平均分）</div>`);
     lines.push(`<div class="text-sm">${Object.entries(balances).map(([n,v]) => `${n}: <b>${currency} ${money(v)}</b>`).join(" · ")}</div>`);
     lines.push(`<div class="mt-2 font-semibold">建議轉帳：</div>`);
 
@@ -886,10 +978,8 @@
     document.getElementById("addMemberBtn").addEventListener("click", () => {
       const name = (document.getElementById("memberNameInput").value || "").trim();
       if (!name) return;
-
       const st = loadSplitState();
       if (st.members.includes(name)) return;
-
       st.members.push(name);
       saveSplitState(st);
       document.getElementById("memberNameInput").value = "";
@@ -923,7 +1013,6 @@
     });
   }
 
-  // ===== Expenses accordion =====
   function initExpensesAccordion(lang) {
     const btn = document.getElementById("toggleExpensesBtn");
     const panel = document.getElementById("expensesPanel");
@@ -937,7 +1026,6 @@
     });
   }
 
-  // ===== Apply language (UI only) =====
   function applyLang(lang) {
     const t = I18N[lang] || I18N.zh;
 
@@ -969,14 +1057,12 @@
     document.getElementById("carTitle").innerHTML = `<i class="fa-solid fa-car-side"></i> ${t.carTitle}`;
     document.getElementById("carText").textContent = t.carText;
 
-    // last updated
     document.getElementById("lastUpdatedBadge").textContent = formatLastUpdated(lang);
 
-    // toggle label respects current state
     const panel = document.getElementById("expensesPanel");
     document.getElementById("toggleExpensesLabel").textContent = panel.classList.contains("hidden") ? t.open : t.close;
 
-    // Google Maps embed UI language (may not fully translate place names)
+    // Google Maps embed UI language (地名不保證全翻)
     const mapFrame = document.getElementById("mapFrame");
     if (mapFrame) {
       try {
@@ -987,17 +1073,16 @@
       } catch {}
     }
 
-    // re-render dynamic areas
     renderDays(lang);
     renderSplitUI(lang);
   }
 
-  // ===== Copy today =====
   function initCopyToday(lang) {
     document.getElementById("copyTodayBtn").addEventListener("click", async () => {
+      const t = I18N[lang] || I18N.zh;
       const d = getTodayOrFirstTripDay();
-      await copyTextToClipboard(buildDayText(d));
-      alert((I18N[lang]||I18N.zh).alertCopiedToday);
+      await copyTextToClipboard(buildDayText(d, lang));
+      alert(t.alertCopiedToday);
     });
   }
 
@@ -1008,7 +1093,6 @@
     langSelect.value = savedLang;
 
     applyLang(savedLang);
-
     initCopyToday(savedLang);
     initSplitHandlers(savedLang);
     initExpensesAccordion(savedLang);
@@ -1016,7 +1100,6 @@
     langSelect.addEventListener("change", () => {
       const lang = langSelect.value;
       localStorage.setItem("trip_lang", lang);
-      // Note: init handlers are already bound; only UI refresh needed
       applyLang(lang);
     });
   })();
