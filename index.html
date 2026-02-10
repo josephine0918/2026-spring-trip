@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florida Spring Trip 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* 確保地圖滾輪操作流暢 */
+        iframe { pointer-events: auto; }
+        .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #e2e8f0; z-index: 0; }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-900 font-sans">
+
+    <nav class="bg-indigo-900 text-white p-4 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="font-bold text-lg tracking-tight">FL Spring Trip 2026 🌴</h1>
+                <p class="text-[10px] text-indigo-300 italic">March 06 - March 13</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <select id="langSelect" onchange="switchLang(this.value)" class="bg-indigo-800 text-white text-sm rounded-lg p-2 outline-none border border-indigo-700 cursor-pointer focus:ring-2 focus:ring-sky-400">
+                    <option value="zh">繁體中文</option>
+                    <option value="en">English</option>
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="ko">한국어</option>
+                    <option value="es">Español</option>
+                </select>
+                <button onclick="shareLink()" class="bg-indigo-600 hover:bg-indigo-500 p-2 rounded-lg text-sm transition">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="w-full h-80 md:h-96 bg-gray-200 border-b-4 border-indigo-900 shadow-inner">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3591465.341147043!2d-83.3944645062534!3d28.373530616900445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sFlorida%20Attractions!5e0!3m2!1szh-TW!2sus!4v1707500000000!5m2!1szh-TW!2sus" 
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <main class="container mx-auto px-4 py-10 max-w-2xl relative">
+        <div class="timeline-line hidden md:block"></div>
+        
+        <div id="itinerary-list" class="space-y-10 relative z-10">
+            </div>
+
+        <div class="mt-16 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-indigo-600">
+            <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2 text-lg">
+                <i class="fa-solid fa-car-side"></i> <span id="footer-title">租車與交通提醒</span>
+            </h3>
+            <p class="text-gray-600 text-sm leading-relaxed" id="footer-desc">
+                建議從奧蘭多 (MCO) 取車，最後在邁阿密 (MIA) 還車。3/13 結束後直接從邁阿密飛回聖安東尼奧 (SAT) 最方便！
+            </p>
+        </div>
+    </main>
+
+    <script>
+        const translations = {
+            zh: {
+                share_msg: "網址已複製！",
+                footer_title: "租車與交通提醒",
+                footer_desc: "建議從奧蘭多 (MCO) 取車，最後在邁阿密 (MIA) 還車。3/13 結束後直接從邁阿密飛回聖安東尼奧 (SAT) 最方便！",
+                info_label: "預估票價與資訊",
+                days: [
+                    { date: "3/06 (Fri)", title: "抵達奧蘭多", icon: "fa-plane-arrival", color: "text-blue-500", desc: "抵達 <a href='https://maps.app.goo.gl/YyR9QpYV5W5r9m589' target='_blank' class='text-indigo-600 font-bold underline'>MCO 機場</a> 取車。晚上去 CityWalk 走走。", price: "門票：無 / 預算：租車與晚餐" },
+                    { date: "3/07 (Sat)", title: "環球影城雙園", icon: "fa-hat-wizard", color: "text-purple-500", desc: "前往 <a href='https://maps.app.goo.gl/uS2C3r3m5B5r9m589' target='_blank' class='text-indigo-600 font-bold underline'>Universal Orlando</a>。搭火車穿梭兩園。", price: "門票：約 $190 - $230" },
+                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "探索最新園區 <a href='https://maps.app.goo.gl/X9C3r3m5B5r9m589' target='_blank' class='text-indigo-600 font-bold underline'>Epic Universe</a>。建議一早出發。", price: "門票：依 2026 官網公告" },
+                    { date: "3/09 (Mon)", title: "NASA 甘迺迪航太中心", icon: "fa-rocket", color: "text-orange-500", desc: "開往 <a href='https://maps.app.goo.gl/NASA12345' target='_blank' class='text-indigo-600 font-bold underline'>KSC 航太中心</a>。看火箭發射場。", price: "門票：成人約 $75 - $89" },
+                    { date: "3/10 (Tue)", title: "前往邁阿密", icon: "fa-car-side", color: "text-indigo-500", desc: "向南開往邁阿密。下午抵達 <a href='https://maps.app.goo.gl/SouthBeach' target='_blank' class='text-indigo-600 font-bold underline'>South Beach</a> 看日落。", price: "門票：免費 / 預算：市區停車" },
+                    { date: "3/11 (Wed)", title: "大沼澤國家公園", icon: "fa-otter", color: "text-green-600", desc: "在 <a href='https://maps.app.goo.gl/SharkValley' target='_blank' class='text-indigo-600 font-bold underline'>Shark Valley</a> 騎單車看野生鱷魚。", price: "門票：每車約 $35" },
+                    { date: "3/12 (Thu)", title: "邁阿密輕鬆日", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "在邁阿密海灘放鬆，或逛逛 Wynwood Walls 藝術區。", price: "自由行程" },
+                    { date: "3/13 (Fri)", title: "回程", icon: "fa-plane-departure", color: "text-red-500", desc: "在 <a href='https://maps.app.goo.gl/MIAPlane' target='_blank' class='text-indigo-600 font-bold underline'>MIA 機場</a> 還車，飛回聖安東尼奧。", price: "機票：MIA to SAT" }
+                ]
+            },
+            en: {
+                share_msg: "Link Copied!",
+                footer_title: "Rental & Transport",
+                footer_desc: "MCO Pick-up, MIA Drop-off. Fly back to SAT from MIA on 3/13.",
+                info_label: "Est. Price & Info",
+                days: [
+                    { date: "3/06 (Fri)", title: "Arrival Orlando", icon: "fa-plane-arrival", color: "text-blue-500", desc: "Arrive at MCO. Pick up car and groceries.", price: "N/A" },
+                    { date: "3/07 (Sat)", title: "Universal Orlando", icon: "fa-hat-wizard", color: "text-purple-500", desc: "Visit Universal Orlando. 2-Park tickets.", price: "$190 - $230" },
+                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "Whole day at the brand new Epic Universe.", price: "Check 2026 Price" },
+                    { date: "3/09 (Mon)", title: "NASA KSC", icon: "fa-rocket", color: "text-orange-500", desc: "Drive to Kennedy Space Center.", price: "$75 - $89" },
+                    { date: "3/10 (Tue)", title: "To Miami", icon: "fa-car-side", color: "text-indigo-500", desc: "3.5h drive. Sunset at South Beach.", price: "Parking fee" },
+                    { date: "3/11 (Wed)", title: "Everglades NP", icon: "fa-otter", color: "text-green-600", desc: "Alligator watching at Shark Valley.", price: "$35/Car" },
+                    { date: "3/12 (Thu)", title: "Miami Beach Relax", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "Beach day and city walk.", price: "Flexible" },
+                    { date: "3/13 (Fri)", title: "Departure", icon: "fa-plane-departure", color: "text-red-500", desc: "Return car at MIA, fly back to SAT.", price: "MIA to SAT" }
+                ]
+            }
+            // (越南、韓、西語可依此類推)
+        };
+
+        function switchLang(lang) {
+            const data = translations[lang] || translations['zh'];
+            
+            document.getElementById('footer-title').innerText = data.footer_title;
+            document.getElementById('footer-desc').innerText = data.footer_desc;
+
+            const container = document.getElementById('itinerary-list');
+            container.innerHTML = '';
+
+            data.days.forEach((day, index) => {
+                const card = `
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 relative">
+                        <div class="absolute -right-2 top-2 text-slate-50 font-black text-6xl select-none z-0">0${index + 1}</div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fa-solid ${day.icon} ${day.color}"></i>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">${day.date}</span>
+                            </div>
+                            <h2 class="text-xl font-bold mb-3 text-slate-800">${day.title}</h2>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">${day.desc}</p>
+                            
+                            <div class="bg-slate-50 rounded-2xl p-4 flex items-center gap-3">
+                                <i class="fa-solid fa-tag text-slate-300"></i>
+                                <div class="text-[11px]">
+                                    <span class="font-bold text-slate-400 block uppercase">${data.info_label}</span>
+                                    <span class="text-indigo-900 font-bold">${day.price}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        function shareLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("網址已複製！");
+        }
+
+        switchLang('zh');
+    </script>
+</body>
+</html>
