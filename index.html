@@ -25,8 +25,16 @@
 
       <div class="flex items-center gap-2">
         <button id="copyTodayBtn" class="bg-emerald-600 hover:bg-emerald-500 p-2 rounded-lg text-sm transition">
-          <i class="fa-solid fa-copy"></i> <span>複製今天行程</span>
+          <i class="fa-solid fa-copy"></i> <span id="copyTodayLabel">複製今天行程</span>
         </button>
+
+        <select id="langSelect" class="bg-indigo-800 border border-indigo-600 text-white text-sm rounded-lg px-3 py-2">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="ko">한국어</option>
+          <option value="vi">Tiếng Việt</option>
+        </select>
       </div>
     </div>
   </nav>
@@ -45,33 +53,33 @@
       <!-- Info -->
       <div class="lg:col-span-1 bg-white rounded-3xl border border-slate-200 shadow-sm p-5">
         <div class="flex items-start justify-between gap-2 mb-3">
-          <h2 class="font-bold text-indigo-900 text-lg">行程資訊</h2>
+          <h2 class="font-bold text-indigo-900 text-lg" id="tripInfoTitle">行程資訊</h2>
           <span class="text-[11px] text-gray-500" id="lastUpdatedBadge">最後更新：—</span>
         </div>
 
         <div class="text-sm space-y-2">
           <div class="flex justify-between gap-2">
-            <span class="text-gray-500">日期</span>
-            <span class="font-semibold text-right">3/07–3/14（8天7夜）</span>
+            <span class="text-gray-500" id="infoDateLabel">日期</span>
+            <span class="font-semibold text-right" id="infoDateValue">3/07–3/14（8天7夜）</span>
           </div>
           <div class="flex justify-between gap-2">
-            <span class="text-gray-500">路線</span>
-            <span class="font-semibold text-right">SAT → MIA →（自駕）→ Orlando → MCO → SAT</span>
+            <span class="text-gray-500" id="infoRouteLabel">路線</span>
+            <span class="font-semibold text-right" id="infoRouteValue">SAT → MIA →（自駕）→ Orlando → MCO → SAT</span>
           </div>
           <div class="flex justify-between gap-2">
-            <span class="text-gray-500">必去</span>
-            <span class="font-semibold text-right">Everglades / South Beach / Gulf Stream / Universal / Epic / KSC(3/12) / Silver Springs</span>
+            <span class="text-gray-500" id="infoMustLabel">必去</span>
+            <span class="font-semibold text-right" id="infoMustValue">Everglades / South Beach / Gulf Stream / Universal / Epic / KSC(3/12) / Silver Springs</span>
           </div>
           <div class="flex justify-between gap-2">
-            <span class="text-gray-500">租車建議</span>
-            <span class="font-semibold text-right">MIA 取車、MCO 還車（one-way）</span>
+            <span class="text-gray-500" id="infoCarLabel">租車建議</span>
+            <span class="font-semibold text-right" id="infoCarValue">MIA 取車、MCO 還車（one-way）</span>
           </div>
         </div>
 
         <!-- Expenses: Splitwise-like -->
         <div class="mt-5 border-t pt-4">
           <div class="flex items-center justify-between">
-            <h3 class="font-bold text-indigo-900">Expenses（多人分帳）</h3>
+            <h3 class="font-bold text-indigo-900" id="expensesTitle">Expenses（多人分帳）</h3>
             <button id="toggleExpensesBtn" class="text-sm text-indigo-700 font-semibold hover:underline">
               <span id="toggleExpensesLabel">展開</span>
             </button>
@@ -81,8 +89,8 @@
             <!-- Members -->
             <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3">
               <div class="flex items-center justify-between mb-2">
-                <div class="font-semibold text-slate-800">成員</div>
-                <div class="text-xs text-gray-500">新增參與分帳的人</div>
+                <div class="font-semibold text-slate-800" id="membersTitle">成員</div>
+                <div class="text-xs text-gray-500" id="membersHint">新增參與分帳的人</div>
               </div>
 
               <div class="flex gap-2 flex-wrap">
@@ -97,21 +105,21 @@
 
             <!-- Add expense -->
             <div class="mt-3 bg-white border border-slate-200 rounded-2xl p-3">
-              <div class="font-semibold text-slate-800 mb-2">新增花費</div>
+              <div class="font-semibold text-slate-800 mb-2" id="addExpenseTitle">新增花費</div>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <div class="flex items-center gap-2">
-                  <label class="text-xs text-gray-600 w-20">金額</label>
+                  <label class="text-xs text-gray-600 w-20" id="amountLabel">金額</label>
                   <input id="expAmount" type="number" min="0" step="0.01" class="w-full border rounded-xl px-3 py-2 text-sm" placeholder="例如 45.50"/>
                 </div>
 
                 <div class="flex items-center gap-2">
-                  <label class="text-xs text-gray-600 w-20">付款人</label>
+                  <label class="text-xs text-gray-600 w-20" id="payerLabel">付款人</label>
                   <select id="expPayer" class="w-full border rounded-xl px-3 py-2 text-sm"></select>
                 </div>
 
                 <div class="flex items-center gap-2">
-                  <label class="text-xs text-gray-600 w-20">分類</label>
+                  <label class="text-xs text-gray-600 w-20" id="categoryLabel">分類</label>
                   <select id="expCategory" class="w-full border rounded-xl px-3 py-2 text-sm">
                     <option value="tickets">門票</option>
                     <option value="hotel">住宿</option>
@@ -124,13 +132,13 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                  <label class="text-xs text-gray-600 w-20">日期</label>
+                  <label class="text-xs text-gray-600 w-20" id="dayLabel">日期</label>
                   <select id="expDay" class="w-full border rounded-xl px-3 py-2 text-sm"></select>
                 </div>
               </div>
 
               <div class="mt-3">
-                <div class="text-xs text-gray-600 mb-2">分攤給誰（可複選；只有參與的人才勾）</div>
+                <div class="text-xs text-gray-600 mb-2" id="splitWithLabel">分攤給誰（可複選；只有參與的人才勾）</div>
                 <div id="splitWithBox" class="flex flex-wrap gap-2"></div>
               </div>
 
@@ -144,16 +152,16 @@
 
             <!-- Expense list + settlement -->
             <div class="mt-3 bg-white border border-slate-200 rounded-2xl p-3">
-              <div class="font-semibold text-slate-800 mb-2">花費明細</div>
+              <div class="font-semibold text-slate-800 mb-2" id="expenseListTitle">花費明細</div>
               <div id="expenseList" class="space-y-2"></div>
 
               <div class="mt-4 border-t pt-3">
-                <div class="font-semibold text-slate-800 mb-2">結算建議（誰欠誰）</div>
+                <div class="font-semibold text-slate-800 mb-2" id="settlementTitle">結算建議（誰欠誰）</div>
                 <div id="settlementList" class="text-sm text-slate-700 space-y-1"></div>
               </div>
             </div>
 
-            <div class="mt-2 text-xs text-gray-500">
+            <div class="mt-2 text-xs text-gray-500" id="localSaveHint">
               會自動存到本機（同一台裝置/瀏覽器有效）。
             </div>
           </div>
@@ -164,29 +172,248 @@
       <div class="lg:col-span-2 relative">
         <div class="timeline-line hidden md:block"></div>
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-xl font-bold text-indigo-900">📌 行程（點每天可收合）</h2>
-          <div class="text-xs text-gray-500">提示：點 Day 標題可收合；今天會自動高亮；IMPORTANT 會自動提亮。</div>
+          <h2 class="text-xl font-bold text-indigo-900" id="itineraryTitle">📌 行程（點每天可收合）</h2>
+          <div class="text-xs text-gray-500" id="itineraryHint">提示：點 Day 標題可收合；今天會自動高亮；IMPORTANT 會自動提亮。</div>
         </div>
         <div id="daysContainer" class="space-y-4 relative z-10"></div>
       </div>
     </div>
 
     <div class="mt-10 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-indigo-600">
-      <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2 text-lg">
+      <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2 text-lg" id="carTitle">
         <i class="fa-solid fa-car-side"></i> 租車與交通提醒
       </h3>
-      <p class="text-gray-600 text-sm leading-relaxed">
+      <p class="text-gray-600 text-sm leading-relaxed" id="carText">
         建議：MIA 取車、MCO 還車（one-way）。Miami 停車貴、Orlando 樂園停車固定；3/12 去 KSC 建議早到搶 Bus Tour。
       </p>
     </div>
   </main>
 
 <script>
-  // ===== Trip config =====
+  // ===== Settings =====
   const TRIP_YEAR = 2026;
   const LAST_UPDATED_ISO = "2026-02-10T00:00:00-06:00";
 
-  // ===== Data (8 days) =====
+  // ===== i18n (UI only; trip content stays Chinese) =====
+  const I18N = {
+    zh: {
+      copyToday: "複製今天行程",
+      tripInfo: "行程資訊",
+      infoDate: "日期",
+      infoRoute: "路線",
+      infoMust: "必去",
+      infoCar: "租車建議",
+      expenses: "Expenses（多人分帳）",
+      open: "展開",
+      close: "收合",
+      members: "成員",
+      membersHint: "新增參與分帳的人",
+      addMember: "+ 新增成員",
+      addExpense: "新增花費",
+      amount: "金額",
+      payer: "付款人",
+      category: "分類",
+      day: "日期",
+      splitWith: "分攤給誰（可複選；只有參與的人才勾）",
+      add: "+ 加入",
+      expenseList: "花費明細",
+      settlement: "結算建議（誰欠誰）",
+      localSave: "會自動存到本機（同一台裝置/瀏覽器有效）。",
+      itineraryTitle: "📌 行程（點每天可收合）",
+      itineraryHint: "提示：點 Day 標題可收合；今天會自動高亮；IMPORTANT 會自動提亮。",
+      reminderTitle: "重點提醒",
+      copyDay: "複製本日",
+      expand: "展開",
+      collapse: "收合",
+      openMap: "一鍵開地圖",
+      address: "地址",
+      phone: "電話",
+      note: "備註",
+      travel: "交通時間",
+      lastUpdatedPrefix: "最後更新：",
+      carTitle: "租車與交通提醒",
+      carText: "建議：MIA 取車、MCO 還車（one-way）。Miami 停車貴、Orlando 樂園停車固定；3/12 去 KSC 建議早到搶 Bus Tour。",
+      alertCopied: "已複製！",
+      alertCopiedToday: "已複製今天行程！",
+      warnAmount: "請填金額",
+      warnPayer: "請選付款人",
+      warnSplit: "至少勾選一位分攤對象"
+    },
+    en: {
+      copyToday: "Copy today's plan",
+      tripInfo: "Trip Info",
+      infoDate: "Dates",
+      infoRoute: "Route",
+      infoMust: "Must-go",
+      infoCar: "Car rental",
+      expenses: "Expenses (Group Split)",
+      open: "Open",
+      close: "Close",
+      members: "Members",
+      membersHint: "Add participants",
+      addMember: "+ Add member",
+      addExpense: "Add expense",
+      amount: "Amount",
+      payer: "Payer",
+      category: "Category",
+      day: "Day",
+      splitWith: "Split with (select participants)",
+      add: "+ Add",
+      expenseList: "Expense list",
+      settlement: "Settlement (who owes who)",
+      localSave: "Saved locally in this browser/device.",
+      itineraryTitle: "📌 Itinerary (tap to expand/collapse)",
+      itineraryHint: "Tip: tap Day title; Today highlighted; IMPORTANT emphasized.",
+      reminderTitle: "Key reminders",
+      copyDay: "Copy day",
+      expand: "Expand",
+      collapse: "Collapse",
+      openMap: "Open map",
+      address: "Address",
+      phone: "Phone",
+      note: "Note",
+      travel: "Travel time",
+      lastUpdatedPrefix: "Last updated: ",
+      carTitle: "Car & Transit Tips",
+      carText: "Suggestion: pick up at MIA and return at MCO (one-way). Parking is pricey in Miami; theme parks have fixed parking fees. For KSC on 3/12, arrive early for the Bus Tour.",
+      alertCopied: "Copied!",
+      alertCopiedToday: "Copied today's plan!",
+      warnAmount: "Enter an amount",
+      warnPayer: "Select a payer",
+      warnSplit: "Select at least one participant"
+    },
+    es: {
+      copyToday: "Copiar plan de hoy",
+      tripInfo: "Info del viaje",
+      infoDate: "Fechas",
+      infoRoute: "Ruta",
+      infoMust: "Imprescindibles",
+      infoCar: "Alquiler de coche",
+      expenses: "Gastos (división grupal)",
+      open: "Abrir",
+      close: "Cerrar",
+      members: "Miembros",
+      membersHint: "Añadir participantes",
+      addMember: "+ Añadir",
+      addExpense: "Añadir gasto",
+      amount: "Importe",
+      payer: "Pagador",
+      category: "Categoría",
+      day: "Día",
+      splitWith: "Repartir con (selecciona)",
+      add: "+ Añadir",
+      expenseList: "Lista de gastos",
+      settlement: "Liquidación (quién debe a quién)",
+      localSave: "Guardado localmente en este navegador/dispositivo.",
+      itineraryTitle: "📌 Itinerario (toca para desplegar/plegar)",
+      itineraryHint: "Consejo: toca el título del día; Hoy resaltado; IMPORTANT enfatizado.",
+      reminderTitle: "Recordatorios",
+      copyDay: "Copiar día",
+      expand: "Desplegar",
+      collapse: "Plegar",
+      openMap: "Abrir mapa",
+      address: "Dirección",
+      phone: "Teléfono",
+      note: "Nota",
+      travel: "Tiempo de traslado",
+      lastUpdatedPrefix: "Última actualización: ",
+      carTitle: "Consejos de coche y transporte",
+      carText: "Sugerencia: recoger en MIA y devolver en MCO (solo ida). El estacionamiento es caro en Miami; los parques tienen tarifa fija. Para KSC el 3/12, llega temprano para el Bus Tour.",
+      alertCopied: "¡Copiado!",
+      alertCopiedToday: "¡Copiado el plan de hoy!",
+      warnAmount: "Ingresa un importe",
+      warnPayer: "Selecciona un pagador",
+      warnSplit: "Selecciona al menos un participante"
+    },
+    ko: {
+      copyToday: "오늘 일정 복사",
+      tripInfo: "여행 정보",
+      infoDate: "기간",
+      infoRoute: "경로",
+      infoMust: "필수 방문",
+      infoCar: "렌터카",
+      expenses: "지출(그룹 정산)",
+      open: "열기",
+      close: "닫기",
+      members: "멤버",
+      membersHint: "참여자 추가",
+      addMember: "+ 추가",
+      addExpense: "지출 추가",
+      amount: "금액",
+      payer: "결제자",
+      category: "카테고리",
+      day: "날짜",
+      splitWith: "분할 대상(선택)",
+      add: "+ 추가",
+      expenseList: "지출 내역",
+      settlement: "정산(누가 누구에게)",
+      localSave: "이 브라우저/기기 로컬에 저장됩니다.",
+      itineraryTitle: "📌 일정 (눌러서 펼치기/접기)",
+      itineraryHint: "팁: Day 제목을 눌러 토글; 오늘 강조; IMPORTANT 더 강조.",
+      reminderTitle: "중요 알림",
+      copyDay: "하루 복사",
+      expand: "펼치기",
+      collapse: "접기",
+      openMap: "지도 열기",
+      address: "주소",
+      phone: "전화",
+      note: "메모",
+      travel: "이동 시간",
+      lastUpdatedPrefix: "마지막 업데이트: ",
+      carTitle: "렌터카/이동 팁",
+      carText: "추천: MIA 픽업, MCO 반납(편도). 마이애미 주차비가 비싸고, 테마파크는 고정 주차요금. 3/12 KSC는 버스투어 위해 일찍 도착.",
+      alertCopied: "복사됨!",
+      alertCopiedToday: "오늘 일정 복사됨!",
+      warnAmount: "금액을 입력하세요",
+      warnPayer: "결제자를 선택하세요",
+      warnSplit: "분할 대상을 1명 이상 선택하세요"
+    },
+    vi: {
+      copyToday: "Sao chép lịch hôm nay",
+      tripInfo: "Thông tin chuyến đi",
+      infoDate: "Ngày",
+      infoRoute: "Tuyến",
+      infoMust: "Điểm phải đi",
+      infoCar: "Thuê xe",
+      expenses: "Chi phí (chia nhóm)",
+      open: "Mở",
+      close: "Đóng",
+      members: "Thành viên",
+      membersHint: "Thêm người tham gia",
+      addMember: "+ Thêm",
+      addExpense: "Thêm chi phí",
+      amount: "Số tiền",
+      payer: "Người trả",
+      category: "Danh mục",
+      day: "Ngày",
+      splitWith: "Chia cho ai (chọn)",
+      add: "+ Thêm",
+      expenseList: "Danh sách chi phí",
+      settlement: "Quyết toán (ai nợ ai)",
+      localSave: "Lưu cục bộ trên trình duyệt/thiết bị này.",
+      itineraryTitle: "📌 Lịch trình (chạm để mở/đóng)",
+      itineraryHint: "Mẹo: chạm tiêu đề ngày; Hôm nay được tô sáng; IMPORTANT được nhấn mạnh.",
+      reminderTitle: "Nhắc nhở",
+      copyDay: "Sao chép ngày",
+      expand: "Mở",
+      collapse: "Đóng",
+      openMap: "Mở bản đồ",
+      address: "Địa chỉ",
+      phone: "Điện thoại",
+      note: "Ghi chú",
+      travel: "Thời gian di chuyển",
+      lastUpdatedPrefix: "Cập nhật lần cuối: ",
+      carTitle: "Mẹo thuê xe/di chuyển",
+      carText: "Gợi ý: nhận xe ở MIA và trả ở MCO (một chiều). Đỗ xe ở Miami khá đắt; công viên có phí cố định. Đi KSC ngày 3/12 nên đến sớm để kịp Bus Tour.",
+      alertCopied: "Đã sao chép!",
+      alertCopiedToday: "Đã sao chép lịch hôm nay!",
+      warnAmount: "Nhập số tiền",
+      warnPayer: "Chọn người trả",
+      warnSplit: "Chọn ít nhất 1 người"
+    }
+  };
+
+  // ===== Trip data (Chinese content; you can edit times/details anytime) =====
   const tripData = {
     days: [
       {
@@ -287,11 +514,13 @@
 
   // ===== Helpers =====
   function pad2(n){ return String(n).padStart(2,'0'); }
-  function formatLastUpdated() {
+  function formatLastUpdated(lang) {
+    const t = I18N[lang] || I18N.zh;
     try {
       const d = new Date(LAST_UPDATED_ISO);
-      return `最後更新：${d.getFullYear()}/${pad2(d.getMonth()+1)}/${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
-    } catch { return "最後更新：—"; }
+      const stamp = `${d.getFullYear()}/${pad2(d.getMonth()+1)}/${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+      return `${t.lastUpdatedPrefix}${stamp}`;
+    } catch { return `${t.lastUpdatedPrefix}—`; }
   }
   function getTodayKey() {
     const now = new Date();
@@ -340,7 +569,8 @@
   }
 
   // ===== Render days =====
-  function renderDays() {
+  function renderDays(lang) {
+    const t = I18N[lang] || I18N.zh;
     const today = getTodayKey();
     const container = document.getElementById("daysContainer");
     container.innerHTML = "";
@@ -371,10 +601,10 @@
 
         <div class="shrink-0 flex items-center gap-2">
           <button class="copyDayBtn bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl px-3 py-2 text-sm" data-dayid="${d.id}" type="button">
-            <i class="fa-solid fa-copy"></i> 複製本日
+            <i class="fa-solid fa-copy"></i> ${t.copyDay}
           </button>
           <div class="text-indigo-700 font-semibold text-sm">
-            <span class="dayToggleText">${expandedByDefault ? "收合" : "展開"}</span>
+            <span class="dayToggleText">${expandedByDefault ? t.collapse : t.expand}</span>
             <i class="fa-solid fa-chevron-down ml-2 transition-transform dayChevron ${expandedByDefault ? "rotate-180" : ""}"></i>
           </div>
         </div>
@@ -387,7 +617,7 @@
       reminderBox.className = `mt-3 rounded-2xl border p-4 ${isToday ? "bg-amber-50 border-amber-200" : "bg-indigo-50 border-indigo-100"}`;
       reminderBox.innerHTML = `
         <div class="font-bold text-indigo-900 mb-2 flex items-center gap-2">
-          <i class="fa-solid fa-bell"></i> 重點提醒
+          <i class="fa-solid fa-bell"></i> ${t.reminderTitle}
         </div>
         <ul class="text-sm space-y-2">
           ${(d.reminders || []).map(r => {
@@ -412,7 +642,7 @@
         if (s.travel) {
           const travel = document.createElement("div");
           travel.className = "flex items-center gap-2 text-xs text-gray-500 pl-2";
-          travel.innerHTML = `<i class="fa-solid fa-car-side text-gray-400"></i> <span class="font-semibold">交通時間:</span> <span>${s.travel}</span>`;
+          travel.innerHTML = `<i class="fa-solid fa-car-side text-gray-400"></i> <span class="font-semibold">${t.travel}:</span> <span>${s.travel}</span>`;
           stopsWrap.appendChild(travel);
         }
 
@@ -420,10 +650,10 @@
         const stopCard = document.createElement("div");
         stopCard.className = "bg-white rounded-2xl border border-slate-100 shadow-sm p-4";
 
-        const mapBtn = s.map ? `<a href="${s.map}" target="_blank" class="text-indigo-700 font-semibold hover:underline"><i class="fa-solid fa-location-dot"></i> 一鍵開地圖</a>` : "";
+        const mapBtn = s.map ? `<a href="${s.map}" target="_blank" class="text-indigo-700 font-semibold hover:underline"><i class="fa-solid fa-location-dot"></i> ${t.openMap}</a>` : "";
         const phoneLine = s.phone ? `
           <div class="text-xs text-gray-600">
-            <span class="font-semibold">電話:</span>
+            <span class="font-semibold">${t.phone}:</span>
             <a href="tel:${String(s.phone).replace(/\s/g,'')}" class="text-indigo-700 hover:underline">${s.phone}</a>
           </div>` : "";
 
@@ -438,10 +668,10 @@
             <div class="text-xs">${mapBtn}</div>
           </div>
 
-          ${s.note ? `<div class="mt-2 text-sm text-gray-700"><span class="font-semibold text-slate-500">備註:</span> ${s.note}</div>` : ""}
+          ${s.note ? `<div class="mt-2 text-sm text-gray-700"><span class="font-semibold text-slate-500">${t.note}:</span> ${s.note}</div>` : ""}
 
           <div class="mt-2 text-xs text-gray-600 space-y-1">
-            ${s.address ? `<div><span class="font-semibold">地址:</span> ${s.address}</div>` : ""}
+            ${s.address ? `<div><span class="font-semibold">${t.address}:</span> ${s.address}</div>` : ""}
             ${phoneLine}
           </div>
         `;
@@ -455,7 +685,7 @@
         if (ev.target.closest(".copyDayBtn")) return;
         const isHidden = body.classList.contains("hidden");
         body.classList.toggle("hidden", !isHidden);
-        header.querySelector(".dayToggleText").innerText = isHidden ? "收合" : "展開";
+        header.querySelector(".dayToggleText").innerText = isHidden ? t.collapse : t.expand;
         header.querySelector(".dayChevron").classList.toggle("rotate-180", isHidden);
       });
 
@@ -472,7 +702,7 @@
         const dayObj = tripData.days.find(x => x.id === dayId);
         if (!dayObj) return;
         await copyTextToClipboard(buildDayText(dayObj));
-        alert("已複製！");
+        alert((I18N[lang]||I18N.zh).alertCopied);
       });
     });
   }
@@ -485,27 +715,15 @@
       const raw = localStorage.getItem(SPLIT_LS_KEY);
       if (raw) return JSON.parse(raw);
     } catch (e) {}
-    return {
-      currency: "USD",
-      members: ["Me"],
-      expenses: [] // {id, dayId, amount, payer, splitWith[], category, note, ts}
-    };
+    return { currency: "USD", members: ["Me"], expenses: [] };
   }
-
   function saveSplitState(state) {
     try { localStorage.setItem(SPLIT_LS_KEY, JSON.stringify(state)); } catch(e) {}
   }
+  function uid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
+  function money(n) { const v = Number(n || 0); return (Math.round(v * 100) / 100).toFixed(2); }
 
-  function uid() {
-    return Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
-  }
-
-  function money(n) {
-    const v = Number(n || 0);
-    return (Math.round(v * 100) / 100).toFixed(2);
-  }
-
-  function renderSplitUI() {
+  function renderSplitUI(lang) {
     const state = loadSplitState();
 
     // day options
@@ -567,7 +785,7 @@
         st.members = st.members.filter(x => x !== name);
         st.expenses = st.expenses.filter(e => e.payer !== name && !(e.splitWith||[]).includes(name));
         saveSplitState(st);
-        renderSplitUI();
+        renderSplitUI(lang);
       });
     });
 
@@ -578,13 +796,12 @@
         const st = loadSplitState();
         st.expenses = st.expenses.filter(e => e.id !== id);
         saveSplitState(st);
-        renderSplitUI();
+        renderSplitUI(lang);
       });
     });
   }
 
   function computeBalances(state) {
-    // balance > 0 means should receive; < 0 means owes
     const bal = {};
     state.members.forEach(m => bal[m] = 0);
 
@@ -665,7 +882,7 @@
     box.innerHTML = lines.join("");
   }
 
-  function initSplitHandlers() {
+  function initSplitHandlers(lang) {
     document.getElementById("addMemberBtn").addEventListener("click", () => {
       const name = (document.getElementById("memberNameInput").value || "").trim();
       if (!name) return;
@@ -676,10 +893,11 @@
       st.members.push(name);
       saveSplitState(st);
       document.getElementById("memberNameInput").value = "";
-      renderSplitUI();
+      renderSplitUI(lang);
     });
 
     document.getElementById("addExpenseBtn").addEventListener("click", () => {
+      const t = I18N[lang] || I18N.zh;
       const st = loadSplitState();
 
       const amount = Number(document.getElementById("expAmount").value || 0);
@@ -692,59 +910,116 @@
         .filter(chk => chk.checked)
         .map(chk => chk.value);
 
-      if (!amount || amount <= 0) return alert("請填金額");
-      if (!payer) return alert("請選付款人");
-      if (!splitWith.length) return alert("至少勾選一位分攤對象");
+      if (!amount || amount <= 0) return alert(t.warnAmount);
+      if (!payer) return alert(t.warnPayer);
+      if (!splitWith.length) return alert(t.warnSplit);
 
-      st.expenses.push({
-        id: uid(),
-        dayId,
-        amount,
-        payer,
-        splitWith,
-        category,
-        note,
-        ts: Date.now()
-      });
-
+      st.expenses.push({ id: uid(), dayId, amount, payer, splitWith, category, note, ts: Date.now() });
       saveSplitState(st);
 
       document.getElementById("expAmount").value = "";
       document.getElementById("expNote").value = "";
-      renderSplitUI();
+      renderSplitUI(lang);
     });
   }
 
   // ===== Expenses accordion =====
-  function initExpensesAccordion() {
+  function initExpensesAccordion(lang) {
     const btn = document.getElementById("toggleExpensesBtn");
     const panel = document.getElementById("expensesPanel");
     const label = document.getElementById("toggleExpensesLabel");
 
     btn.addEventListener("click", () => {
-      const open = panel.classList.contains("hidden");
+      const willOpen = panel.classList.contains("hidden");
       panel.classList.toggle("hidden");
-      label.innerText = open ? "收合" : "展開";
+      const t = I18N[lang] || I18N.zh;
+      label.innerText = willOpen ? t.close : t.open;
     });
   }
 
+  // ===== Apply language (UI only) =====
+  function applyLang(lang) {
+    const t = I18N[lang] || I18N.zh;
+
+    document.getElementById("copyTodayLabel").textContent = t.copyToday;
+    document.getElementById("tripInfoTitle").textContent = t.tripInfo;
+    document.getElementById("infoDateLabel").textContent = t.infoDate;
+    document.getElementById("infoRouteLabel").textContent = t.infoRoute;
+    document.getElementById("infoMustLabel").textContent = t.infoMust;
+    document.getElementById("infoCarLabel").textContent = t.infoCar;
+
+    document.getElementById("expensesTitle").textContent = t.expenses;
+    document.getElementById("membersTitle").textContent = t.members;
+    document.getElementById("membersHint").textContent = t.membersHint;
+    document.getElementById("addExpenseTitle").textContent = t.addExpense;
+
+    document.getElementById("amountLabel").textContent = t.amount;
+    document.getElementById("payerLabel").textContent = t.payer;
+    document.getElementById("categoryLabel").textContent = t.category;
+    document.getElementById("dayLabel").textContent = t.day;
+    document.getElementById("splitWithLabel").textContent = t.splitWith;
+
+    document.getElementById("expenseListTitle").textContent = t.expenseList;
+    document.getElementById("settlementTitle").textContent = t.settlement;
+    document.getElementById("localSaveHint").textContent = t.localSave;
+
+    document.getElementById("itineraryTitle").textContent = t.itineraryTitle;
+    document.getElementById("itineraryHint").textContent = t.itineraryHint;
+
+    document.getElementById("carTitle").innerHTML = `<i class="fa-solid fa-car-side"></i> ${t.carTitle}`;
+    document.getElementById("carText").textContent = t.carText;
+
+    // last updated
+    document.getElementById("lastUpdatedBadge").textContent = formatLastUpdated(lang);
+
+    // toggle label respects current state
+    const panel = document.getElementById("expensesPanel");
+    document.getElementById("toggleExpensesLabel").textContent = panel.classList.contains("hidden") ? t.open : t.close;
+
+    // Google Maps embed UI language (may not fully translate place names)
+    const mapFrame = document.getElementById("mapFrame");
+    if (mapFrame) {
+      try {
+        const url = new URL(mapFrame.src);
+        const hl = (lang === "zh") ? "zh-TW" : lang;
+        url.searchParams.set("hl", hl);
+        mapFrame.src = url.toString();
+      } catch {}
+    }
+
+    // re-render dynamic areas
+    renderDays(lang);
+    renderSplitUI(lang);
+  }
+
   // ===== Copy today =====
-  function initCopyToday() {
+  function initCopyToday(lang) {
     document.getElementById("copyTodayBtn").addEventListener("click", async () => {
       const d = getTodayOrFirstTripDay();
       await copyTextToClipboard(buildDayText(d));
-      alert("已複製今天行程！");
+      alert((I18N[lang]||I18N.zh).alertCopiedToday);
     });
   }
 
   // ===== Init =====
-  document.getElementById("lastUpdatedBadge").innerText = formatLastUpdated();
-  renderDays();
-  initCopyToday();
+  (function init() {
+    const langSelect = document.getElementById("langSelect");
+    const savedLang = localStorage.getItem("trip_lang") || "zh";
+    langSelect.value = savedLang;
 
-  initExpensesAccordion();
-  initSplitHandlers();
-  renderSplitUI();
+    applyLang(savedLang);
+
+    initCopyToday(savedLang);
+    initSplitHandlers(savedLang);
+    initExpensesAccordion(savedLang);
+
+    langSelect.addEventListener("change", () => {
+      const lang = langSelect.value;
+      localStorage.setItem("trip_lang", lang);
+      // Note: init handlers are already bound; only UI refresh needed
+      applyLang(lang);
+    });
+  })();
 </script>
 </body>
 </html>
