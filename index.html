@@ -3,177 +3,748 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>佛州旅行行程（7–14）</title>
+  <title>Florida Trip 3/7–3/14</title>
 
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
-  <!-- Tailwind CDN（你原本就有） -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    iframe { pointer-events: auto; }
+    .timeline-line { position:absolute; left:20px; top:0; bottom:0; width:2px; background:#e2e8f0; z-index:0; }
+  </style>
 </head>
 
-<body class="bg-slate-900 text-slate-100">
+<body class="bg-slate-50 text-gray-900 font-sans">
+  <!-- ===== Nav ===== -->
+  <nav class="bg-indigo-900 text-white p-4 sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto flex flex-wrap justify-between items-center gap-3">
+      <div>
+        <h1 class="font-bold text-lg tracking-tight">Florida Trip 2026 🌴</h1>
+        <p class="text-[10px] text-indigo-300 italic">March 07 - March 14 · SAT → MIA → ORL → SAT</p>
+      </div>
 
-<!-- ================= HEADER ================= -->
-<header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur border-b border-slate-700">
-  <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
-    <div>
-      <h1 class="text-lg font-bold">Florida Trip 3/7–3/14</h1>
-      <p class="text-xs text-indigo-300 italic">SAT → MIA → ORL → SAT</p>
+      <div class="flex items-center gap-2">
+        <button id="copyTodayBtn" class="bg-emerald-600 hover:bg-emerald-500 p-2 rounded-lg text-sm transition">
+          <i class="fa-solid fa-copy"></i> <span>複製今天行程</span>
+        </button>
+      </div>
     </div>
+  </nav>
+
+  <!-- ===== Map ===== -->
+  <div class="w-full h-72 md:h-96 bg-gray-200 border-b-4 border-indigo-900 shadow-inner">
+    <iframe
+      id="mapFrame"
+      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3028207.819705539!2d-81.6!3d27.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-TW!2sus!4v1700000000000"
+      width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+    </iframe>
   </div>
-</header>
 
-<!-- ================= MAIN ================= -->
-<main class="max-w-5xl mx-auto px-4 py-6 space-y-8">
+  <main class="container mx-auto px-4 py-10 max-w-5xl">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+      <!-- Info -->
+      <div class="lg:col-span-1 bg-white rounded-3xl border border-slate-200 shadow-sm p-5">
+        <div class="flex items-start justify-between gap-2 mb-3">
+          <h2 class="font-bold text-indigo-900 text-lg">行程資訊</h2>
+          <span class="text-[11px] text-gray-500" id="lastUpdatedBadge">最後更新：—</span>
+        </div>
 
-<!-- ================= DAY TEMPLATE ================= -->
-<section class="bg-slate-800 rounded-xl p-4">
-  <button onclick="toggleDay(this)" class="w-full flex justify-between items-center">
-    <h2 class="font-semibold text-lg">Day 1｜3/07（六）抵達邁阿密</h2>
-    <i class="fa-solid fa-chevron-down"></i>
-  </button>
+        <div class="text-sm space-y-2">
+          <div class="flex justify-between gap-2">
+            <span class="text-gray-500">日期</span>
+            <span class="font-semibold text-right">3/07–3/14（8天7夜）</span>
+          </div>
+          <div class="flex justify-between gap-2">
+            <span class="text-gray-500">路線</span>
+            <span class="font-semibold text-right">SAT → MIA →（自駕）→ Orlando → MCO → SAT</span>
+          </div>
+          <div class="flex justify-between gap-2">
+            <span class="text-gray-500">必去</span>
+            <span class="font-semibold text-right">Everglades / South Beach / Gulf Stream / Universal / Epic / KSC(3/12) / Silver Springs</span>
+          </div>
+          <div class="flex justify-between gap-2">
+            <span class="text-gray-500">租車建議</span>
+            <span class="font-semibold text-right">MIA 取車、MCO 還車（one-way）</span>
+          </div>
+        </div>
 
-  <div class="mt-4 space-y-4 hidden">
+        <!-- Expenses: Splitwise-like -->
+        <div class="mt-5 border-t pt-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-indigo-900">Expenses（多人分帳）</h3>
+            <button id="toggleExpensesBtn" class="text-sm text-indigo-700 font-semibold hover:underline">
+              <span id="toggleExpensesLabel">展開</span>
+            </button>
+          </div>
 
-    <!-- Reminder -->
-    <div class="bg-red-900/40 border-l-4 border-red-400 p-3 rounded">
-      ⚠️ 抵達後先取車，邁阿密停車費偏高
-    </div>
+          <div id="expensesPanel" class="hidden mt-3">
+            <!-- Members -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3">
+              <div class="flex items-center justify-between mb-2">
+                <div class="font-semibold text-slate-800">成員</div>
+                <div class="text-xs text-gray-500">新增參與分帳的人</div>
+              </div>
 
-    <!-- Stop -->
-    <div class="border border-slate-700 rounded-lg p-3">
-      <p class="text-sm text-indigo-300">15:00–16:00</p>
-      <h3 class="font-semibold">Miami International Airport (MIA)</h3>
-      <p class="text-sm">📍 2100 NW 42nd Ave, Miami, FL</p>
-      <div class="flex gap-4 text-sm mt-2">
-        <a href="https://maps.google.com/?q=Miami+International+Airport" target="_blank" class="text-indigo-400">🧭 開啟地圖</a>
-        <span>☎️ +1 305-876-7000</span>
+              <div class="flex gap-2 flex-wrap">
+                <input id="memberNameInput" class="bg-white border rounded-xl px-3 py-2 text-sm" placeholder="輸入名字（例：Katie）"/>
+                <button id="addMemberBtn" class="bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl px-3 py-2 text-sm">
+                  + 新增成員
+                </button>
+              </div>
+
+              <div id="membersList" class="mt-3 flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- Add expense -->
+            <div class="mt-3 bg-white border border-slate-200 rounded-2xl p-3">
+              <div class="font-semibold text-slate-800 mb-2">新增花費</div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div class="flex items-center gap-2">
+                  <label class="text-xs text-gray-600 w-20">金額</label>
+                  <input id="expAmount" type="number" min="0" step="0.01" class="w-full border rounded-xl px-3 py-2 text-sm" placeholder="例如 45.50"/>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <label class="text-xs text-gray-600 w-20">付款人</label>
+                  <select id="expPayer" class="w-full border rounded-xl px-3 py-2 text-sm"></select>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <label class="text-xs text-gray-600 w-20">分類</label>
+                  <select id="expCategory" class="w-full border rounded-xl px-3 py-2 text-sm">
+                    <option value="tickets">門票</option>
+                    <option value="hotel">住宿</option>
+                    <option value="car">租車</option>
+                    <option value="gas">油錢</option>
+                    <option value="parking">停車</option>
+                    <option value="food">餐費</option>
+                    <option value="misc">其他</option>
+                  </select>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <label class="text-xs text-gray-600 w-20">日期</label>
+                  <select id="expDay" class="w-full border rounded-xl px-3 py-2 text-sm"></select>
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <div class="text-xs text-gray-600 mb-2">分攤給誰（可複選；只有參與的人才勾）</div>
+                <div id="splitWithBox" class="flex flex-wrap gap-2"></div>
+              </div>
+
+              <div class="mt-3 flex items-center gap-2 flex-wrap">
+                <input id="expNote" class="flex-1 border rounded-xl px-3 py-2 text-sm" placeholder="備註（可選）例如：Universal 門票"/>
+                <button id="addExpenseBtn" class="bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl px-3 py-2 text-sm">
+                  + 加入
+                </button>
+              </div>
+            </div>
+
+            <!-- Expense list + settlement -->
+            <div class="mt-3 bg-white border border-slate-200 rounded-2xl p-3">
+              <div class="font-semibold text-slate-800 mb-2">花費明細</div>
+              <div id="expenseList" class="space-y-2"></div>
+
+              <div class="mt-4 border-t pt-3">
+                <div class="font-semibold text-slate-800 mb-2">結算建議（誰欠誰）</div>
+                <div id="settlementList" class="text-sm text-slate-700 space-y-1"></div>
+              </div>
+            </div>
+
+            <div class="mt-2 text-xs text-gray-500">
+              會自動存到本機（同一台裝置/瀏覽器有效）。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="lg:col-span-2 relative">
+        <div class="timeline-line hidden md:block"></div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-indigo-900">📌 行程（點每天可收合）</h2>
+          <div class="text-xs text-gray-500">提示：點 Day 標題可收合；今天會自動高亮；IMPORTANT 會自動提亮。</div>
+        </div>
+        <div id="daysContainer" class="space-y-4 relative z-10"></div>
       </div>
     </div>
 
-    <!-- Travel -->
-    <div class="text-center text-sm text-slate-400">🚗 約 30 分鐘</div>
-
-    <!-- Stop -->
-    <div class="border border-slate-700 rounded-lg p-3">
-      <p class="text-sm text-indigo-300">17:00–19:30</p>
-      <h3 class="font-semibold">South Beach 南海灘</h3>
-      <p class="text-sm">📍 Ocean Dr, Miami Beach</p>
-      <a href="https://maps.google.com/?q=South+Beach+Miami" target="_blank" class="text-indigo-400 text-sm">🧭 開啟地圖</a>
+    <div class="mt-10 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-indigo-600">
+      <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2 text-lg">
+        <i class="fa-solid fa-car-side"></i> 租車與交通提醒
+      </h3>
+      <p class="text-gray-600 text-sm leading-relaxed">
+        建議：MIA 取車、MCO 還車（one-way）。Miami 停車貴、Orlando 樂園停車固定；3/12 去 KSC 建議早到搶 Bus Tour。
+      </p>
     </div>
+  </main>
 
-  </div>
-</section>
-
-<!-- ================= EXPENSES ================= -->
-<section class="bg-slate-800 rounded-xl p-4">
-  <h2 class="font-semibold text-lg mb-4">💰 多人分帳</h2>
-
-  <!-- People -->
-  <div class="flex gap-2 mb-4">
-    <input id="personName" class="bg-slate-700 p-2 rounded text-sm" placeholder="新增成員"/>
-    <button onclick="addPerson()" class="bg-indigo-600 px-3 rounded">新增</button>
-  </div>
-
-  <ul id="peopleList" class="text-sm mb-6 space-y-1"></ul>
-
-  <!-- Add Expense -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-4">
-    <input id="expenseTitle" placeholder="項目" class="bg-slate-700 p-2 rounded text-sm"/>
-    <input id="expenseAmount" placeholder="金額" type="number" class="bg-slate-700 p-2 rounded text-sm"/>
-    <select id="expensePayer" class="bg-slate-700 p-2 rounded text-sm"></select>
-    <button onclick="addExpense()" class="bg-green-600 rounded">新增支出</button>
-  </div>
-
-  <!-- Expense List -->
-  <ul id="expenseList" class="text-sm space-y-2 mb-6"></ul>
-
-  <!-- Settlement -->
-  <div class="bg-slate-700 p-3 rounded text-sm">
-    <h3 class="font-semibold mb-2">📊 結算結果</h3>
-    <ul id="settlement"></ul>
-  </div>
-</section>
-
-<p class="text-xs text-slate-400 text-right">Last updated: 2026-02-10</p>
-
-</main>
-
-<!-- ================= SCRIPT ================= -->
 <script>
-/* -------- Day toggle -------- */
-function toggleDay(btn) {
-  const content = btn.nextElementSibling;
-  content.classList.toggle("hidden");
-  btn.querySelector("i").classList.toggle("fa-chevron-down");
-  btn.querySelector("i").classList.toggle("fa-chevron-up");
-}
+  // ===== Trip config =====
+  const TRIP_YEAR = 2026;
+  const LAST_UPDATED_ISO = "2026-02-10T00:00:00-06:00";
 
-/* -------- Expenses (Multi-person) -------- */
-const people = [];
-const expenses = [];
+  // ===== Data (8 days) =====
+  const tripData = {
+    days: [
+      {
+        id: "d1", month: 3, day: 7, label: "3/07 (Sat)",
+        title: "SAT → 邁阿密（MIA）＋南海灘",
+        reminders: [
+          { level: "important", text: "抵達 MIA 後取車；Miami 停車偏貴，住宿盡量找含停車" },
+          { level: "info", text: "晚上 South Beach + Ocean Drive 散步" }
+        ],
+        stops: [
+          { start:"12:00", end:"14:00", name:"飛行：SAT → MIA", address:"SAT → MIA", map:"https://maps.google.com/?q=Miami+International+Airport", note:"時段可依你的航班調整（這裡先放範例）。" },
+          { travel:"30–60 min", start:"14:00", end:"15:00", name:"MIA 取車＋前往住宿", address:"Miami International Airport, 2100 NW 42nd Ave, Miami, FL 33142", phone:"+1 305-876-7000", map:"https://maps.google.com/?q=Miami+International+Airport", note:"確認 toll（電子收費）設定。" },
+          { travel:"20–30 min", start:"17:30", end:"20:30", name:"South Beach 南海灘＋Ocean Drive", address:"Ocean Dr, Miami Beach, FL 33139", map:"https://maps.google.com/?q=South+Beach+Miami", note:"夕陽散步＋晚餐；留意停車費。" }
+        ]
+      },
+      {
+        id: "d2", month: 3, day: 8, label: "3/08 (Sun)",
+        title: "大沼澤 Everglades（Shark Valley）",
+        reminders: [
+          { level: "important", text: "防曬＋水＋帽子；早到比較不排隊" }
+        ],
+        stops: [
+          { start:"09:00", end:"12:30", name:"Shark Valley Visitor Center", address:"36000 SW 8th St, Miami, FL 33194", phone:"+1 305-221-8776", map:"https://maps.google.com/?q=Shark+Valley+Visitor+Center", note:"可租腳踏車或搭 Tram；很容易看到鱷魚。" },
+          { travel:"45–70 min", start:"16:00", end:"18:30", name:"回 Miami 自由活動（Little Havana 可選）", address:"Little Havana, Miami, FL", map:"https://maps.google.com/?q=Little+Havana+Miami", note:"咖啡＋古巴風情街區。" }
+        ]
+      },
+      {
+        id: "d3", month: 3, day: 9, label: "3/09 (Mon)",
+        title: "墨西哥灣暖流（Gulf Stream）體驗＋開去奧蘭多",
+        reminders: [
+          { level: "important", text: "今天移動較多：建議早出發，晚上抵達 Orlando" },
+          { level: "info", text: "Gulf Stream 最有感通常是 Palm Beach/Jupiter 一帶的海上活動" }
+        ],
+        stops: [
+          { start:"09:00", end:"10:30", name:"自駕：Miami → West Palm Beach", address:"Miami to West Palm Beach", map:"https://maps.google.com/?q=Miami+to+West+Palm+Beach", note:"車程約 1.5 小時（看交通）。" },
+          { travel:"15–25 min", start:"11:30", end:"14:30", name:"Gulf Stream 近海體驗（浮潛/出海，擇一）", address:"Phil Foster Park / Peanut Island（Palm Beach）", map:"https://maps.google.com/?q=Phil+Foster+Park", note:"如果你指的是 Gulfstream Park（賽馬場/娛樂城），可改 Hallandale Beach。" },
+          { travel:"2.5–3 hr", start:"16:30", end:"19:30", name:"自駕：West Palm Beach → Orlando", address:"West Palm Beach to Orlando", map:"https://maps.google.com/?q=West+Palm+Beach+to+Orlando", note:"抵達後入住，為隔天樂園做準備。" }
+        ]
+      },
+      {
+        id: "d4", month: 3, day: 10, label: "3/10 (Tue)",
+        title: "環球影城 Universal Orlando（玩整天）",
+        reminders: [
+          { level: "important", text: "想搭霍格華茲特快車需 Park-to-Park 票" },
+          { level: "important", text: "建議開園就到（排隊差很多）" }
+        ],
+        stops: [
+          { start:"09:00", end:"19:00", name:"Universal Orlando Resort（Studios + Islands of Adventure）", address:"6000 Universal Blvd, Orlando, FL 32819", phone:"+1 407-363-8000", map:"https://www.universalorlando.com/web/en/us", note:"兩園一日行程（可依需求調整）。" }
+        ]
+      },
+      {
+        id: "d5", month: 3, day: 11, label: "3/11 (Wed)",
+        title: "Epic Universe（玩整天）",
+        reminders: [
+          { level: "important", text: "新園區人潮很猛：rope drop（開園衝第一波）" }
+        ],
+        stops: [
+          { start:"09:00", end:"19:00", name:"Universal Epic Universe", address:"Orlando, FL", map:"https://www.universalorlando.com/web/en/us/theme-parks/epic-universe", note:"先排必玩：任天堂/魔法部等。" }
+        ]
+      },
+      {
+        id: "d6", month: 3, day: 12, label: "3/12 (Thu)",
+        title: "肯尼迪航天中心 KSC（固定 3/12）",
+        reminders: [
+          { level: "important", text: "Bus Tour 可能額滿：越早到越好" }
+        ],
+        stops: [
+          { start:"08:30", end:"09:30", name:"自駕：Orlando → Kennedy Space Center", address:"Orlando to Merritt Island", map:"https://maps.google.com/?q=Orlando+to+Kennedy+Space+Center", note:"車程約 1 小時（看交通）。" },
+          { start:"10:00", end:"17:00", name:"Kennedy Space Center Visitor Complex", address:"Space Commerce Way, Merritt Island, FL 32953", phone:"+1 855-433-4210", map:"https://www.kennedyspacecenter.com/", note:"Rocket Garden / Atlantis / Bus Tour（先搶 Bus Tour）。" },
+          { travel:"1 hr", start:"17:30", end:"18:30", name:"回 Orlando", address:"Orlando, FL", map:"https://maps.google.com/?q=Orlando", note:"晚餐＋休息。" }
+        ]
+      },
+      {
+        id: "d7", month: 3, day: 13, label: "3/13 (Fri)",
+        title: "Silver Springs（玻璃船/清泉）一日",
+        reminders: [
+          { level: "important", text: "帶防蚊液；清泉區早晚溫差可帶薄外套" }
+        ],
+        stops: [
+          { start:"09:00", end:"10:30", name:"自駕：Orlando → Silver Springs State Park", address:"1425 NE 58th Ave, Ocala, FL 34470", phone:"+1 352-236-7148", map:"https://maps.google.com/?q=Silver+Springs+State+Park", note:"車程約 1.5 小時。" },
+          { start:"11:00", end:"14:00", name:"Glass Bottom Boat（玻璃船，建議）", address:"Silver Springs State Park", map:"https://maps.google.com/?q=Silver+Springs+Glass+Bottom+Boat", note:"依當天班次調整；也可加步道/划船。" },
+          { travel:"1.5 hr", start:"16:00", end:"17:30", name:"回 Orlando（整理行李）", address:"Orlando, FL", map:"https://maps.google.com/?q=Orlando", note:"明天要飛，建議早睡。" }
+        ]
+      },
+      {
+        id: "d8", month: 3, day: 14, label: "3/14 (Sat)",
+        title: "MCO → SAT 回程（還車＋登機）",
+        reminders: [
+          { level: "important", text: "還車＋安檢要留緩衝（建議起飛前 2.5～3 小時到機場）" }
+        ],
+        stops: [
+          { start:"09:30", end:"11:00", name:"Orlando International Airport（MCO）還車＋辦理登機", address:"1 Jeff Fuqua Blvd, Orlando, FL 32827", phone:"+1 407-825-2001", map:"https://maps.google.com/?q=Orlando+International+Airport", note:"如果你最後要從 MIA 飛回，也可把這天改 Orlando → Miami 早移動。" },
+          { start:"12:00", end:"14:30", name:"飛行：MCO → SAT", address:"MCO → SAT", map:"https://maps.google.com/?q=San+Antonio+International+Airport", note:"時段依你的航班調整（這裡先放範例）。" }
+        ]
+      }
+    ]
+  };
 
-function addPerson() {
-  const name = document.getElementById("personName").value.trim();
-  if (!name) return;
-  people.push(name);
-  document.getElementById("personName").value = "";
-  renderPeople();
-  renderPayerOptions();
-}
+  // ===== Helpers =====
+  function pad2(n){ return String(n).padStart(2,'0'); }
+  function formatLastUpdated() {
+    try {
+      const d = new Date(LAST_UPDATED_ISO);
+      return `最後更新：${d.getFullYear()}/${pad2(d.getMonth()+1)}/${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+    } catch { return "最後更新：—"; }
+  }
+  function getTodayKey() {
+    const now = new Date();
+    return { year: now.getFullYear(), month: now.getMonth()+1, day: now.getDate() };
+  }
+  function sameDate(a,b){ return a.year===b.year && a.month===b.month && a.day===b.day; }
+  function dayKeyObj(dayObj){ return {year: TRIP_YEAR, month: dayObj.month, day: dayObj.day}; }
 
-function renderPeople() {
-  const ul = document.getElementById("peopleList");
-  ul.innerHTML = people.map(p => `<li>👤 ${p}</li>`).join("");
-}
+  function minutesBetween(start, end) {
+    const [sh, sm] = start.split(":").map(Number);
+    const [eh, em] = end.split(":").map(Number);
+    return (eh*60+em) - (sh*60+sm);
+  }
+  function humanMins(mins){
+    if (!Number.isFinite(mins) || mins<=0) return "";
+    return `${mins} 分鐘`;
+  }
 
-function renderPayerOptions() {
-  const sel = document.getElementById("expensePayer");
-  sel.innerHTML = people.map(p => `<option value="${p}">${p}</option>`).join("");
-}
+  function buildDayText(dayObj) {
+    const lines = [];
+    lines.push(`${dayObj.label} · ${dayObj.title}`);
+    lines.push(`- 重點提醒：`);
+    (dayObj.reminders||[]).forEach(r => lines.push(`  • ${r.level==="important" ? "IMPORTANT" : "INFO"}：${r.text}`));
+    lines.push("");
+    (dayObj.stops||[]).forEach(s => {
+      if (s.travel) lines.push(`🚗 交通時間：${s.travel}`);
+      if (s.start && s.end) lines.push(`${s.start}-${s.end} ${s.name}`);
+      else lines.push(`${s.name}`);
+      if (s.address) lines.push(`  📍 ${s.address}`);
+      if (s.map) lines.push(`  🗺 ${s.map}`);
+      if (s.phone) lines.push(`  ☎ ${s.phone}`);
+      if (s.note) lines.push(`  📝 ${s.note}`);
+      lines.push("");
+    });
+    return lines.join("\n").trim();
+  }
 
-function addExpense() {
-  const title = expenseTitle.value;
-  const amount = parseFloat(expenseAmount.value);
-  const payer = expensePayer.value;
-  if (!title || !amount || !payer) return;
+  async function copyTextToClipboard(text) {
+    await navigator.clipboard.writeText(text);
+  }
 
-  expenses.push({ title, amount, payer });
-  expenseTitle.value = "";
-  expenseAmount.value = "";
-  renderExpenses();
-  calculateSettlement();
-}
+  function getTodayOrFirstTripDay() {
+    const today = getTodayKey();
+    const match = tripData.days.find(d => sameDate(today, dayKeyObj(d)));
+    return match || tripData.days[0];
+  }
 
-function renderExpenses() {
-  const ul = document.getElementById("expenseList");
-  ul.innerHTML = expenses.map(e =>
-    `<li>💸 ${e.title} — $${e.amount}（${e.payer} 付）</li>`
-  ).join("");
-}
+  // ===== Render days =====
+  function renderDays() {
+    const today = getTodayKey();
+    const container = document.getElementById("daysContainer");
+    container.innerHTML = "";
 
-function calculateSettlement() {
-  const total = expenses.reduce((s, e) => s + e.amount, 0);
-  const perPerson = total / people.length;
+    tripData.days.forEach((d, idx) => {
+      const isToday = sameDate(today, dayKeyObj(d));
+      const expandedByDefault = isToday || idx === 0;
 
-  const paid = {};
-  people.forEach(p => paid[p] = 0);
-  expenses.forEach(e => paid[e.payer] += e.amount);
+      const dayCard = document.createElement("div");
+      dayCard.className = `bg-white rounded-3xl shadow-sm border p-0 relative overflow-hidden ${isToday ? "border-amber-300 ring-2 ring-amber-200" : "border-slate-100"}`;
 
-  const ul = document.getElementById("settlement");
-  ul.innerHTML = "";
+      const header = document.createElement("button");
+      header.type = "button";
+      header.className = "w-full text-left p-5 hover:bg-indigo-50 transition flex items-start justify-between gap-3";
+      header.innerHTML = `
+        <div class="relative z-10">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">${d.label}</span>
+            ${isToday ? `<span class="text-[11px] bg-amber-100 text-amber-800 px-2 py-1 rounded-full"><i class="fa-solid fa-star"></i> Today</span>` : ""}
+          </div>
+          <h3 class="text-xl font-bold text-slate-800">${d.title}</h3>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full">
+              <i class="fa-solid fa-location-dot"></i> ${(d.stops||[]).length} stops
+            </span>
+          </div>
+        </div>
 
-  people.forEach(p => {
-    const diff = paid[p] - perPerson;
-    if (diff > 0) {
-      ul.innerHTML += `<li>${p} 應收 $${diff.toFixed(2)}</li>`;
-    } else if (diff < 0) {
-      ul.innerHTML += `<li>${p} 應付 $${(-diff).toFixed(2)}</li>`;
+        <div class="shrink-0 flex items-center gap-2">
+          <button class="copyDayBtn bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl px-3 py-2 text-sm" data-dayid="${d.id}" type="button">
+            <i class="fa-solid fa-copy"></i> 複製本日
+          </button>
+          <div class="text-indigo-700 font-semibold text-sm">
+            <span class="dayToggleText">${expandedByDefault ? "收合" : "展開"}</span>
+            <i class="fa-solid fa-chevron-down ml-2 transition-transform dayChevron ${expandedByDefault ? "rotate-180" : ""}"></i>
+          </div>
+        </div>
+      `;
+
+      const body = document.createElement("div");
+      body.className = `px-5 pb-5 ${expandedByDefault ? "" : "hidden"}`;
+
+      const reminderBox = document.createElement("div");
+      reminderBox.className = `mt-3 rounded-2xl border p-4 ${isToday ? "bg-amber-50 border-amber-200" : "bg-indigo-50 border-indigo-100"}`;
+      reminderBox.innerHTML = `
+        <div class="font-bold text-indigo-900 mb-2 flex items-center gap-2">
+          <i class="fa-solid fa-bell"></i> 重點提醒
+        </div>
+        <ul class="text-sm space-y-2">
+          ${(d.reminders || []).map(r => {
+            const isImp = r.level === "important";
+            return `
+              <li class="flex gap-2 items-start">
+                <span class="mt-2 inline-block w-2 h-2 rounded-full ${isImp ? "bg-amber-500" : "bg-indigo-500"}"></span>
+                <span class="inline-block px-2 py-[2px] rounded text-[11px] font-bold ${isImp ? "bg-amber-200 text-amber-900" : "bg-indigo-200 text-indigo-900"}">
+                  ${isImp ? "IMPORTANT" : "INFO"}
+                </span>
+                <span class="${isImp ? "font-semibold text-amber-900" : "text-slate-700"}">${r.text}</span>
+              </li>
+            `;
+          }).join("")}
+        </ul>
+      `;
+
+      const stopsWrap = document.createElement("div");
+      stopsWrap.className = "mt-4 space-y-3";
+
+      (d.stops||[]).forEach((s) => {
+        if (s.travel) {
+          const travel = document.createElement("div");
+          travel.className = "flex items-center gap-2 text-xs text-gray-500 pl-2";
+          travel.innerHTML = `<i class="fa-solid fa-car-side text-gray-400"></i> <span class="font-semibold">交通時間:</span> <span>${s.travel}</span>`;
+          stopsWrap.appendChild(travel);
+        }
+
+        const stayMins = (s.start && s.end) ? minutesBetween(s.start, s.end) : null;
+        const stopCard = document.createElement("div");
+        stopCard.className = "bg-white rounded-2xl border border-slate-100 shadow-sm p-4";
+
+        const mapBtn = s.map ? `<a href="${s.map}" target="_blank" class="text-indigo-700 font-semibold hover:underline"><i class="fa-solid fa-location-dot"></i> 一鍵開地圖</a>` : "";
+        const phoneLine = s.phone ? `
+          <div class="text-xs text-gray-600">
+            <span class="font-semibold">電話:</span>
+            <a href="tel:${String(s.phone).replace(/\s/g,'')}" class="text-indigo-700 hover:underline">${s.phone}</a>
+          </div>` : "";
+
+        stopCard.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <div class="text-xs text-gray-500">
+                ${s.start && s.end ? `<span class="font-semibold">${s.start}–${s.end}</span> ${stayMins ? `· ${humanMins(stayMins)}` : ""}` : ""}
+              </div>
+              <div class="font-bold text-indigo-900">${s.name}</div>
+            </div>
+            <div class="text-xs">${mapBtn}</div>
+          </div>
+
+          ${s.note ? `<div class="mt-2 text-sm text-gray-700"><span class="font-semibold text-slate-500">備註:</span> ${s.note}</div>` : ""}
+
+          <div class="mt-2 text-xs text-gray-600 space-y-1">
+            ${s.address ? `<div><span class="font-semibold">地址:</span> ${s.address}</div>` : ""}
+            ${phoneLine}
+          </div>
+        `;
+        stopsWrap.appendChild(stopCard);
+      });
+
+      body.appendChild(reminderBox);
+      body.appendChild(stopsWrap);
+
+      header.addEventListener("click", (ev) => {
+        if (ev.target.closest(".copyDayBtn")) return;
+        const isHidden = body.classList.contains("hidden");
+        body.classList.toggle("hidden", !isHidden);
+        header.querySelector(".dayToggleText").innerText = isHidden ? "收合" : "展開";
+        header.querySelector(".dayChevron").classList.toggle("rotate-180", isHidden);
+      });
+
+      dayCard.appendChild(header);
+      dayCard.appendChild(body);
+      container.appendChild(dayCard);
+    });
+
+    container.querySelectorAll(".copyDayBtn").forEach(btn => {
+      btn.addEventListener("click", async (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const dayId = btn.getAttribute("data-dayid");
+        const dayObj = tripData.days.find(x => x.id === dayId);
+        if (!dayObj) return;
+        await copyTextToClipboard(buildDayText(dayObj));
+        alert("已複製！");
+      });
+    });
+  }
+
+  // ===== Multi-split expenses (Splitwise-like, partial participants) =====
+  const SPLIT_LS_KEY = "trip_split_v2";
+
+  function loadSplitState() {
+    try {
+      const raw = localStorage.getItem(SPLIT_LS_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return {
+      currency: "USD",
+      members: ["Me"],
+      expenses: [] // {id, dayId, amount, payer, splitWith[], category, note, ts}
+    };
+  }
+
+  function saveSplitState(state) {
+    try { localStorage.setItem(SPLIT_LS_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function uid() {
+    return Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+  }
+
+  function money(n) {
+    const v = Number(n || 0);
+    return (Math.round(v * 100) / 100).toFixed(2);
+  }
+
+  function renderSplitUI() {
+    const state = loadSplitState();
+
+    // day options
+    const expDay = document.getElementById("expDay");
+    expDay.innerHTML = tripData.days.map(d => `<option value="${d.id}">${d.label} · ${d.title}</option>`).join("");
+
+    // payer options
+    const expPayer = document.getElementById("expPayer");
+    expPayer.innerHTML = state.members.map(m => `<option value="${m}">${m}</option>`).join("");
+
+    // members chips
+    const membersList = document.getElementById("membersList");
+    membersList.innerHTML = state.members.map(m => `
+      <span class="bg-indigo-50 border border-indigo-200 text-indigo-900 px-3 py-1 rounded-full text-sm flex items-center gap-2">
+        ${m}
+        ${state.members.length > 1 ? `<button class="removeMemberBtn text-indigo-700 hover:text-red-600" data-name="${m}" title="remove">✕</button>` : ""}
+      </span>
+    `).join("");
+
+    // splitWith checkboxes (default: all checked)
+    const splitBox = document.getElementById("splitWithBox");
+    splitBox.innerHTML = state.members.map(m => `
+      <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-full px-3 py-1 text-sm cursor-pointer">
+        <input type="checkbox" class="splitWithChk" value="${m}" checked>
+        <span>${m}</span>
+      </label>
+    `).join("");
+
+    // expense list
+    const list = document.getElementById("expenseList");
+    list.innerHTML = state.expenses
+      .slice()
+      .sort((a,b)=> (b.ts||0)-(a.ts||0))
+      .map(e => {
+        const dayObj = tripData.days.find(d => d.id === e.dayId);
+        const dayLabel = dayObj ? dayObj.label : e.dayId;
+        return `
+          <div class="border border-slate-200 rounded-xl p-3 flex items-start justify-between gap-2">
+            <div>
+              <div class="text-xs text-gray-500">${dayLabel} · ${e.category}</div>
+              <div class="font-semibold text-slate-800">${e.payer} 付 ${state.currency} ${money(e.amount)}</div>
+              <div class="text-xs text-gray-600">分攤：${(e.splitWith||[]).join(", ") || "—"}</div>
+              ${e.note ? `<div class="text-xs text-gray-600 mt-1">備註：${e.note}</div>` : ""}
+            </div>
+            <button class="removeExpenseBtn text-sm text-red-600 hover:underline" data-id="${e.id}">刪除</button>
+          </div>
+        `;
+      }).join("");
+
+    renderSettlement(state);
+
+    // wire remove member
+    membersList.querySelectorAll(".removeMemberBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const name = btn.dataset.name;
+        const st = loadSplitState();
+        if (st.members.length <= 1) return;
+
+        st.members = st.members.filter(x => x !== name);
+        st.expenses = st.expenses.filter(e => e.payer !== name && !(e.splitWith||[]).includes(name));
+        saveSplitState(st);
+        renderSplitUI();
+      });
+    });
+
+    // wire remove expense
+    list.querySelectorAll(".removeExpenseBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.id;
+        const st = loadSplitState();
+        st.expenses = st.expenses.filter(e => e.id !== id);
+        saveSplitState(st);
+        renderSplitUI();
+      });
+    });
+  }
+
+  function computeBalances(state) {
+    // balance > 0 means should receive; < 0 means owes
+    const bal = {};
+    state.members.forEach(m => bal[m] = 0);
+
+    for (const e of state.expenses) {
+      const amt = Number(e.amount || 0);
+      const payer = e.payer;
+      const splitWith = (e.splitWith && e.splitWith.length) ? e.splitWith : [];
+      const people = splitWith.length;
+
+      if (!(payer in bal)) bal[payer] = 0;
+      bal[payer] += amt;
+
+      if (people > 0) {
+        const share = amt / people;
+        for (const p of splitWith) {
+          if (!(p in bal)) bal[p] = 0;
+          bal[p] -= share;
+        }
+      }
     }
-  });
-}
-</script>
 
+    for (const k of Object.keys(bal)) bal[k] = Math.round(bal[k] * 100) / 100;
+    return bal;
+  }
+
+  function suggestTransfers(balances) {
+    const creditors = [];
+    const debtors = [];
+    for (const [name, val] of Object.entries(balances)) {
+      if (val > 0.009) creditors.push([name, val]);
+      else if (val < -0.009) debtors.push([name, -val]);
+    }
+    creditors.sort((a,b)=> b[1]-a[1]);
+    debtors.sort((a,b)=> b[1]-a[1]);
+
+    const transfers = [];
+    let i=0, j=0;
+    while (i < debtors.length && j < creditors.length) {
+      const [dName, dAmt] = debtors[i];
+      const [cName, cAmt] = creditors[j];
+      const pay = Math.min(dAmt, cAmt);
+
+      transfers.push({ from: dName, to: cName, amount: Math.round(pay*100)/100 });
+
+      debtors[i][1] = Math.round((dAmt - pay)*100)/100;
+      creditors[j][1] = Math.round((cAmt - pay)*100)/100;
+
+      if (debtors[i][1] <= 0.009) i++;
+      if (creditors[j][1] <= 0.009) j++;
+    }
+    return transfers;
+  }
+
+  function renderSettlement(state) {
+    const balances = computeBalances(state);
+    const transfers = suggestTransfers(balances);
+    const box = document.getElementById("settlementList");
+
+    if (!state.expenses.length) {
+      box.innerHTML = `<div class="text-gray-500">目前還沒有花費明細。</div>`;
+      return;
+    }
+
+    const currency = state.currency || "USD";
+    const lines = [];
+    lines.push(`<div class="text-xs text-gray-500 mb-2">正數＝應收 / 負數＝應付（每筆依「分攤對象」平均分）</div>`);
+    lines.push(`<div class="text-sm">${Object.entries(balances).map(([n,v]) => `${n}: <b>${currency} ${money(v)}</b>`).join(" · ")}</div>`);
+    lines.push(`<div class="mt-2 font-semibold">建議轉帳：</div>`);
+
+    if (!transfers.length) {
+      lines.push(`<div class="text-emerald-700 font-semibold">已結清 ✅</div>`);
+    } else {
+      lines.push(`<ul class="list-disc pl-5 space-y-1">` + transfers.map(tr =>
+        `<li><b>${tr.from}</b> → <b>${tr.to}</b>：${currency} ${money(tr.amount)}</li>`
+      ).join("") + `</ul>`);
+    }
+
+    box.innerHTML = lines.join("");
+  }
+
+  function initSplitHandlers() {
+    document.getElementById("addMemberBtn").addEventListener("click", () => {
+      const name = (document.getElementById("memberNameInput").value || "").trim();
+      if (!name) return;
+
+      const st = loadSplitState();
+      if (st.members.includes(name)) return;
+
+      st.members.push(name);
+      saveSplitState(st);
+      document.getElementById("memberNameInput").value = "";
+      renderSplitUI();
+    });
+
+    document.getElementById("addExpenseBtn").addEventListener("click", () => {
+      const st = loadSplitState();
+
+      const amount = Number(document.getElementById("expAmount").value || 0);
+      const payer = document.getElementById("expPayer").value;
+      const category = document.getElementById("expCategory").value;
+      const dayId = document.getElementById("expDay").value;
+      const note = (document.getElementById("expNote").value || "").trim();
+
+      const splitWith = Array.from(document.querySelectorAll(".splitWithChk"))
+        .filter(chk => chk.checked)
+        .map(chk => chk.value);
+
+      if (!amount || amount <= 0) return alert("請填金額");
+      if (!payer) return alert("請選付款人");
+      if (!splitWith.length) return alert("至少勾選一位分攤對象");
+
+      st.expenses.push({
+        id: uid(),
+        dayId,
+        amount,
+        payer,
+        splitWith,
+        category,
+        note,
+        ts: Date.now()
+      });
+
+      saveSplitState(st);
+
+      document.getElementById("expAmount").value = "";
+      document.getElementById("expNote").value = "";
+      renderSplitUI();
+    });
+  }
+
+  // ===== Expenses accordion =====
+  function initExpensesAccordion() {
+    const btn = document.getElementById("toggleExpensesBtn");
+    const panel = document.getElementById("expensesPanel");
+    const label = document.getElementById("toggleExpensesLabel");
+
+    btn.addEventListener("click", () => {
+      const open = panel.classList.contains("hidden");
+      panel.classList.toggle("hidden");
+      label.innerText = open ? "收合" : "展開";
+    });
+  }
+
+  // ===== Copy today =====
+  function initCopyToday() {
+    document.getElementById("copyTodayBtn").addEventListener("click", async () => {
+      const d = getTodayOrFirstTripDay();
+      await copyTextToClipboard(buildDayText(d));
+      alert("已複製今天行程！");
+    });
+  }
+
+  // ===== Init =====
+  document.getElementById("lastUpdatedBadge").innerText = formatLastUpdated();
+  renderDays();
+  initCopyToday();
+
+  initExpensesAccordion();
+  initSplitHandlers();
+  renderSplitUI();
+</script>
 </body>
 </html>
