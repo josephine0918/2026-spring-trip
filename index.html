@@ -16,8 +16,8 @@
     <nav class="bg-indigo-900 text-white p-4 sticky top-0 z-50 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <div>
-                <h1 class="font-bold text-lg tracking-tight">FL Spring Trip 2026 🌴</h1>
-                <p class="text-[10px] text-indigo-300 italic">March 06 - March 13</p>
+                <h1 class="font-bold text-lg tracking-tight"><span id="nav-title">FL Spring Trip 2026 🌴</span></h1>
+                <p class="text-[10px] text-indigo-300 italic"><span id="nav-subtitle">March 06 - March 13</span></p>
             </div>
             <div class="flex items-center gap-3">
                 <select id="langSelect" onchange="switchLang(this.value)" class="bg-indigo-800 text-white text-sm rounded-lg p-2 outline-none border border-indigo-700 cursor-pointer focus:ring-2 focus:ring-sky-400">
@@ -35,8 +35,7 @@
     </nav>
 
     <div class="w-full h-80 md:h-96 bg-gray-200 border-b-4 border-indigo-900 shadow-inner">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3547942.502941093!2d-82.44971865!3d27.994402399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-TW!2sus!4v1700000000000" 
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <iframe id="mapFrame" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3547942.502941093!2d-82.44971865!3d27.994402399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-TW!2sus!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
 
     <main class="container mx-auto px-4 py-10 max-w-2xl relative">
@@ -54,6 +53,11 @@
     <script>
         const translations = {
             zh: {
+                page_title: "Florida Spring Trip 2026 | Josephine",
+                nav_title: "FL Spring Trip 2026 🌴",
+                nav_subtitle: "March 06 - March 13",
+                share_placeholder: "貼上 GitHub Pages 連結（或留空=複製目前頁面）",
+
                 share_msg: "網址已複製！",
                 footer_title: "租車與交通提醒",
                 footer_desc: "建議從奧蘭多 (MCO) 取車，最後在邁阿密 (MIA) 還車。3/13 結束後直接從邁阿密飛回聖安東尼奧 (SAT) 最方便！",
@@ -70,6 +74,11 @@
                 ]
             },
             en: {
+                page_title: "Florida Spring Trip 2026 | Josephine",
+                nav_title: "FL Spring Trip 2026 🌴",
+                nav_subtitle: "March 06 - March 13",
+                share_placeholder: "Paste GitHub Pages link (or leave blank to copy this page)",
+
                 share_msg: "Link Copied!",
                 footer_title: "Rental & Transport",
                 footer_desc: "MCO Pick-up, MIA Drop-off. Fly back to SAT from MIA on 3/13 is recommended.",
@@ -86,6 +95,11 @@
                 ]
             },
             vi: {
+                page_title: "Chuyến đi Florida Mùa Xuân 2026 | Josephine",
+                nav_title: "FL Spring Trip 2026 🌴",
+                nav_subtitle: "06 Mar - 13 Mar",
+                share_placeholder: "Dán link GitHub Pages (hoặc để trống để copy trang này)",
+
                 share_msg: "Đã sao chép liên kết!",
                 footer_title: "Thuê xe & Di chuyển",
                 footer_desc: "Nhận xe tại MCO, trả tại MIA. Bay về San Antonio từ MIA vào ngày 3/13.",
@@ -102,6 +116,11 @@
                 ]
             },
             ko: {
+                page_title: "플로리다 봄 여행 2026 | Josephine",
+                nav_title: "FL Spring Trip 2026 🌴",
+                nav_subtitle: "3월 6일 - 3월 13일",
+                share_placeholder: "GitHub Pages 링크를 붙여넣기 (비우면 현재 페이지 링크 복사)",
+
                 share_msg: "링크가 복사되었습니다!",
                 footer_title: "렌터카 및 교통",
                 footer_desc: "MCO 대여, MIA 반납 권장. 3/13 MIA에서 샌안토니오행 추천.",
@@ -118,6 +137,11 @@
                 ]
             },
             es: {
+                page_title: "Viaje de Primavera Florida 2026 | Josephine",
+                nav_title: "FL Spring Trip 2026 🌴",
+                nav_subtitle: "06 Mar - 13 Mar",
+                share_placeholder: "Pega el enlace de GitHub Pages (o déjalo vacío para copiar esta página)",
+
                 share_msg: "¡Enlace copiado!",
                 footer_title: "Alquiler y Transporte",
                 footer_desc: "Recogida en MCO, devolución en MIA. Vuelo MIA a SAT el 3/13.",
@@ -137,6 +161,28 @@
 
         function switchLang(lang) {
             const data = translations[lang] || translations['zh'];
+
+            // Update page-level strings
+            document.title = data.page_title || document.title;
+            const navTitle = document.getElementById('nav-title');
+            const navSubtitle = document.getElementById('nav-subtitle');
+            if (navTitle && data.nav_title) navTitle.innerText = data.nav_title;
+            if (navSubtitle && data.nav_subtitle) navSubtitle.innerText = data.nav_subtitle;
+
+            const shareInput = document.getElementById('shareUrl');
+            if (shareInput && data.share_placeholder) shareInput.placeholder = data.share_placeholder;
+
+            // Update <html lang="">
+            const langMap = { zh: "zh-TW", en: "en", vi: "vi", ko: "ko", es: "es" };
+            document.documentElement.lang = langMap[lang] || "zh-TW";
+
+            // Update Google Map embed language (best-effort)
+            const frame = document.getElementById('mapFrame');
+            if (frame && frame.src) {
+                const target = langMap[lang] || "zh-TW";
+                // Replace the "!1s<lang>!" segment inside embed URL
+                frame.src = frame.src.replace(/!1s[^!]+!/, `!1s${target}!`);
+            }
             document.getElementById('footer-title').innerText = data.footer_title;
             document.getElementById('footer-desc').innerText = data.footer_desc;
             const container = document.getElementById('itinerary-list');
@@ -164,11 +210,18 @@
             });
         }
         function shareLink() {
-            navigator.clipboard.writeText(window.location.href);
-            const currentLang = document.getElementById('langSelect').value;
-            alert(translations[currentLang].share_msg);
+            const input = document.getElementById('shareUrl');
+            const url = (input && input.value && input.value.trim()) ? input.value.trim() : window.location.href;
+            navigator.clipboard.writeText(url);
+
+            const currentLang = document.getElementById('langSelect').value || 'zh';
+            const msg = (translations[currentLang] && translations[currentLang].share_msg) ? translations[currentLang].share_msg : translations['en'].share_msg;
+            alert(msg);
         }
-        switchLang('zh');
+        switchLang(document.getElementById('langSelect').value || 'zh');
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
