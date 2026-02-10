@@ -1,227 +1,1146 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Florida Spring Trip 2026 | Josephine</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        iframe { pointer-events: auto; }
-        .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #e2e8f0; z-index: 0; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Florida Trip 2026 | Josephine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    iframe { pointer-events: auto; }
+    .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #e2e8f0; z-index: 0; }
+  </style>
 </head>
+
 <body class="bg-slate-50 text-gray-900 font-sans">
 
-    <nav class="bg-indigo-900 text-white p-4 sticky top-0 z-50 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <div>
-                <h1 class="font-bold text-lg tracking-tight"><span id="nav-title">FL Spring Trip 2026 🌴</span></h1>
-                <p class="text-[10px] text-indigo-300 italic"><span id="nav-subtitle">March 06 - March 13</span></p>
-            </div>
-            <div class="flex items-center gap-3">
-                <select id="langSelect" onchange="switchLang(this.value)" class="bg-indigo-800 text-white text-sm rounded-lg p-2 outline-none border border-indigo-700 cursor-pointer focus:ring-2 focus:ring-sky-400">
-                    <option value="zh">繁體中文</option>
-                    <option value="en">English</option>
-                    <option value="vi">Tiếng Việt</option>
-                    <option value="ko">한국어</option>
-                    <option value="es">Español</option>
-                </select>
-                <button onclick="shareLink()" class="bg-indigo-600 hover:bg-indigo-500 p-2 rounded-lg text-sm transition">
-                    <i class="fa-solid fa-share-nodes"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
+  <!-- ===== Nav ===== -->
+  <nav class="bg-indigo-900 text-white p-4 sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto flex flex-wrap justify-between items-center gap-3">
+      <div>
+        <h1 class="font-bold text-lg tracking-tight"><span id="nav-title">Florida Trip 2026 🌴</span></h1>
+        <p class="text-[10px] text-indigo-300 italic"><span id="nav-subtitle">March 07 - March 14</span></p>
+      </div>
 
-    <div class="w-full h-80 md:h-96 bg-gray-200 border-b-4 border-indigo-900 shadow-inner">
-        <iframe id="mapFrame" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3547942.502941093!2d-82.44971865!3d27.994402399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-TW!2sus!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      <div class="flex items-center gap-2">
+        <select id="langSelect" class="bg-indigo-800 text-white text-sm rounded-lg p-2 outline-none border border-indigo-700 cursor-pointer focus:ring-2 focus:ring-sky-400">
+          <option value="zh">繁體中文</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="ko">한국어</option>
+          <option value="vi">Tiếng Việt</option>
+        </select>
+
+        <button id="copyTodayBtn" class="bg-emerald-600 hover:bg-emerald-500 p-2 rounded-lg text-sm transition">
+          <i class="fa-solid fa-copy"></i> <span id="copyTodayLabel">複製今天行程</span>
+        </button>
+
+        <button id="exportIcsBtn" class="bg-indigo-700 hover:bg-indigo-600 p-2 rounded-lg text-sm transition">
+          <i class="fa-solid fa-calendar-plus"></i> <span id="exportIcsLabel">匯出 .ics</span>
+        </button>
+
+        <button id="shareBtn" class="bg-indigo-600 hover:bg-indigo-500 p-2 rounded-lg text-sm transition" title="Copy share link">
+          <i class="fa-solid fa-share-nodes"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Map ===== -->
+  <div class="w-full h-80 md:h-96 bg-gray-200 border-b-4 border-indigo-900 shadow-inner">
+    <iframe
+      id="mapFrame"
+      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3647686.1739013236!2d-82.142046!3d27.816585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-TW!2sus!4v1700000000000"
+      width="100%"
+      height="100%"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
+  </div>
+
+  <!-- ===== Page ===== -->
+  <main class="container mx-auto px-4 py-10 max-w-5xl">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+      <!-- Info card -->
+      <div class="lg:col-span-1 bg-white rounded-3xl border border-slate-200 shadow-sm p-5">
+        <div class="flex items-start justify-between gap-2 mb-3">
+          <h2 class="font-bold text-indigo-900 text-lg" id="tripInfoTitle">行程資訊</h2>
+          <span class="text-[11px] text-gray-500" id="lastUpdatedBadge">最後更新：—</span>
+        </div>
+
+        <div id="infoBox" class="text-sm space-y-2"></div>
+
+        <!-- Expenses -->
+        <div class="mt-5 border-t pt-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-indigo-900" id="expensesTitle">Expenses（花費表）</h3>
+            <button id="toggleExpensesBtn" class="text-sm text-indigo-700 font-semibold hover:underline">
+              <span id="toggleExpensesLabel">展開</span>
+            </button>
+          </div>
+
+          <div id="expensesPanel" class="hidden mt-3">
+            <div class="flex items-center gap-2 mb-3 flex-wrap">
+              <label class="text-xs text-gray-600" id="splitLabel">分帳人數</label>
+              <input id="splitPeople" type="number" min="1" value="2" class="w-20 text-sm rounded border px-2 py-1"/>
+              <span class="text-xs text-gray-600" id="currencyLabel">幣別</span>
+              <select id="currencySelect" class="text-sm rounded border px-2 py-1">
+                <option value="USD">USD</option>
+                <option value="TWD">TWD</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm border rounded-xl overflow-hidden">
+                <thead class="bg-indigo-50">
+                  <tr>
+                    <th class="text-left p-2 border" id="expDayCol">Day</th>
+                    <th class="text-right p-2 border" id="expTicketsCol">門票</th>
+                    <th class="text-right p-2 border" id="expHotelCol">住宿</th>
+                    <th class="text-right p-2 border" id="expCarCol">租車</th>
+                    <th class="text-right p-2 border" id="expGasCol">油錢</th>
+                    <th class="text-right p-2 border" id="expParkingCol">停車</th>
+                    <th class="text-right p-2 border" id="expFoodCol">餐費</th>
+                    <th class="text-right p-2 border" id="expMiscCol">其他</th>
+                    <th class="text-right p-2 border" id="expTotalCol">小計</th>
+                  </tr>
+                </thead>
+                <tbody id="expensesTableBody" class="bg-white"></tbody>
+                <tfoot class="bg-indigo-50">
+                  <tr>
+                    <td class="p-2 border font-bold" id="expGrandLabel">總計</td>
+                    <td class="p-2 border text-right font-bold" colspan="7" id="expGrandValue">—</td>
+                    <td class="p-2 border text-right font-bold" id="expGrandTotalCell">—</td>
+                  </tr>
+                  <tr>
+                    <td class="p-2 border font-bold" id="expSplitLabel">每人</td>
+                    <td class="p-2 border text-right font-bold" colspan="8" id="expSplitValue">—</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <div class="mt-2 text-xs text-gray-500" id="expNote">
+              你可以直接在表格裡改數字，會自動存到本機（同一台裝置/瀏覽器有效）。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="lg:col-span-2 relative">
+        <div class="timeline-line hidden md:block"></div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-indigo-900" id="itineraryTitle">📌 行程（點每天可收合）</h2>
+          <div class="text-xs text-gray-500" id="itineraryTip">提示：點 Day 標題可收合；今天會自動高亮；IMPORTANT 會自動提亮。</div>
+        </div>
+        <div id="daysContainer" class="space-y-4 relative z-10"></div>
+      </div>
     </div>
 
-    <main class="container mx-auto px-4 py-10 max-w-2xl relative">
-        <div class="timeline-line hidden md:block"></div>
-        <div id="itinerary-list" class="space-y-10 relative z-10"></div>
+    <!-- Footer -->
+    <div class="mt-10 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-indigo-600">
+      <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2 text-lg">
+        <i class="fa-solid fa-car-side"></i> <span id="footerTitle">租車與交通提醒</span>
+      </h3>
+      <p class="text-gray-600 text-sm leading-relaxed" id="footerDesc">
+        建議：MIA 取車、MCO 還車（one-way）。路線：Miami → Orlando（環球/EPIC）→ 3/12 KSC → 3/13 Silver Springs → 3/14 MCO 飛回 SAT。
+      </p>
+    </div>
+  </main>
 
-        <div class="mt-16 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-indigo-600">
-            <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2 text-lg">
-                <i class="fa-solid fa-car-side"></i> <span id="footer-title"></span>
-            </h3>
-            <p class="text-gray-600 text-sm leading-relaxed" id="footer-desc"></p>
+  <script>
+    // ===== Trip config =====
+    const TRIP_YEAR = 2026;
+    const LAST_UPDATED_ISO = "2026-02-10T00:00:00-06:00";
+
+    // ===== Data =====
+    const tripData = {
+      days: [
+        // Day 1 - 3/07 SAT -> MIA, South Beach
+        {
+          id: "d1",
+          month: 3, day: 7,
+          label: "3/07 (Sat)",
+          title: "SAT → 邁阿密（MIA）＋南海灘",
+          reminders: [
+            { level: "important", text: "抵達 MIA 後取車，市區停車較貴：盡量選有停車位/含停車的住宿" },
+            { level: "info", text: "晚上 South Beach + Ocean Drive 散步很舒服" }
+          ],
+          stops: [
+            {
+              start: "12:00", end: "14:00",
+              name: "飛行：San Antonio (SAT) → Miami (MIA)",
+              address: "SAT → MIA",
+              phone: "",
+              map: "https://www.google.com/maps/search/?api=1&query=Miami%20International%20Airport",
+              note: "時間可依你的航班調整（這裡先放範例時段）。"
+            },
+            {
+              travel: "30–60 min",
+              start: "14:00", end: "15:00",
+              name: "MIA 取車 + 前往飯店",
+              address: "Miami International Airport, 2100 NW 42nd Ave, Miami, FL 33142",
+              phone: "+1 305-876-7000",
+              map: "https://maps.google.com/?q=Miami+International+Airport",
+              note: "建議先買水/零食，確認高速公路 toll（電子收費）設定。"
+            },
+            {
+              travel: "20–30 min",
+              start: "17:30", end: "20:30",
+              name: "South Beach（南海灘）+ Ocean Drive",
+              address: "Ocean Dr, Miami Beach, FL 33139",
+              phone: "",
+              map: "https://maps.google.com/?q=South+Beach+Miami",
+              note: "夕陽散步 + 晚餐；停車可用附近 public parking garage。"
+            }
+          ],
+          expenses: { tickets: 0, hotel: 220, car: 75, gas: 10, parking: 25, food: 90, misc: 10 }
+        },
+
+        // Day 2 - 3/08 Everglades
+        {
+          id: "d2",
+          month: 3, day: 8,
+          label: "3/08 (Sun)",
+          title: "大沼澤 Everglades（Shark Valley）",
+          reminders: [
+            { level: "important", text: "防曬＋水＋帽子；早到比較不排隊" }
+          ],
+          stops: [
+            {
+              start: "09:00", end: "12:30",
+              name: "Shark Valley Visitor Center",
+              address: "36000 SW 8th St, Miami, FL 33194",
+              phone: "+1 305-221-8776",
+              map: "https://maps.google.com/?q=Shark+Valley+Visitor+Center",
+              note: "可租腳踏車／搭 Tram；很容易看到鱷魚。"
+            },
+            {
+              travel: "45–70 min",
+              start: "16:00", end: "18:30",
+              name: "回 Miami 自由活動（Little Havana 可選）",
+              address: "Little Havana, Miami, FL",
+              phone: "",
+              map: "https://maps.google.com/?q=Little+Havana+Miami",
+              note: "咖啡＋古巴風情街區。"
+            }
+          ],
+          expenses: { tickets: 35, hotel: 220, car: 75, gas: 20, parking: 15, food: 85, misc: 10 }
+        },
+
+        // Day 3 - 3/09 Gulf Stream experience + drive to Orlando
+        {
+          id: "d3",
+          month: 3, day: 9,
+          label: "3/09 (Mon)",
+          title: "墨西哥灣暖流（Gulf Stream）體驗＋開去奧蘭多",
+          reminders: [
+            { level: "important", text: "今天會移動較多：建議早出發，晚上抵達 Orlando" },
+            { level: "info", text: "Gulf Stream 最有感通常是 Palm Beach/Jupiter 一帶出海或浮潛" }
+          ],
+          stops: [
+            {
+              start: "09:00", end: "10:30",
+              name: "自駕：Miami → West Palm Beach",
+              address: "Miami to West Palm Beach",
+              phone: "",
+              map: "https://maps.google.com/?q=Miami+to+West+Palm+Beach",
+              note: "車程約 1.5 小時（看交通）。"
+            },
+            {
+              travel: "15–25 min",
+              start: "11:30", end: "14:30",
+              name: "Gulf Stream 近海體驗（浮潛/出海，擇一）",
+              address: "Phil Foster Park / Peanut Island（Palm Beach）",
+              phone: "",
+              map: "https://maps.google.com/?q=Phil+Foster+Park",
+              note: "如果你其實指的是 Gulfstream Park（賽馬場/娛樂城），跟我說我可改成 Hallandale Beach 行程。"
+            },
+            {
+              travel: "2.5–3 hr",
+              start: "16:30", end: "19:30",
+              name: "自駕：West Palm Beach → Orlando",
+              address: "West Palm Beach to Orlando",
+              phone: "",
+              map: "https://maps.google.com/?q=West+Palm+Beach+to+Orlando",
+              note: "抵達後入住，為隔天環球做準備。"
+            }
+          ],
+          expenses: { tickets: 60, hotel: 180, car: 75, gas: 35, parking: 10, food: 85, misc: 15 }
+        },
+
+        // Day 4 - 3/10 Universal
+        {
+          id: "d4",
+          month: 3, day: 10,
+          label: "3/10 (Tue)",
+          title: "環球影城 Universal Orlando（玩整天）",
+          reminders: [
+            { level: "important", text: "想搭霍格華茲特快車需 Park-to-Park 票" },
+            { level: "important", text: "建議開園就到（排隊差很多）" }
+          ],
+          stops: [
+            {
+              start: "09:00", end: "19:00",
+              name: "Universal Orlando Resort（Studios + Islands of Adventure）",
+              address: "6000 Universal Blvd, Orlando, FL 32819",
+              phone: "+1 407-363-8000",
+              map: "https://www.universalorlando.com/web/en/us",
+              note: "如果只想玩其中一園可調整；此處以整天安排。"
+            }
+          ],
+          expenses: { tickets: 220, hotel: 180, car: 75, gas: 10, parking: 30, food: 95, misc: 15 }
+        },
+
+        // Day 5 - 3/11 Epic Universe
+        {
+          id: "d5",
+          month: 3, day: 11,
+          label: "3/11 (Wed)",
+          title: "Epic Universe（玩整天）",
+          reminders: [
+            { level: "important", text: "新園區人潮很猛：rope drop（開園衝第一波）" }
+          ],
+          stops: [
+            {
+              start: "09:00", end: "19:00",
+              name: "Universal Epic Universe",
+              address: "Orlando, FL（新園區）",
+              phone: "",
+              map: "https://www.universalorlando.com/web/en/us/theme-parks/epic-universe",
+              note: "先排必玩清單：任天堂/魔法部等。"
+            }
+          ],
+          expenses: { tickets: 210, hotel: 180, car: 75, gas: 10, parking: 30, food: 95, misc: 15 }
+        },
+
+        // Day 6 - 3/12 KSC fixed
+        {
+          id: "d6",
+          month: 3, day: 12,
+          label: "3/12 (Thu)",
+          title: "肯尼迪航天中心（KSC）— 固定 3/12",
+          reminders: [
+            { level: "important", text: "Bus Tour 可能額滿：越早到越好" }
+          ],
+          stops: [
+            {
+              start: "08:30", end: "09:30",
+              name: "自駕：Orlando → Kennedy Space Center",
+              address: "Orlando to Merritt Island",
+              phone: "",
+              map: "https://maps.google.com/?q=Orlando+to+Kennedy+Space+Center",
+              note: "車程約 1 小時（看交通）。"
+            },
+            {
+              start: "10:00", end: "17:00",
+              name: "Kennedy Space Center Visitor Complex",
+              address: "Space Commerce Way, Merritt Island, FL 32953",
+              phone: "+1 855-433-4210",
+              map: "https://www.kennedyspacecenter.com/",
+              note: "Rocket Garden / Atlantis / Bus Tour（建議先搶 Bus Tour）。"
+            },
+            {
+              travel: "1 hr",
+              start: "17:30", end: "18:30",
+              name: "回 Orlando",
+              address: "Orlando, FL",
+              phone: "",
+              map: "https://maps.google.com/?q=Orlando",
+              note: "晚餐＋休息。"
+            }
+          ],
+          expenses: { tickets: 170, hotel: 180, car: 75, gas: 25, parking: 15, food: 85, misc: 10 }
+        },
+
+        // Day 7 - 3/13 Silver Springs
+        {
+          id: "d7",
+          month: 3, day: 13,
+          label: "3/13 (Fri)",
+          title: "Silver Springs（玻璃船/清泉）一日",
+          reminders: [
+            { level: "important", text: "帶防蚊液；清泉區早晚溫差較大可帶薄外套" }
+          ],
+          stops: [
+            {
+              start: "09:00", end: "10:30",
+              name: "自駕：Orlando → Silver Springs State Park",
+              address: "1425 NE 58th Ave, Ocala, FL 34470",
+              phone: "+1 352-236-7148",
+              map: "https://maps.google.com/?q=Silver+Springs+State+Park",
+              note: "車程約 1.5 小時。"
+            },
+            {
+              start: "11:00", end: "14:00",
+              name: "Glass Bottom Boat（玻璃船，建議）",
+              address: "Silver Springs State Park",
+              phone: "",
+              map: "https://maps.google.com/?q=Silver+Springs+Glass+Bottom+Boat",
+              note: "行程依當天班次調整；也可改成划船/步道。"
+            },
+            {
+              travel: "1.5 hr",
+              start: "16:00", end: "17:30",
+              name: "回 Orlando（整理行李）",
+              address: "Orlando, FL",
+              phone: "",
+              map: "https://maps.google.com/?q=Orlando",
+              note: "明天要飛，建議早點休息。"
+            }
+          ],
+          expenses: { tickets: 20, hotel: 180, car: 75, gas: 20, parking: 10, food: 90, misc: 10 }
+        },
+
+        // Day 8 - 3/14 fly back from MCO
+        {
+          id: "d8",
+          month: 3, day: 14,
+          label: "3/14 (Sat)",
+          title: "MCO → SAT 回程（還車＋登機）",
+          reminders: [
+            { level: "important", text: "還車＋安檢要留緩衝（建議起飛前 2.5~3 小時到機場）" }
+          ],
+          stops: [
+            {
+              start: "09:30", end: "11:00",
+              name: "Orlando International Airport（MCO）還車＋辦理登機",
+              address: "1 Jeff Fuqua Blvd, Orlando, FL 32827",
+              phone: "+1 407-825-2001",
+              map: "https://maps.google.com/?q=Orlando+International+Airport",
+              note: "若你最後要從 MIA 飛回，也可以把這天改成 Orlando → Miami 早移動。"
+            },
+            {
+              start: "12:00", end: "14:30",
+              name: "飛行：Orlando (MCO) → San Antonio (SAT)",
+              address: "MCO → SAT",
+              phone: "",
+              map: "https://www.google.com/maps/search/?api=1&query=San%20Antonio%20International%20Airport",
+              note: "時間依你的航班調整（這裡先放範例時段）。"
+            }
+          ],
+          expenses: { tickets: 0, hotel: 0, car: 75, gas: 10, parking: 0, food: 40, misc: 0 }
+        }
+      ]
+    };
+
+    // ===== Translations (FULL, not fallback) =====
+    const translations = {
+      zh: {
+        page_title: "Florida Trip 2026 | Josephine",
+        nav_title: "Florida Trip 2026 🌴",
+        nav_subtitle: "March 07 - March 14",
+        trip_info: "行程資訊",
+        itinerary_title: "📌 行程（點每天可收合）",
+        itinerary_tip: "提示：點 Day 標題可收合；今天會自動高亮；IMPORTANT 會自動提亮。",
+        share_label: "分享連結（GitHub Pages）",
+        share_placeholder: "貼上 GitHub Pages 連結（或留空=複製目前頁面）",
+        share_hint: "提示：貼上你的 GitHub Pages 網址，或留空直接複製目前頁面。",
+        share_msg: "已複製連結！",
+        copy_today: "複製今天行程",
+        copy_day: "複製本日",
+        export_ics: "匯出 .ics",
+        export_ics_all: "匯出整趟 .ics",
+        export_ics_today: "匯出今日 .ics",
+        export_ics_done: "已產生 .ics 檔案",
+        day_expand: "展開",
+        day_collapse: "收合",
+        last_updated: "最後更新：",
+        stop_address: "地址",
+        stop_phone: "電話",
+        open_map: "一鍵開地圖",
+        notes: "備註",
+        reminders: "重點提醒",
+        travel_time: "交通時間",
+        expenses: "Expenses（花費表）",
+        expenses_toggle_open: "展開",
+        expenses_toggle_close: "收合",
+        split_people: "分帳人數",
+        currency: "幣別",
+        exp_cols: { day: "Day", tickets: "門票", hotel: "住宿", car: "租車", gas: "油錢", parking: "停車", food: "餐費", misc: "其他", total: "小計" },
+        exp_grand: "總計",
+        exp_per_person: "每人",
+        exp_note: "你可以直接在表格裡改數字，會自動存到本機（同一台裝置/瀏覽器有效）。",
+        footer_title: "租車與交通提醒",
+        footer_desc: "建議：MIA 取車、MCO 還車（one-way）。路線：Miami → Orlando（環球/EPIC）→ 3/12 KSC → 3/13 Silver Springs → 3/14 MCO 飛回 SAT。"
+      },
+      en: {
+        page_title: "Florida Trip 2026 | Josephine",
+        nav_title: "Florida Trip 2026 🌴",
+        nav_subtitle: "March 07 - March 14",
+        trip_info: "Trip Info",
+        itinerary_title: "📌 Itinerary (tap day to expand/collapse)",
+        itinerary_tip: "Tip: tap a Day header to expand/collapse. Today is auto-highlighted; IMPORTANT reminders are emphasized.",
+        share_label: "Share link (GitHub Pages)",
+        share_placeholder: "Paste GitHub Pages link (or leave blank to copy this page)",
+        share_hint: "Tip: paste your GitHub Pages URL, or leave blank to copy this page.",
+        share_msg: "Link copied!",
+        copy_today: "Copy today",
+        copy_day: "Copy this day",
+        export_ics: "Export .ics",
+        export_ics_all: "Export full trip .ics",
+        export_ics_today: "Export today .ics",
+        export_ics_done: ".ics generated",
+        day_expand: "Expand",
+        day_collapse: "Collapse",
+        last_updated: "Last updated: ",
+        stop_address: "Address",
+        stop_phone: "Phone",
+        open_map: "Open map",
+        notes: "Notes",
+        reminders: "Reminders",
+        travel_time: "Travel time",
+        expenses: "Expenses",
+        expenses_toggle_open: "Open",
+        expenses_toggle_close: "Close",
+        split_people: "Split",
+        currency: "Currency",
+        exp_cols: { day: "Day", tickets: "Tickets", hotel: "Hotel", car: "Car", gas: "Gas", parking: "Parking", food: "Food", misc: "Misc", total: "Total" },
+        exp_grand: "Grand Total",
+        exp_per_person: "Per person",
+        exp_note: "You can edit numbers in the table; they are saved locally in this browser.",
+        footer_title: "Rental Car & Transportation",
+        footer_desc: "Recommended: pick up at MIA and drop off at MCO (one-way). Route: Miami → Orlando (Universal/EPIC) → Mar 12 KSC → Mar 13 Silver Springs → Mar 14 fly MCO → SAT."
+      },
+      es: {
+        page_title: "Viaje Florida 2026 | Josephine",
+        nav_title: "Florida Trip 2026 🌴",
+        nav_subtitle: "07 Mar - 14 Mar",
+        trip_info: "Info del viaje",
+        itinerary_title: "📌 Itinerario (toca el día para abrir/cerrar)",
+        itinerary_tip: "Consejo: toca el encabezado del día para abrir/cerrar. Hoy se resalta automáticamente; los IMPORTANT se destacan.",
+        share_label: "Compartir enlace (GitHub Pages)",
+        share_placeholder: "Pega el enlace de GitHub Pages (o déjalo vacío para copiar esta página)",
+        share_hint: "Consejo: pega la URL de GitHub Pages o déjalo vacío para copiar esta página.",
+        share_msg: "¡Enlace copiado!",
+        copy_today: "Copiar hoy",
+        copy_day: "Copiar este día",
+        export_ics: "Exportar .ics",
+        export_ics_all: "Exportar viaje completo .ics",
+        export_ics_today: "Exportar hoy .ics",
+        export_ics_done: ".ics generado",
+        day_expand: "Abrir",
+        day_collapse: "Cerrar",
+        last_updated: "Última actualización: ",
+        stop_address: "Dirección",
+        stop_phone: "Teléfono",
+        open_map: "Abrir mapa",
+        notes: "Notas",
+        reminders: "Recordatorios",
+        travel_time: "Tiempo de traslado",
+        expenses: "Gastos",
+        expenses_toggle_open: "Abrir",
+        expenses_toggle_close: "Cerrar",
+        split_people: "Dividir",
+        currency: "Moneda",
+        exp_cols: { day: "Día", tickets: "Entradas", hotel: "Hotel", car: "Coche", gas: "Gasolina", parking: "Parking", food: "Comida", misc: "Otros", total: "Total" },
+        exp_grand: "Total",
+        exp_per_person: "Por persona",
+        exp_note: "Puedes editar números en la tabla; se guardan localmente en este navegador.",
+        footer_title: "Alquiler y transporte",
+        footer_desc: "Recomendado: recoger en MIA y devolver en MCO (one-way). Ruta: Miami → Orlando (Universal/EPIC) → 12 Mar KSC → 13 Mar Silver Springs → 14 Mar vuelo MCO → SAT."
+      },
+      ko: {
+        page_title: "플로리다 여행 2026 | Josephine",
+        nav_title: "Florida Trip 2026 🌴",
+        nav_subtitle: "3월 7일 - 3월 14일",
+        trip_info: "여행 정보",
+        itinerary_title: "📌 일정 (Day를 눌러 접기/펼치기)",
+        itinerary_tip: "팁: Day 헤더를 눌러 접기/펼치기. 오늘 일정은 자동 하이라이트; IMPORTANT 알림은 강조됩니다.",
+        share_label: "공유 링크 (GitHub Pages)",
+        share_placeholder: "GitHub Pages 링크를 붙여넣기 (비우면 현재 페이지 링크 복사)",
+        share_hint: "팁: GitHub Pages URL을 붙여넣거나 비우면 현재 페이지 링크를 복사합니다.",
+        share_msg: "링크가 복사되었습니다!",
+        copy_today: "오늘 일정 복사",
+        copy_day: "이 날 복사",
+        export_ics: ".ics 내보내기",
+        export_ics_all: "전체 여행 .ics",
+        export_ics_today: "오늘 .ics",
+        export_ics_done: ".ics 생성됨",
+        day_expand: "펼치기",
+        day_collapse: "접기",
+        last_updated: "마지막 업데이트: ",
+        stop_address: "주소",
+        stop_phone: "전화",
+        open_map: "지도 열기",
+        notes: "메모",
+        reminders: "중요 알림",
+        travel_time: "이동 시간",
+        expenses: "비용",
+        expenses_toggle_open: "열기",
+        expenses_toggle_close: "닫기",
+        split_people: "분할",
+        currency: "통화",
+        exp_cols: { day: "Day", tickets: "티켓", hotel: "숙박", car: "렌트", gas: "주유", parking: "주차", food: "식비", misc: "기타", total: "합계" },
+        exp_grand: "총합",
+        exp_per_person: "1인",
+        exp_note: "표에서 숫자를 수정하면 이 브라우저에 로컬 저장됩니다.",
+        footer_title: "렌터카 & 이동 안내",
+        footer_desc: "추천: MIA에서 픽업하고 MCO에서 반납(one-way). 루트: Miami → Orlando(Universal/EPIC) → 3/12 KSC → 3/13 Silver Springs → 3/14 MCO → SAT."
+      },
+      vi: {
+        page_title: "Chuyến đi Florida 2026 | Josephine",
+        nav_title: "Florida Trip 2026 🌴",
+        nav_subtitle: "07 Mar - 14 Mar",
+        trip_info: "Thông tin chuyến đi",
+        itinerary_title: "📌 Lịch trình (chạm để mở/đóng ngày)",
+        itinerary_tip: "Gợi ý: chạm tiêu đề ngày để mở/đóng. Hôm nay sẽ được tô sáng; IMPORTANT sẽ được nhấn mạnh.",
+        share_label: "Liên kết chia sẻ (GitHub Pages)",
+        share_placeholder: "Dán link GitHub Pages (hoặc để trống để copy trang này)",
+        share_hint: "Gợi ý: dán URL GitHub Pages hoặc để trống để copy trang này.",
+        share_msg: "Đã sao chép liên kết!",
+        copy_today: "Copy hôm nay",
+        copy_day: "Copy ngày này",
+        export_ics: "Xuất .ics",
+        export_ics_all: "Xuất cả chuyến .ics",
+        export_ics_today: "Xuất hôm nay .ics",
+        export_ics_done: "Đã tạo .ics",
+        day_expand: "Mở",
+        day_collapse: "Đóng",
+        last_updated: "Cập nhật: ",
+        stop_address: "Địa chỉ",
+        stop_phone: "Điện thoại",
+        open_map: "Mở bản đồ",
+        notes: "Ghi chú",
+        reminders: "Nhắc nhở",
+        travel_time: "Thời gian di chuyển",
+        expenses: "Chi phí",
+        expenses_toggle_open: "Mở",
+        expenses_toggle_close: "Đóng",
+        split_people: "Chia",
+        currency: "Tiền tệ",
+        exp_cols: { day: "Ngày", tickets: "Vé", hotel: "Khách sạn", car: "Thuê xe", gas: "Xăng", parking: "Đỗ xe", food: "Ăn uống", misc: "Khác", total: "Tổng" },
+        exp_grand: "Tổng cộng",
+        exp_per_person: "Mỗi người",
+        exp_note: "Bạn có thể sửa số trong bảng; dữ liệu sẽ lưu cục bộ trên trình duyệt này.",
+        footer_title: "Thuê xe & di chuyển",
+        footer_desc: "Gợi ý: nhận xe tại MIA và trả xe tại MCO (one-way). Lộ trình: Miami → Orlando (Universal/EPIC) → 12/3 KSC → 13/3 Silver Springs → 14/3 bay MCO → SAT."
+      }
+    };
+
+    // ===== Helpers =====
+    function pad2(n){ return String(n).padStart(2,'0'); }
+
+    function formatLastUpdated(lang) {
+      const t = translations[lang] || translations.zh;
+      try {
+        const d = new Date(LAST_UPDATED_ISO);
+        const y = d.getFullYear(), m = d.getMonth()+1, day = d.getDate();
+        const hh = pad2(d.getHours()), mm = pad2(d.getMinutes());
+        if (lang === "zh") return `${t.last_updated}${y}/${pad2(m)}/${pad2(day)} ${hh}:${mm}`;
+        return `${t.last_updated}${y}-${pad2(m)}-${pad2(day)} ${hh}:${mm}`;
+      } catch (e) {
+        return (translations[lang]||translations.zh).last_updated + "—";
+      }
+    }
+
+    function getTodayKey() {
+      const now = new Date();
+      return { year: now.getFullYear(), month: now.getMonth()+1, day: now.getDate() };
+    }
+    function dayKeyObj(dayObj) { return { year: TRIP_YEAR, month: dayObj.month, day: dayObj.day }; }
+    function sameDate(a,b){ return a.year===b.year && a.month===b.month && a.day===b.day; }
+
+    function minutesBetween(start, end) {
+      const [sh, sm] = start.split(":").map(Number);
+      const [eh, em] = end.split(":").map(Number);
+      return (eh*60+em) - (sh*60+sm);
+    }
+
+    function humanDuration(mins, lang) {
+      if (!Number.isFinite(mins) || mins <= 0) return "";
+      if (lang === "zh") return `${mins} 分鐘`;
+      if (lang === "ko") return `${mins}분`;
+      if (lang === "vi") return `${mins} phút`;
+      if (lang === "es") return `${mins} min`;
+      return `${mins} min`;
+    }
+
+    // ===== Copy helpers =====
+    function buildDayText(dayObj, lang) {
+      const t = translations[lang] || translations.zh;
+      const lines = [];
+      lines.push(`${dayObj.label} · ${dayObj.title}`);
+      lines.push(`- ${t.reminders}:`);
+      (dayObj.reminders || []).forEach(r => lines.push(`  • ${r.text}`));
+      lines.push("");
+      dayObj.stops.forEach(s => {
+        if (s.travel) lines.push(`🚗 ${t.travel_time}: ${s.travel}`);
+        if (s.start && s.end) lines.push(`${s.start}-${s.end} ${s.name}`);
+        else lines.push(`${s.name}`);
+        if (s.address) lines.push(`  📍 ${s.address}`);
+        if (s.map) lines.push(`  🗺 ${s.map}`);
+        if (s.phone) lines.push(`  ☎ ${s.phone}`);
+        if (s.note) lines.push(`  📝 ${s.note}`);
+        lines.push("");
+      });
+      return lines.join("\n").trim();
+    }
+
+    function getTodayOrFirstTripDay() {
+      const today = getTodayKey();
+      const match = tripData.days.find(d => sameDate(today, dayKeyObj(d)));
+      return match || tripData.days[0];
+    }
+
+    async function copyTextToClipboard(text) {
+      await navigator.clipboard.writeText(text);
+    }
+
+    // ===== ICS export =====
+    function escapeIcs(s) {
+      return String(s || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/\n/g, "\\n")
+        .replace(/,/g, "\\,")
+        .replace(/;/g, "\\;");
+    }
+
+    function toIcsDateTimeLocal(year, month, day, hhmm) {
+      const [h, m] = hhmm.split(":").map(Number);
+      return `${year}${pad2(month)}${pad2(day)}T${pad2(h)}${pad2(m)}00`;
+    }
+
+    function buildIcs(events, filename="trip.ics") {
+      const dtStamp = new Date().toISOString().replace(/[-:]/g,"").split(".")[0] + "Z";
+      const lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Trip Planner//EN",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH"
+      ];
+      for (const ev of events) {
+        lines.push("BEGIN:VEVENT");
+        lines.push(`UID:${ev.uid}`);
+        lines.push(`DTSTAMP:${dtStamp}`);
+        lines.push(`DTSTART:${ev.dtstart}`);
+        lines.push(`DTEND:${ev.dtend}`);
+        lines.push(`SUMMARY:${escapeIcs(ev.summary)}`);
+        if (ev.location) lines.push(`LOCATION:${escapeIcs(ev.location)}`);
+        if (ev.description) lines.push(`DESCRIPTION:${escapeIcs(ev.description)}`);
+        lines.push("END:VEVENT");
+      }
+      lines.push("END:VCALENDAR");
+
+      const blob = new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportIcs(lang, onlyToday=false) {
+      const t = translations[lang] || translations.zh;
+      const days = onlyToday ? [getTodayOrFirstTripDay()] : tripData.days;
+
+      const events = [];
+      for (const d of days) {
+        for (const s of d.stops) {
+          if (!s.start || !s.end) continue;
+          const uid = `${d.id}-${(s.name||"stop").replace(/\s+/g,"_")}-${s.start}`.slice(0,200);
+          events.push({
+            uid: uid + "@trip",
+            dtstart: toIcsDateTimeLocal(TRIP_YEAR, d.month, d.day, s.start),
+            dtend: toIcsDateTimeLocal(TRIP_YEAR, d.month, d.day, s.end),
+            summary: s.name,
+            location: s.address || "",
+            description: (s.note || "") + (s.map ? `\nMap: ${s.map}` : "")
+          });
+        }
+      }
+
+      const filename = onlyToday ? `today_${TRIP_YEAR}.ics` : `trip_${TRIP_YEAR}.ics`;
+      buildIcs(events, filename);
+      alert(t.export_ics_done);
+    }
+
+    // ===== Expenses local storage =====
+    const EXP_LS_KEY = "trip_expenses_v2";
+    function loadExpenseOverrides() {
+      try {
+        const raw = localStorage.getItem(EXP_LS_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) { return {}; }
+    }
+    function saveExpenseOverrides(obj) {
+      try { localStorage.setItem(EXP_LS_KEY, JSON.stringify(obj)); } catch (e) {}
+    }
+
+    // ===== Rendering =====
+    function renderInfo(lang) {
+      const t = translations[lang] || translations.zh;
+      document.getElementById("tripInfoTitle").innerText = t.trip_info;
+      document.getElementById("lastUpdatedBadge").innerText = formatLastUpdated(lang);
+
+      const infoItems = [
+        { label: (lang==="zh" ? "航線" : "Route"), value: "SAT → MIA → (drive) → MCO → SAT" },
+        { label: (lang==="zh" ? "交通" : "Transport"), value: (lang==="zh" ? "自駕（租車）" : "Road trip (rental car)") },
+        { label: (lang==="zh" ? "必去" : "Must-do"), value: "Everglades / South Beach / Gulf Stream / Universal / Epic / KSC (3/12) / Silver Springs" },
+        { label: (lang==="zh" ? "還車建議" : "Drop-off"), value: (lang==="zh" ? "MIA 取車、MCO 還車（one-way）" : "Pick up MIA, drop off MCO (one-way)") }
+      ];
+
+      const infoBox = document.getElementById("infoBox");
+      infoBox.innerHTML = infoItems.map(item => `
+        <div class="flex justify-between gap-2">
+          <span class="text-gray-500">${item.label}</span>
+          <span class="font-semibold text-right">${item.value}</span>
         </div>
-    </main>
+      `).join("");
+    }
 
-    <script>
-        const translations = {
-            zh: {
-                page_title: "Florida Spring Trip 2026 | Josephine",
-                nav_title: "FL Spring Trip 2026 🌴",
-                nav_subtitle: "March 06 - March 13",
-                share_placeholder: "貼上 GitHub Pages 連結（或留空=複製目前頁面）",
+    function renderDays(lang) {
+      const t = translations[lang] || translations.zh;
+      const today = getTodayKey();
+      const container = document.getElementById("daysContainer");
+      container.innerHTML = "";
 
-                share_msg: "網址已複製！",
-                footer_title: "租車與交通提醒",
-                footer_desc: "建議從奧蘭多 (MCO) 取車，最後在邁阿密 (MIA) 還車。3/13 結束後直接從邁阿密飛回聖安東尼奧 (SAT) 最方便！",
-                info_label: "預估票價與資訊",
-                days: [
-                    { date: "3/06 (Fri)", title: "抵達奧蘭多", icon: "fa-plane-arrival", color: "text-blue-500", desc: "抵達 <a href='https://maps.app.goo.gl/pW6z6S7QG8W9X4J48' target='_blank' class='text-indigo-600 font-bold underline'>MCO 機場</a> 取車。晚上去 CityWalk 走走。", price: "門票：無 / 預算：租車與晚餐" },
-                    { date: "3/07 (Sat)", title: "環球影城雙園", icon: "fa-hat-wizard", color: "text-purple-500", desc: "前往 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>Universal Orlando</a>。搭火車穿梭兩園。", price: "門票：約 $190 - $230" },
-                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "探索最新園區 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>Epic Universe</a>。建議一早出發。", price: "門票：依 2026 官網公告" },
-                    { date: "3/09 (Mon)", title: "NASA 甘迺迪航太中心", icon: "fa-rocket", color: "text-orange-500", desc: "開往 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>KSC 航太中心</a>。看火箭發射場。", price: "門票：成人約 $75 - $89" },
-                    { date: "3/10 (Tue)", title: "前往邁阿密", icon: "fa-car-side", color: "text-indigo-500", desc: "南下邁阿密。下午抵達 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>South Beach</a> 看日落。", price: "門票：免費 / 預算：市區停車" },
-                    { date: "3/11 (Wed)", title: "大沼澤國家公園", icon: "fa-otter", color: "text-green-600", desc: "在 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>Shark Valley</a> 騎單車看野生鱷魚。", price: "門票：每車約 $35" },
-                    { date: "3/12 (Thu)", title: "邁阿密輕鬆日", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "在海灘放鬆，或逛逛 Wynwood Walls 藝術區。", price: "自由行程" },
-                    { date: "3/13 (Fri)", title: "回程", icon: "fa-plane-departure", color: "text-red-500", desc: "在 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>MIA 機場</a> 還車，飛回聖安東尼奧。", price: "機票：MIA to SAT" }
-                ]
-            },
-            en: {
-                page_title: "Florida Spring Trip 2026 | Josephine",
-                nav_title: "FL Spring Trip 2026 🌴",
-                nav_subtitle: "March 06 - March 13",
-                share_placeholder: "Paste GitHub Pages link (or leave blank to copy this page)",
+      tripData.days.forEach((d, idx) => {
+        const isToday = sameDate(today, dayKeyObj(d));
+        const expandedByDefault = isToday || idx === 0;
 
-                share_msg: "Link Copied!",
-                footer_title: "Rental & Transport",
-                footer_desc: "MCO Pick-up, MIA Drop-off. Fly back to SAT from MIA on 3/13 is recommended.",
-                info_label: "Est. Price & Info",
-                days: [
-                    { date: "3/06 (Fri)", title: "Arrival Orlando", icon: "fa-plane-arrival", color: "text-blue-500", desc: "Arrive at MCO. Pick up car and check-in. Evening at CityWalk.", price: "Budget: Rental + Dinner" },
-                    { date: "3/07 (Sat)", title: "Universal Orlando", icon: "fa-hat-wizard", color: "text-purple-500", desc: "Visit Universal Orlando. Park-to-Park recommended.", price: "$190 - $230" },
-                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "Explore the brand new Epic Universe. Arrive early.", price: "Check 2026 Prices" },
-                    { date: "3/09 (Mon)", title: "NASA KSC", icon: "fa-rocket", color: "text-orange-500", desc: "Drive to Kennedy Space Center. Rocket garden tour.", price: "$75 - $89" },
-                    { date: "3/10 (Tue)", title: "To Miami", icon: "fa-car-side", color: "text-indigo-500", desc: "3.5h drive. Afternoon at South Beach for sunset.", price: "Parking fee" },
-                    { date: "3/11 (Wed)", title: "Everglades NP", icon: "fa-otter", color: "text-green-600", desc: "Biking at Shark Valley to see alligators.", price: "$35/Car" },
-                    { date: "3/12 (Thu)", title: "Miami Relax", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "Beach day or visit Wynwood Walls art district.", price: "Flexible" },
-                    { date: "3/13 (Fri)", title: "Departure", icon: "fa-plane-departure", color: "text-red-500", desc: "Drop off at MIA Airport. Fly back to San Antonio.", price: "MIA to SAT" }
-                ]
-            },
-            vi: {
-                page_title: "Chuyến đi Florida Mùa Xuân 2026 | Josephine",
-                nav_title: "FL Spring Trip 2026 🌴",
-                nav_subtitle: "06 Mar - 13 Mar",
-                share_placeholder: "Dán link GitHub Pages (hoặc để trống để copy trang này)",
+        const dayCard = document.createElement("div");
+        dayCard.className = `bg-white rounded-3xl shadow-sm border p-0 relative overflow-hidden ${isToday ? "border-amber-300 ring-2 ring-amber-200" : "border-slate-100"}`;
 
-                share_msg: "Đã sao chép liên kết!",
-                footer_title: "Thuê xe & Di chuyển",
-                footer_desc: "Nhận xe tại MCO, trả tại MIA. Bay về San Antonio từ MIA vào ngày 3/13.",
-                info_label: "Giá vé & Thông tin",
-                days: [
-                    { date: "3/06 (Fri)", title: "Đến Orlando", icon: "fa-plane-arrival", color: "text-blue-500", desc: "Nhận xe tại sân bay MCO. Buổi tối dạo chơi CityWalk.", price: "Phí thuê xe & Ăn tối" },
-                    { date: "3/07 (Sat)", title: "Universal Orlando", icon: "fa-hat-wizard", color: "text-purple-500", desc: "Mua vé Park-to-Park để đi tàu Hogwarts Express.", price: "$190 - $230" },
-                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "Khám phá công viên mới Epic Universe. Nên đi sớm.", price: "Theo giá 2026" },
-                    { date: "3/09 (Mon)", title: "Trung tâm NASA", icon: "fa-rocket", color: "text-orange-500", desc: "Tham quan Kennedy Space Center (1 tiếng lái xe).", price: "$75 - $89" },
-                    { date: "3/10 (Tue)", title: "Đi Miami", icon: "fa-car-side", color: "text-indigo-500", desc: "Lái xe 3.5 tiếng. Ngắm hoàng hôn tại South Beach.", price: "Phí đậu xe tự túc" },
-                    { date: "3/11 (Wed)", title: "Vườn quốc gia Everglades", icon: "fa-otter", color: "text-green-600", desc: "Đạp xe ngắm cá sấu tại Shark Valley.", price: "$35/xe" },
-                    { date: "3/12 (Thu)", title: "Thư giãn tại Miami", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "Nghỉ ngơi tại biển hoặc xem nghệ thuật Wynwood.", price: "Tự do" },
-                    { date: "3/13 (Fri)", title: "Trở về", icon: "fa-plane-departure", color: "text-red-500", desc: "Trả xe tại MIA, bay về San Antonio.", price: "MIA về SAT" }
-                ]
-            },
-            ko: {
-                page_title: "플로리다 봄 여행 2026 | Josephine",
-                nav_title: "FL Spring Trip 2026 🌴",
-                nav_subtitle: "3월 6일 - 3월 13일",
-                share_placeholder: "GitHub Pages 링크를 붙여넣기 (비우면 현재 페이지 링크 복사)",
+        // header (accordion)
+        const header = document.createElement("button");
+        header.type = "button";
+        header.className = "w-full text-left p-5 hover:bg-indigo-50 transition flex items-start justify-between gap-3";
+        header.innerHTML = `
+          <div class="relative z-10">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">${d.label}</span>
+              ${isToday ? `<span class="text-[11px] bg-amber-100 text-amber-800 px-2 py-1 rounded-full"><i class="fa-solid fa-star"></i> Today</span>` : ""}
+            </div>
+            <h3 class="text-xl font-bold text-slate-800">${d.title}</h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full">
+                <i class="fa-solid fa-location-dot"></i> ${d.stops.length} stops
+              </span>
+            </div>
+          </div>
 
-                share_msg: "링크가 복사되었습니다!",
-                footer_title: "렌터카 및 교통",
-                footer_desc: "MCO 대여, MIA 반납 권장. 3/13 MIA에서 샌안토니오행 추천.",
-                info_label: "예상 가격 및 정보",
-                days: [
-                    { date: "3/06 (금)", title: "올랜도 도착", icon: "fa-plane-arrival", color: "text-blue-500", desc: "MCO 공항 렌터카 수령. 저녁에 CityWalk 방문.", price: "렌트비 & 저녁식사" },
-                    { date: "3/07 (토)", title: "유니버설 올랜도", icon: "fa-hat-wizard", color: "text-purple-500", desc: "파크 투 파크 추천. 호그와트 급행열차 탑승.", price: "$190 - $230" },
-                    { date: "3/08 (일)", title: "에픽 유니버스", icon: "fa-star", color: "text-yellow-500", desc: "신규 파크 에픽 유니버스 관람. 일찍 입장 추천.", price: "공식 홈페이지 확인" },
-                    { date: "3/09 (월)", title: "NASA 케네디 센터", icon: "fa-rocket", color: "text-orange-500", desc: "우주 센터 방문 (차로 1시간). 로켓 정원 관람.", price: "$75 - $89" },
-                    { date: "3/10 (화)", title: "마이애미 이동", icon: "fa-car-side", color: "text-indigo-500", desc: "3.5시간 드라이브. 사우스 비치 일몰 감상.", price: "주차비 별도" },
-                    { date: "3/11 (수)", title: "에버글레이즈 국립공원", icon: "fa-otter", color: "text-green-600", desc: "샤크 밸리에서 자전거 타고 악어 관찰.", price: "$35/차량" },
-                    { date: "3/12 (목)", title: "마이애미 휴식", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "해변 휴식 또는 윈우드 월즈 예술 지구 관광.", price: "자유 일정" },
-                    { date: "3/13 (금)", title: "귀환", icon: "fa-plane-departure", color: "text-red-500", desc: "MIA 공항 반납 후 샌안토니오행 비행기 탑승.", price: "MIA - SAT" }
-                ]
-            },
-            es: {
-                page_title: "Viaje de Primavera Florida 2026 | Josephine",
-                nav_title: "FL Spring Trip 2026 🌴",
-                nav_subtitle: "06 Mar - 13 Mar",
-                share_placeholder: "Pega el enlace de GitHub Pages (o déjalo vacío para copiar esta página)",
+          <div class="shrink-0 flex items-center gap-2">
+            <button class="copyDayBtn bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl px-3 py-2 text-sm" data-dayid="${d.id}" type="button">
+              <i class="fa-solid fa-copy"></i> <span class="copyDayLabel">${t.copy_day}</span>
+            </button>
+            <div class="text-indigo-700 font-semibold text-sm">
+              <span class="dayToggleText">${expandedByDefault ? t.day_collapse : t.day_expand}</span>
+              <i class="fa-solid fa-chevron-down ml-2 transition-transform dayChevron ${expandedByDefault ? "rotate-180" : ""}"></i>
+            </div>
+          </div>
+        `;
 
-                share_msg: "¡Enlace copiado!",
-                footer_title: "Alquiler y Transporte",
-                footer_desc: "Recogida en MCO, devolución en MIA. Vuelo MIA a SAT el 3/13.",
-                info_label: "Precios e Información",
-                days: [
-                    { date: "3/06 (Vie)", title: "Llegada a Orlando", icon: "fa-plane-arrival", color: "text-blue-500", desc: "Recogida en MCO. Noche en CityWalk.", price: "Auto + Cena" },
-                    { date: "3/07 (Sáb)", title: "Universal Orlando", icon: "fa-hat-wizard", color: "text-purple-500", desc: "Entradas Park-to-Park para el Hogwarts Express.", price: "$190 - $230" },
-                    { date: "3/08 (Dom)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "Nuevo parque Epic Universe. Llegar temprano.", price: "Precios 2026" },
-                    { date: "3/09 (Lun)", title: "NASA (KSC)", icon: "fa-rocket", color: "text-orange-500", desc: "Kennedy Space Center (1h viaje). Cohetes reales.", price: "$75 - $89" },
-                    { date: "3/10 (Mar)", title: "Hacia Miami", icon: "fa-car-side", color: "text-indigo-500", desc: "3.5h viaje. Atardecer en South Beach.", price: "Estacionamiento" },
-                    { date: "3/11 (Mié)", title: "Parque Everglades", icon: "fa-otter", color: "text-green-600", desc: "Ver caimanes en Shark Valley (bicicleta).", price: "$35 por auto" },
-                    { date: "3/12 (Jue)", title: "Relax en Miami", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "Día de playa o distrito artístico Wynwood.", price: "Flexible" },
-                    { date: "3/13 (Vie)", title: "Regreso", icon: "fa-plane-departure", color: "text-red-500", desc: "Devolver auto en MIA. Vuelo a San Antonio.", price: "MIA a SAT" }
-                ]
-            }
-        };
+        // body
+        const body = document.createElement("div");
+        body.className = `px-5 pb-5 ${expandedByDefault ? "" : "hidden"}`;
 
-        function switchLang(lang) {
-            const data = translations[lang] || translations['zh'];
+        // reminders (highlight important)
+        const reminderBox = document.createElement("div");
+        reminderBox.className = `mt-3 rounded-2xl border p-4 ${isToday ? "bg-amber-50 border-amber-200" : "bg-indigo-50 border-indigo-100"}`;
+        reminderBox.innerHTML = `
+          <div class="font-bold text-indigo-900 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-bell"></i> ${t.reminders}
+          </div>
+          <ul class="text-sm space-y-2">
+            ${(d.reminders || []).map(r => {
+              const isImp = r.level === "important";
+              return `
+                <li class="flex gap-2 items-start">
+                  <span class="mt-2 inline-block w-2 h-2 rounded-full ${isImp ? "bg-amber-500" : "bg-indigo-500"}"></span>
+                  <span class="inline-block px-2 py-[2px] rounded text-[11px] font-bold ${isImp ? "bg-amber-200 text-amber-900" : "bg-indigo-200 text-indigo-900"}">
+                    ${isImp ? "IMPORTANT" : "INFO"}
+                  </span>
+                  <span class="${isImp ? "font-semibold text-amber-900" : "text-slate-700"}">${r.text}</span>
+                </li>
+              `;
+            }).join("")}
+          </ul>
+        `;
 
-            // Update page-level strings
-            document.title = data.page_title || document.title;
-            const navTitle = document.getElementById('nav-title');
-            const navSubtitle = document.getElementById('nav-subtitle');
-            if (navTitle && data.nav_title) navTitle.innerText = data.nav_title;
-            if (navSubtitle && data.nav_subtitle) navSubtitle.innerText = data.nav_subtitle;
+        // stops
+        const stopsWrap = document.createElement("div");
+        stopsWrap.className = "mt-4 space-y-3";
 
-            const shareInput = document.getElementById('shareUrl');
-            if (shareInput && data.share_placeholder) shareInput.placeholder = data.share_placeholder;
+        d.stops.forEach((s) => {
+          if (s.travel) {
+            const travel = document.createElement("div");
+            travel.className = "flex items-center gap-2 text-xs text-gray-500 pl-2";
+            travel.innerHTML = `<i class="fa-solid fa-car-side text-gray-400"></i> <span class="font-semibold">${t.travel_time}:</span> <span>${s.travel}</span>`;
+            stopsWrap.appendChild(travel);
+          }
 
-            // Update <html lang="">
-            const langMap = { zh: "zh-TW", en: "en", vi: "vi", ko: "ko", es: "es" };
-            document.documentElement.lang = langMap[lang] || "zh-TW";
+          const stayMins = (s.start && s.end) ? minutesBetween(s.start, s.end) : null;
 
-            // Update Google Map embed language (best-effort)
-            const frame = document.getElementById('mapFrame');
-            if (frame && frame.src) {
-                const target = langMap[lang] || "zh-TW";
-                // Replace the "!1s<lang>!" segment inside embed URL
-                frame.src = frame.src.replace(/!1s[^!]+!/, `!1s${target}!`);
-            }
-            document.getElementById('footer-title').innerText = data.footer_title;
-            document.getElementById('footer-desc').innerText = data.footer_desc;
-            const container = document.getElementById('itinerary-list');
-            container.innerHTML = '';
-            data.days.forEach((day, index) => {
-                container.innerHTML += `
-                    <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 relative">
-                        <div class="absolute -right-2 top-2 text-slate-50 font-black text-6xl select-none z-0">0${index + 1}</div>
-                        <div class="relative z-10">
-                            <div class="flex items-center gap-2 mb-2">
-                                <i class="fa-solid ${day.icon} ${day.color}"></i>
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">${day.date}</span>
-                            </div>
-                            <h2 class="text-xl font-bold mb-3 text-slate-800">${day.title}</h2>
-                            <p class="text-slate-600 text-sm leading-relaxed mb-6">${day.desc}</p>
-                            <div class="bg-slate-50 rounded-2xl p-4 flex items-center gap-3">
-                                <i class="fa-solid fa-tag text-slate-300"></i>
-                                <div class="text-[11px]">
-                                    <span class="font-bold text-slate-400 block uppercase">${data.info_label}</span>
-                                    <span class="text-indigo-900 font-bold">${day.price}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-            });
-        }
-        function shareLink() {
-            const input = document.getElementById('shareUrl');
-            const url = (input && input.value && input.value.trim()) ? input.value.trim() : window.location.href;
-            navigator.clipboard.writeText(url);
+          const stopCard = document.createElement("div");
+          stopCard.className = "bg-white rounded-2xl border border-slate-100 shadow-sm p-4";
 
-            const currentLang = document.getElementById('langSelect').value || 'zh';
-            const msg = (translations[currentLang] && translations[currentLang].share_msg) ? translations[currentLang].share_msg : translations['en'].share_msg;
-            alert(msg);
-        }
-        switchLang(document.getElementById('langSelect').value || 'zh');
-    </script>
-</body>
-</html>
-    </script>
+          const mapBtn = s.map ? `<a href="${s.map}" target="_blank" class="text-indigo-700 font-semibold hover:underline"><i class="fa-solid fa-location-dot"></i> ${t.open_map}</a>` : "";
+          const phoneLine = s.phone ? `
+            <div class="text-xs text-gray-600">
+              <span class="font-semibold">${t.stop_phone}:</span>
+              <a href="tel:${String(s.phone).replace(/\s/g,'')}" class="text-indigo-700 hover:underline">${s.phone}</a>
+            </div>` : "";
+
+          stopCard.innerHTML = `
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <div class="text-xs text-gray-500">
+                  ${s.start && s.end ? `<span class="font-semibold">${s.start}–${s.end}</span> ${stayMins ? `· ${humanDuration(stayMins, lang)}` : ""}` : ""}
+                </div>
+                <div class="font-bold text-indigo-900">${s.name}</div>
+              </div>
+              <div class="text-xs">${mapBtn}</div>
+            </div>
+
+            ${s.note ? `<div class="mt-2 text-sm text-gray-700"><span class="font-semibold text-slate-500">${t.notes}:</span> ${s.note}</div>` : ""}
+
+            <div class="mt-2 text-xs text-gray-600 space-y-1">
+              ${s.address ? `<div><span class="font-semibold">${t.stop_address}:</span> ${s.address}</div>` : ""}
+              ${phoneLine}
+            </div>
+          `;
+          stopsWrap.appendChild(stopCard);
+        });
+
+        body.appendChild(reminderBox);
+        body.appendChild(stopsWrap);
+
+        // accordion toggle (but don't toggle when clicking "copy day" button)
+        header.addEventListener("click", (ev) => {
+          if (ev.target.closest(".copyDayBtn")) return;
+          const isHidden = body.classList.contains("hidden");
+          body.classList.toggle("hidden", !isHidden);
+          header.querySelector(".dayToggleText").innerText = isHidden ? t.day_collapse : t.day_expand;
+          header.querySelector(".dayChevron").classList.toggle("rotate-180", isHidden);
+        });
+
+        dayCard.appendChild(header);
+        dayCard.appendChild(body);
+        container.appendChild(dayCard);
+      });
+
+      // Wire up per-day copy buttons
+      container.querySelectorAll(".copyDayBtn").forEach(btn => {
+        btn.addEventListener("click", async (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const dayId = btn.getAttribute("data-dayid");
+          const dayObj = tripData.days.find(x => x.id === dayId);
+          if (!dayObj) return;
+          try {
+            await copyTextToClipboard(buildDayText(dayObj, lang));
+            alert((translations[lang]||translations.en).share_msg);
+          } catch (e) {
+            alert("Copy failed");
+          }
+        });
+      });
+    }
+
+    // ===== Expenses =====
+    function renderExpenses(lang) {
+      const t = translations[lang] || translations.zh;
+
+      document.getElementById("expensesTitle").innerText = t.expenses;
+      document.getElementById("splitLabel").innerText = t.split_people;
+      document.getElementById("currencyLabel").innerText = t.currency;
+
+      document.getElementById("expDayCol").innerText = t.exp_cols.day;
+      document.getElementById("expTicketsCol").innerText = t.exp_cols.tickets;
+      document.getElementById("expHotelCol").innerText = t.exp_cols.hotel;
+      document.getElementById("expCarCol").innerText = t.exp_cols.car;
+      document.getElementById("expGasCol").innerText = t.exp_cols.gas;
+      document.getElementById("expParkingCol").innerText = t.exp_cols.parking;
+      document.getElementById("expFoodCol").innerText = t.exp_cols.food;
+      document.getElementById("expMiscCol").innerText = t.exp_cols.misc;
+      document.getElementById("expTotalCol").innerText = t.exp_cols.total;
+
+      document.getElementById("expGrandLabel").innerText = t.exp_grand;
+      document.getElementById("expSplitLabel").innerText = t.exp_per_person;
+      document.getElementById("expNote").innerText = t.exp_note;
+
+      const overrides = loadExpenseOverrides();
+      const tbody = document.getElementById("expensesTableBody");
+      tbody.innerHTML = "";
+
+      tripData.days.forEach((d) => {
+        const key = d.id;
+        const base = d.expenses || {};
+        const ov = overrides[key] || {};
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="p-2 border whitespace-nowrap">${d.label}</td>
+          ${["tickets","hotel","car","gas","parking","food","misc"].map(k => {
+            const val = (ov[k] ?? base[k] ?? 0);
+            return `<td class="p-2 border text-right">
+              <input data-day="${key}" data-k="${k}" type="number" step="1" min="0"
+                class="w-20 text-right text-sm rounded border px-2 py-1"
+                value="${val}">
+            </td>`;
+          }).join("")}
+          <td class="p-2 border text-right font-semibold" data-rowtotal="${key}">—</td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      tbody.querySelectorAll("input").forEach(inp => {
+        inp.addEventListener("input", () => {
+          const dayId = inp.dataset.day;
+          const k = inp.dataset.k;
+          const v = Number(inp.value || 0);
+
+          const all = loadExpenseOverrides();
+          all[dayId] = all[dayId] || {};
+          all[dayId][k] = v;
+          saveExpenseOverrides(all);
+
+          recomputeTotals(lang);
+        });
+      });
+
+      recomputeTotals(lang);
+    }
+
+    function recomputeTotals(lang) {
+      const currency = document.getElementById("currencySelect").value || "USD";
+      const people = Math.max(1, Number(document.getElementById("splitPeople").value || 1));
+      const overrides = loadExpenseOverrides();
+
+      let grand = 0;
+
+      tripData.days.forEach(d => {
+        const base = d.expenses || {};
+        const ov = overrides[d.id] || {};
+        const total = ["tickets","hotel","car","gas","parking","food","misc"].reduce(
+          (sum,k)=> sum + Number(ov[k] ?? base[k] ?? 0), 0
+        );
+        grand += total;
+
+        const cell = document.querySelector(`[data-rowtotal="${d.id}"]`);
+        if (cell) cell.innerText = `${currency} ${total.toFixed(0)}`;
+      });
+
+      document.getElementById("expGrandTotalCell").innerText = `${currency} ${grand.toFixed(0)}`;
+      document.getElementById("expGrandValue").innerText = `${currency} ${grand.toFixed(0)}  ·  ${people} pax`;
+      document.getElementById("expSplitValue").innerText = `${currency} ${(grand/people).toFixed(0)}`;
+    }
+
+    // ===== Language switch =====
+    function applyLang(lang) {
+      const t = translations[lang] || translations.zh;
+      document.title = t.page_title;
+
+      document.getElementById("nav-title").innerText = t.nav_title;
+      document.getElementById("nav-subtitle").innerText = t.nav_subtitle;
+
+      document.getElementById("copyTodayLabel").innerText = t.copy_today;
+      document.getElementById("exportIcsLabel").innerText = t.export_ics;
+
+      document.getElementById("itineraryTitle").innerText = t.itinerary_title;
+      document.getElementById("itineraryTip").innerText = t.itinerary_tip;
+
+      document.getElementById("shareLabel").innerText = t.share_label;
+      const shareUrl = document.getElementById("shareUrl");
+      shareUrl.placeholder = t.share_placeholder;
+      document.getElementById("shareHint").innerText = t.share_hint;
+
+      document.getElementById("footerTitle").innerText = t.footer_title;
+      document.getElementById("footerDesc").innerText = t.footer_desc;
+
+      // Update <html lang="">
+      const langMap = { zh: "zh-TW", en: "en", es: "es", ko: "ko", vi: "vi" };
+      document.documentElement.lang = langMap[lang] || "zh-TW";
+
+      // Update map language (best-effort): replace "!1sxx-XX!"
+      const frame = document.getElementById("mapFrame");
+      if (frame && frame.src) {
+        const target = langMap[lang] || "zh-TW";
+        frame.src = frame.src.replace(/!1s[^!]+!/, `!1s${target}!`);
+      }
+
+      // Re-render
+      renderInfo(lang);
+      renderDays(lang);
+
+      // Reset expenses panel label to OPEN on lang change
+      document.getElementById("toggleExpensesLabel").innerText = t.expenses_toggle_open;
+      document.getElementById("expensesPanel").classList.add("hidden");
+      renderExpenses(lang);
+
+      document.getElementById("lastUpdatedBadge").innerText = formatLastUpdated(lang);
+    }
+
+    // ===== Share link =====
+    async function shareLink() {
+      const lang = document.getElementById("langSelect").value || "zh";
+      const t = translations[lang] || translations.zh;
+      const input = document.getElementById("shareUrl");
+      const url = (input && input.value && input.value.trim()) ? input.value.trim() : window.location.href;
+      try {
+        await copyTextToClipboard(url);
+        alert(t.share_msg);
+      } catch(e) {
+        alert("Copy failed");
+      }
+    }
+
+    // ===== Wire up UI =====
+    const langSelect = document.getElementById("langSelect");
+    const copyTodayBtn = document.getElementById("copyTodayBtn");
+    const exportIcsBtn = document.getElementById("exportIcsBtn");
+    const shareBtn = document.getElementById("shareBtn");
+    const copyShareBtn = document.getElementById("copyShareBtn");
+
+    const toggleExpensesBtn = document.getElementById("toggleExpensesBtn");
+    const expensesPanel = document.getElementById("expensesPanel");
+    const splitPeople = document.getElementById("splitPeople");
+    const currencySelect = document.getElementById("currencySelect");
+
+    langSelect.addEventListener("change", () => applyLang(langSelect.value));
+
+    copyTodayBtn.addEventListener("click", async () => {
+      const lang = langSelect.value || "zh";
+      const t = translations[lang] || translations.zh;
+      const dayObj = getTodayOrFirstTripDay();
+      try {
+        await copyTextToClipboard(buildDayText(dayObj, lang));
+        alert(t.share_msg);
+      } catch(e) {
+        alert("Copy failed");
+      }
+    });
+
+    exportIcsBtn.addEventListener("click", () => {
+      const lang = langSelect.value || "zh";
+      // quick menu: export full trip; if you want today only, call exportIcs(lang, true)
+      exportIcs(lang, false);
+    });
+
+    shareBtn.addEventListener("click", shareLink);
+    copyShareBtn.addEventListener("click", shareLink);
+
+    toggleExpensesBtn.addEventListener("click", () => {
+      const lang = langSelect.value || "zh";
+      const t = translations[lang] || translations.zh;
+      const open = expensesPanel.classList.contains("hidden");
+      expensesPanel.classList.toggle("hidden");
+      document.getElementById("toggleExpensesLabel").innerText = open ? t.expenses_toggle_close : t.expenses_toggle_open;
+    });
+
+    splitPeople.addEventListener("input", () => recomputeTotals(langSelect.value || "zh"));
+    currencySelect.addEventListener("change", () => recomputeTotals(langSelect.value || "zh"));
+
+    // ===== Init =====
+    applyLang(langSelect.value || "zh");
+  </script>
 </body>
 </html>
