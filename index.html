@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Florida Spring Trip 2026</title>
+    <title>Florida Spring Trip 2026 | Josephine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* 確保地圖滾輪操作流暢 */
         iframe { pointer-events: auto; }
         .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #e2e8f0; z-index: 0; }
     </style>
@@ -36,23 +35,19 @@
     </nav>
 
     <div class="w-full h-80 md:h-96 bg-gray-200 border-b-4 border-indigo-900 shadow-inner">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3591465.341147043!2d-83.3944645062534!3d28.373530616900445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sFlorida%20Attractions!5e0!3m2!1szh-TW!2sus!4v1707500000000!5m2!1szh-TW!2sus" 
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3547942.502941093!2d-82.44971865!3d27.994402399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-TW!2sus!4v1700000000000" 
                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
 
     <main class="container mx-auto px-4 py-10 max-w-2xl relative">
         <div class="timeline-line hidden md:block"></div>
-        
-        <div id="itinerary-list" class="space-y-10 relative z-10">
-            </div>
+        <div id="itinerary-list" class="space-y-10 relative z-10"></div>
 
         <div class="mt-16 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-indigo-600">
             <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2 text-lg">
-                <i class="fa-solid fa-car-side"></i> <span id="footer-title">租車與交通提醒</span>
+                <i class="fa-solid fa-car-side"></i> <span id="footer-title"></span>
             </h3>
-            <p class="text-gray-600 text-sm leading-relaxed" id="footer-desc">
-                建議從奧蘭多 (MCO) 取車，最後在邁阿密 (MIA) 還車。3/13 結束後直接從邁阿密飛回聖安東尼奧 (SAT) 最方便！
-            </p>
+            <p class="text-gray-600 text-sm leading-relaxed" id="footer-desc"></p>
         </div>
     </main>
 
@@ -64,49 +59,92 @@
                 footer_desc: "建議從奧蘭多 (MCO) 取車，最後在邁阿密 (MIA) 還車。3/13 結束後直接從邁阿密飛回聖安東尼奧 (SAT) 最方便！",
                 info_label: "預估票價與資訊",
                 days: [
-                    { date: "3/06 (Fri)", title: "抵達奧蘭多", icon: "fa-plane-arrival", color: "text-blue-500", desc: "抵達 <a href='https://maps.app.goo.gl/YyR9QpYV5W5r9m589' target='_blank' class='text-indigo-600 font-bold underline'>MCO 機場</a> 取車。晚上去 CityWalk 走走。", price: "門票：無 / 預算：租車與晚餐" },
-                    { date: "3/07 (Sat)", title: "環球影城雙園", icon: "fa-hat-wizard", color: "text-purple-500", desc: "前往 <a href='https://maps.app.goo.gl/uS2C3r3m5B5r9m589' target='_blank' class='text-indigo-600 font-bold underline'>Universal Orlando</a>。搭火車穿梭兩園。", price: "門票：約 $190 - $230" },
-                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "探索最新園區 <a href='https://maps.app.goo.gl/X9C3r3m5B5r9m589' target='_blank' class='text-indigo-600 font-bold underline'>Epic Universe</a>。建議一早出發。", price: "門票：依 2026 官網公告" },
-                    { date: "3/09 (Mon)", title: "NASA 甘迺迪航太中心", icon: "fa-rocket", color: "text-orange-500", desc: "開往 <a href='https://maps.app.goo.gl/NASA12345' target='_blank' class='text-indigo-600 font-bold underline'>KSC 航太中心</a>。看火箭發射場。", price: "門票：成人約 $75 - $89" },
-                    { date: "3/10 (Tue)", title: "前往邁阿密", icon: "fa-car-side", color: "text-indigo-500", desc: "向南開往邁阿密。下午抵達 <a href='https://maps.app.goo.gl/SouthBeach' target='_blank' class='text-indigo-600 font-bold underline'>South Beach</a> 看日落。", price: "門票：免費 / 預算：市區停車" },
-                    { date: "3/11 (Wed)", title: "大沼澤國家公園", icon: "fa-otter", color: "text-green-600", desc: "在 <a href='https://maps.app.goo.gl/SharkValley' target='_blank' class='text-indigo-600 font-bold underline'>Shark Valley</a> 騎單車看野生鱷魚。", price: "門票：每車約 $35" },
-                    { date: "3/12 (Thu)", title: "邁阿密輕鬆日", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "在邁阿密海灘放鬆，或逛逛 Wynwood Walls 藝術區。", price: "自由行程" },
-                    { date: "3/13 (Fri)", title: "回程", icon: "fa-plane-departure", color: "text-red-500", desc: "在 <a href='https://maps.app.goo.gl/MIAPlane' target='_blank' class='text-indigo-600 font-bold underline'>MIA 機場</a> 還車，飛回聖安東尼奧。", price: "機票：MIA to SAT" }
+                    { date: "3/06 (Fri)", title: "抵達奧蘭多", icon: "fa-plane-arrival", color: "text-blue-500", desc: "抵達 <a href='https://maps.app.goo.gl/pW6z6S7QG8W9X4J48' target='_blank' class='text-indigo-600 font-bold underline'>MCO 機場</a> 取車。晚上去 CityWalk 走走。", price: "門票：無 / 預算：租車與晚餐" },
+                    { date: "3/07 (Sat)", title: "環球影城雙園", icon: "fa-hat-wizard", color: "text-purple-500", desc: "前往 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>Universal Orlando</a>。搭火車穿梭兩園。", price: "門票：約 $190 - $230" },
+                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "探索最新園區 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>Epic Universe</a>。建議一早出發。", price: "門票：依 2026 官網公告" },
+                    { date: "3/09 (Mon)", title: "NASA 甘迺迪航太中心", icon: "fa-rocket", color: "text-orange-500", desc: "開往 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>KSC 航太中心</a>。看火箭發射場。", price: "門票：成人約 $75 - $89" },
+                    { date: "3/10 (Tue)", title: "移師邁阿密", icon: "fa-car-side", color: "text-indigo-500", desc: "南下邁阿密。下午抵達 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>South Beach</a> 看日落。", price: "門票：免費 / 預算：市區停車" },
+                    { date: "3/11 (Wed)", title: "大沼澤國家公園", icon: "fa-otter", color: "text-green-600", desc: "在 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>Shark Valley</a> 騎單車看野生鱷魚。", price: "門票：每車約 $35" },
+                    { date: "3/12 (Thu)", title: "邁阿密輕鬆日", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "在海灘放鬆，或逛逛 Wynwood Walls 藝術區。", price: "自由行程" },
+                    { date: "3/13 (Fri)", title: "回程", icon: "fa-plane-departure", color: "text-red-500", desc: "在 <a href='https://maps.app.goo.gl/uX3L5V5W5X5V5W5X5' target='_blank' class='text-indigo-600 font-bold underline'>MIA 機場</a> 還車，飛回聖安東尼奧。", price: "機票：MIA to SAT" }
                 ]
             },
             en: {
                 share_msg: "Link Copied!",
                 footer_title: "Rental & Transport",
-                footer_desc: "MCO Pick-up, MIA Drop-off. Fly back to SAT from MIA on 3/13.",
+                footer_desc: "MCO Pick-up, MIA Drop-off. Fly back to SAT from MIA on 3/13 is recommended.",
                 info_label: "Est. Price & Info",
                 days: [
-                    { date: "3/06 (Fri)", title: "Arrival Orlando", icon: "fa-plane-arrival", color: "text-blue-500", desc: "Arrive at MCO. Pick up car and groceries.", price: "N/A" },
-                    { date: "3/07 (Sat)", title: "Universal Orlando", icon: "fa-hat-wizard", color: "text-purple-500", desc: "Visit Universal Orlando. 2-Park tickets.", price: "$190 - $230" },
-                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "Whole day at the brand new Epic Universe.", price: "Check 2026 Price" },
-                    { date: "3/09 (Mon)", title: "NASA KSC", icon: "fa-rocket", color: "text-orange-500", desc: "Drive to Kennedy Space Center.", price: "$75 - $89" },
-                    { date: "3/10 (Tue)", title: "To Miami", icon: "fa-car-side", color: "text-indigo-500", desc: "3.5h drive. Sunset at South Beach.", price: "Parking fee" },
-                    { date: "3/11 (Wed)", title: "Everglades NP", icon: "fa-otter", color: "text-green-600", desc: "Alligator watching at Shark Valley.", price: "$35/Car" },
-                    { date: "3/12 (Thu)", title: "Miami Beach Relax", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "Beach day and city walk.", price: "Flexible" },
-                    { date: "3/13 (Fri)", title: "Departure", icon: "fa-plane-departure", color: "text-red-500", desc: "Return car at MIA, fly back to SAT.", price: "MIA to SAT" }
+                    { date: "3/06 (Fri)", title: "Arrival Orlando", icon: "fa-plane-arrival", color: "text-blue-500", desc: "Arrive at MCO. Pick up car and check-in. Evening at CityWalk.", price: "Budget: Rental + Dinner" },
+                    { date: "3/07 (Sat)", title: "Universal Orlando", icon: "fa-hat-wizard", color: "text-purple-500", desc: "Visit Universal Orlando. Park-to-Park recommended.", price: "$190 - $230" },
+                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "Explore the brand new Epic Universe. Arrive early.", price: "Check 2026 Prices" },
+                    { date: "3/09 (Mon)", title: "NASA KSC", icon: "fa-rocket", color: "text-orange-500", desc: "Drive to Kennedy Space Center. Rocket garden tour.", price: "$75 - $89" },
+                    { date: "3/10 (Tue)", title: "To Miami", icon: "fa-car-side", color: "text-indigo-500", desc: "3.5h drive. Afternoon at South Beach for sunset.", price: "Parking fee" },
+                    { date: "3/11 (Wed)", title: "Everglades NP", icon: "fa-otter", color: "text-green-600", desc: "Biking at Shark Valley to see alligators.", price: "$35/Car" },
+                    { date: "3/12 (Thu)", title: "Miami Relax", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "Beach day or visit Wynwood Walls art district.", price: "Flexible" },
+                    { date: "3/13 (Fri)", title: "Departure", icon: "fa-plane-departure", color: "text-red-500", desc: "Drop off at MIA Airport. Fly back to San Antonio.", price: "MIA to SAT" }
+                ]
+            },
+            vi: {
+                share_msg: "Đã sao chép liên kết!",
+                footer_title: "Thuê xe & Di chuyển",
+                footer_desc: "Nhận xe tại MCO, trả tại MIA. Bay về San Antonio từ MIA vào ngày 3/13.",
+                info_label: "Giá vé & Thông tin",
+                days: [
+                    { date: "3/06 (Fri)", title: "Đến Orlando", icon: "fa-plane-arrival", color: "text-blue-500", desc: "Nhận xe tại sân bay MCO. Buổi tối dạo chơi CityWalk.", price: "Phí thuê xe & Ăn tối" },
+                    { date: "3/07 (Sat)", title: "Universal Orlando", icon: "fa-hat-wizard", color: "text-purple-500", desc: "Mua vé Park-to-Park để đi tàu Hogwarts Express.", price: "$190 - $230" },
+                    { date: "3/08 (Sun)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "Khám phá công viên mới Epic Universe. Nên đi sớm.", price: "Theo giá 2026" },
+                    { date: "3/09 (Mon)", title: "Trung tâm NASA", icon: "fa-rocket", color: "text-orange-500", desc: "Tham quan Kennedy Space Center (1 tiếng lái xe).", price: "$75 - $89" },
+                    { date: "3/10 (Tue)", title: "Đi Miami", icon: "fa-car-side", color: "text-indigo-500", desc: "Lái xe 3.5 tiếng. Ngắm hoàng hôn tại South Beach.", price: "Phí đậu xe tự túc" },
+                    { date: "3/11 (Wed)", title: "Vườn quốc gia Everglades", icon: "fa-otter", color: "text-green-600", desc: "Đạp xe ngắm cá sấu tại Shark Valley.", price: "$35/xe" },
+                    { date: "3/12 (Thu)", title: "Thư giãn tại Miami", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "Nghỉ ngơi tại biển hoặc xem nghệ thuật Wynwood.", price: "Tự do" },
+                    { date: "3/13 (Fri)", title: "Trở về", icon: "fa-plane-departure", color: "text-red-500", desc: "Trả xe tại MIA, bay về San Antonio.", price: "MIA về SAT" }
+                ]
+            },
+            ko: {
+                share_msg: "링크가 복사되었습니다!",
+                footer_title: "렌터카 및 교통",
+                footer_desc: "MCO 대여, MIA 반납 권장. 3/13 MIA에서 샌안토니오행 추천.",
+                info_label: "예상 가격 및 정보",
+                days: [
+                    { date: "3/06 (금)", title: "올랜도 도착", icon: "fa-plane-arrival", color: "text-blue-500", desc: "MCO 공항 렌터카 수령. 저녁에 CityWalk 방문.", price: "렌트비 & 저녁식사" },
+                    { date: "3/07 (토)", title: "유니버설 올랜도", icon: "fa-hat-wizard", color: "text-purple-500", desc: "파크 투 파크 추천. 호그와트 급행열차 탑승.", price: "$190 - $230" },
+                    { date: "3/08 (일)", title: "에픽 유니버스", icon: "fa-star", color: "text-yellow-500", desc: "신규 파크 에픽 유니버스 관람. 일찍 입장 추천.", price: "공식 홈페이지 확인" },
+                    { date: "3/09 (월)", title: "NASA 케네디 센터", icon: "fa-rocket", color: "text-orange-500", desc: "우주 센터 방문 (차로 1시간). 로켓 정원 관람.", price: "$75 - $89" },
+                    { date: "3/10 (화)", title: "마이애미 이동", icon: "fa-car-side", color: "text-indigo-500", desc: "3.5시간 드라이브. 사우스 비치 일몰 감상.", price: "주차비 별도" },
+                    { date: "3/11 (수)", title: "에버글레이즈 국립공원", icon: "fa-otter", color: "text-green-600", desc: "샤크 밸리에서 자전거 타고 악어 관찰.", price: "$35/차량" },
+                    { date: "3/12 (목)", title: "마이애미 휴식", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "해변 휴식 또는 윈우드 월즈 예술 지구 관광.", price: "자유 일정" },
+                    { date: "3/13 (금)", title: "귀환", icon: "fa-plane-departure", color: "text-red-500", desc: "MIA 공항 반납 후 샌안토니오행 비행기 탑승.", price: "MIA - SAT" }
+                ]
+            },
+            es: {
+                share_msg: "¡Enlace copiado!",
+                footer_title: "Alquiler y Transporte",
+                footer_desc: "Recogida en MCO, devolución en MIA. Vuelo MIA a SAT el 3/13.",
+                info_label: "Precios e Información",
+                days: [
+                    { date: "3/06 (Vie)", title: "Llegada a Orlando", icon: "fa-plane-arrival", color: "text-blue-500", desc: "Recogida en MCO. Noche en CityWalk.", price: "Auto + Cena" },
+                    { date: "3/07 (Sáb)", title: "Universal Orlando", icon: "fa-hat-wizard", color: "text-purple-500", desc: "Entradas Park-to-Park para el Hogwarts Express.", price: "$190 - $230" },
+                    { date: "3/08 (Dom)", title: "Epic Universe", icon: "fa-star", color: "text-yellow-500", desc: "Nuevo parque Epic Universe. Llegar temprano.", price: "Precios 2026" },
+                    { date: "3/09 (Lun)", title: "NASA (KSC)", icon: "fa-rocket", color: "text-orange-500", desc: "Kennedy Space Center (1h viaje). Cohetes reales.", price: "$75 - $89" },
+                    { date: "3/10 (Mar)", title: "Hacia Miami", icon: "fa-car-side", color: "text-indigo-500", desc: "3.5h viaje. Atardecer en South Beach.", price: "Estacionamiento" },
+                    { date: "3/11 (Mié)", title: "Parque Everglades", icon: "fa-otter", color: "text-green-600", desc: "Ver caimanes en Shark Valley (bicicleta).", price: "$35 por auto" },
+                    { date: "3/12 (Jue)", title: "Relax en Miami", icon: "fa-umbrella-beach", color: "text-cyan-500", desc: "Día de playa o distrito artístico Wynwood.", price: "Flexible" },
+                    { date: "3/13 (Vie)", title: "Regreso", icon: "fa-plane-departure", color: "text-red-500", desc: "Devolver auto en MIA. Vuelo a San Antonio.", price: "MIA a SAT" }
                 ]
             }
-            // (越南、韓、西語可依此類推)
         };
 
         function switchLang(lang) {
             const data = translations[lang] || translations['zh'];
-            
             document.getElementById('footer-title').innerText = data.footer_title;
             document.getElementById('footer-desc').innerText = data.footer_desc;
-
             const container = document.getElementById('itinerary-list');
             container.innerHTML = '';
-
             data.days.forEach((day, index) => {
-                const card = `
+                container.innerHTML += `
                     <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 relative">
                         <div class="absolute -right-2 top-2 text-slate-50 font-black text-6xl select-none z-0">0${index + 1}</div>
-                        
                         <div class="relative z-10">
                             <div class="flex items-center gap-2 mb-2">
                                 <i class="fa-solid ${day.icon} ${day.color}"></i>
@@ -114,7 +152,6 @@
                             </div>
                             <h2 class="text-xl font-bold mb-3 text-slate-800">${day.title}</h2>
                             <p class="text-slate-600 text-sm leading-relaxed mb-6">${day.desc}</p>
-                            
                             <div class="bg-slate-50 rounded-2xl p-4 flex items-center gap-3">
                                 <i class="fa-solid fa-tag text-slate-300"></i>
                                 <div class="text-[11px]">
@@ -123,17 +160,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                `;
-                container.innerHTML += card;
+                    </div>`;
             });
         }
-
         function shareLink() {
             navigator.clipboard.writeText(window.location.href);
-            alert("網址已複製！");
+            const currentLang = document.getElementById('langSelect').value;
+            alert(translations[currentLang].share_msg);
         }
-
         switchLang('zh');
     </script>
 </body>
