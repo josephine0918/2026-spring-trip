@@ -20,7 +20,7 @@
     <div class="container mx-auto flex flex-wrap justify-between items-center gap-3">
       <div>
         <h1 class="font-bold text-lg tracking-tight">Florida Trip 2026 🌴</h1>
-        <p class="text-[10px] text-indigo-300 italic">March 07 - March 14 · SAT → MIA → ORL → SAT</p>
+        <p class="text-[10px] text-indigo-300 italic">March 07 - March 14 · SAT → MCO → MIA → ORL → MCO → SAT</p>
       </div>
 
       <div class="flex items-center gap-2">
@@ -64,15 +64,15 @@
           </div>
           <div class="flex justify-between gap-2">
             <span class="text-gray-500" id="infoRouteLabel">路線</span>
-            <span class="font-semibold text-right" id="infoRouteValue">SAT → MIA →（自駕）→ Orlando → MCO → SAT</span>
+            <span class="font-semibold text-right" id="infoRouteValue">SAT → MCO →（自駕）→ Miami →（自駕）→ Orlando/Kissimmee → MCO → SAT</span>
           </div>
           <div class="flex justify-between gap-2">
             <span class="text-gray-500" id="infoMustLabel">必去</span>
-            <span class="font-semibold text-right" id="infoMustValue">Everglades / South Beach / Gulf Stream / Universal / Epic / KSC(3/12) / Silver Springs</span>
+            <span class="font-semibold text-right" id="infoMustValue">Everglades / South Beach / Universal / KSC(3/12) / Disney Springs / Silver Springs</span>
           </div>
           <div class="flex justify-between gap-2">
             <span class="text-gray-500" id="infoCarLabel">租車建議</span>
-            <span class="font-semibold text-right" id="infoCarValue">MIA 取車、MCO 還車（one-way）</span>
+            <span class="font-semibold text-right" id="infoCarValue">MCO 取車、MCO 還車（3/7 11:00 – 3/14 11:00）</span>
           </div>
         </div>
 
@@ -415,193 +415,690 @@
   // ===== Trip content (你之後要新增翻譯：補 es/ko/vi 即可) =====
   // 目前：es/ko/vi 先給空字串會 fallback 英文
   const tripData = {
-    days: [
-      {
-        id: "d1", month: 3, day: 7, label: "3/07 (Sat)",
-        title: {
-          zh: "SAT → 邁阿密（MIA）＋南海灘",
-          en: "SAT → Miami (MIA) + South Beach",
-          es: "",
-          ko: "",
-          vi: ""
+  "days": [
+    {
+      "id": "d1",
+      "month": 3,
+      "day": 7,
+      "label": "3/07 (Sat)",
+      "title": {
+        "zh": "SAT → Orlando（MCO）→ 自駕到 Miami",
+        "en": "SAT → Orlando (MCO) → drive to Miami",
+        "es": "",
+        "ko": "",
+        "vi": ""
+      },
+      "reminders": [
+        {
+          "level": "important",
+          "text": {
+            "zh": "固定：06:00–09:00 SAT→MCO；11:00 取車（3/7 11:00 – 3/14 11:00）",
+            "en": "Fixed: 06:00–09:00 SAT→MCO; pick up car at 11:00 (3/7 11:00 – 3/14 11:00).",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
         },
-        reminders: [
-          { level: "important", text: {
-            zh: "抵達 MIA 後取車；Miami 停車偏貴，住宿盡量找含停車",
-            en: "Pick up the rental car after landing at MIA. Parking in Miami is pricey—choose lodging with parking if possible.",
-            es: "", ko: "", vi: ""
-          }},
-          { level: "info", text: {
-            zh: "晚上 South Beach + Ocean Drive 散步",
-            en: "Evening walk at South Beach + Ocean Drive",
-            es: "", ko: "", vi: ""
-          }}
-        ],
-        stops: [
-          { start:"12:00", end:"14:00", name:{
-              zh:"飛行：SAT → MIA", en:"Flight: SAT → MIA", es:"", ko:"", vi:""
-            }, address:"SAT → MIA", map:"https://maps.google.com/?q=Miami+International+Airport", note:{
-              zh:"時段可依你的航班調整（這裡先放範例）。",
-              en:"Adjust this time based on your actual flight (sample time shown).",
-              es:"", ko:"", vi:""
-            }
-          },
-          { travel:"30–60 min", start:"14:00", end:"15:00", name:{
-              zh:"MIA 取車＋前往住宿", en:"Pick up car at MIA + drive to hotel", es:"", ko:"", vi:""
-            }, address:"Miami International Airport, 2100 NW 42nd Ave, Miami, FL 33142", phone:"+1 305-876-7000", map:"https://maps.google.com/?q=Miami+International+Airport", note:{
-              zh:"確認 toll（電子收費）設定。", en:"Confirm toll (electronic toll) settings.", es:"", ko:"", vi:""
-            }
-          },
-          { travel:"20–30 min", start:"17:30", end:"20:30", name:{
-              zh:"South Beach 南海灘＋Ocean Drive", en:"South Beach + Ocean Drive", es:"", ko:"", vi:""
-            }, address:"Ocean Dr, Miami Beach, FL 33139", map:"https://maps.google.com/?q=South+Beach+Miami", note:{
-              zh:"夕陽散步＋晚餐；留意停車費。", en:"Sunset stroll + dinner; watch for parking fees.", es:"", ko:"", vi:""
-            }
+        {
+          "level": "info",
+          "text": {
+            "zh": "今天主要是長途移動日：MCO → Miami 約 3.5–4 小時（Florida Turnpike）",
+            "en": "Mainly a travel day: MCO → Miami ~3.5–4 hours via Florida Turnpike.",
+            "es": "",
+            "ko": "",
+            "vi": ""
           }
-        ]
+        }
+      ],
+      "stops": [
+        {
+          "start": "06:00",
+          "end": "09:00",
+          "name": {
+            "zh": "飛行：SAT → MCO",
+            "en": "Flight: SAT → MCO",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "SAT → MCO",
+          "map": "https://maps.google.com/?q=Orlando+International+Airport",
+          "note": {
+            "zh": "固定時段（依你的實際航班可微調）。",
+            "en": "Fixed window (adjust to your actual flight if needed).",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "travel": "1–2 hr",
+          "name": {
+            "zh": "取行李＋機場接駁＋取車",
+            "en": "Baggage + shuttle + pick up rental car",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "Orlando International Airport (MCO)",
+          "map": "https://maps.google.com/?q=Orlando+International+Airport",
+          "note": {
+            "zh": "取車時間固定 11:00；確認 toll / SunPass 設定。",
+            "en": "Car pick-up fixed at 11:00; confirm toll/SunPass settings.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "travel": "3.5–4 hr",
+          "name": {
+            "zh": "自駕：MCO → Miami（可停 Turnpike Service Plaza）",
+            "en": "Drive: MCO → Miami (optional service plaza stops)",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "Orlando to Miami",
+          "map": "https://maps.google.com/?q=Orlando+to+Miami",
+          "note": {
+            "zh": "推薦停靠：Turkey Lake / Fort Drum / Fort Pierce / West Palm。",
+            "en": "Suggested stops: Turkey Lake / Fort Drum / Fort Pierce / West Palm.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "晚上：South Beach + Ocean Drive",
+            "en": "Evening: South Beach + Ocean Drive",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "Ocean Dr, Miami Beach, FL 33139",
+          "map": "https://maps.google.com/?q=South+Beach+Miami",
+          "note": {
+            "zh": "South Beach 24H；餐廳多到 22:00 後。停車費偏貴。",
+            "en": "South Beach is 24h; many restaurants open past 10pm. Parking is pricey.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "d2",
+      "month": 3,
+      "day": 8,
+      "label": "3/08 (Sun)",
+      "title": {
+        "zh": "Everglades（Shark Valley）+ 夜間活動",
+        "en": "Everglades (Shark Valley) + night event",
+        "es": "",
+        "ko": "",
+        "vi": ""
       },
-
-      {
-        id: "d2", month: 3, day: 8, label: "3/08 (Sun)",
-        title: { zh:"大沼澤 Everglades（Shark Valley）", en:"Everglades (Shark Valley)", es:"", ko:"", vi:"" },
-        reminders: [
-          { level:"important", text:{ zh:"防曬＋水＋帽子；早到比較不排隊", en:"Sunscreen + water + hat. Arrive early to avoid lines.", es:"", ko:"", vi:"" } }
-        ],
-        stops: [
-          { start:"09:00", end:"12:30", name:{ zh:"Shark Valley Visitor Center", en:"Shark Valley Visitor Center", es:"", ko:"", vi:"" },
-            address:"36000 SW 8th St, Miami, FL 33194", phone:"+1 305-221-8776",
-            map:"https://maps.google.com/?q=Shark+Valley+Visitor+Center",
-            note:{ zh:"可租腳踏車或搭 Tram；很容易看到鱷魚。", en:"Rent bikes or take the tram—alligators are common.", es:"", ko:"", vi:"" }
-          },
-          { travel:"45–70 min", start:"16:00", end:"18:30", name:{ zh:"回 Miami 自由活動（Little Havana 可選）", en:"Back to Miami (optional: Little Havana)", es:"", ko:"", vi:"" },
-            address:"Little Havana, Miami, FL", map:"https://maps.google.com/?q=Little+Havana+Miami",
-            note:{ zh:"咖啡＋古巴風情街區。", en:"Coffee and Cuban vibes.", es:"", ko:"", vi:"" }
+      "reminders": [
+        {
+          "level": "important",
+          "text": {
+            "zh": "Shark Valley 08:30–17:00；防曬＋水＋帽子",
+            "en": "Shark Valley 08:30–17:00; sunscreen + water + hat.",
+            "es": "",
+            "ko": "",
+            "vi": ""
           }
-        ]
+        },
+        {
+          "level": "info",
+          "text": {
+            "zh": "晚上：Monster Jam / Demolition Derby（通常 19:00–19:30 起；依城市與日期）",
+            "en": "Night: Monster Jam / Demolition Derby (often 7:00–7:30pm; varies by city/date).",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        }
+      ],
+      "stops": [
+        {
+          "name": {
+            "zh": "Everglades – Shark Valley Visitor Center",
+            "en": "Everglades – Shark Valley Visitor Center",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "36000 SW 8th St, Miami, FL 33194",
+          "phone": "+1 305-221-8776",
+          "map": "https://maps.google.com/?q=Shark+Valley+Visitor+Center",
+          "note": {
+            "zh": "可租腳踏車或搭 Tram；很容易看到鱷魚。營業時間 08:30–17:00。",
+            "en": "Rent bikes or take the tram; alligators are common. Hours 08:30–17:00.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "晚上活動（選擇性）",
+            "en": "Night event (optional)",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "Miami / nearby venue (TBD)",
+          "map": "https://www.monsterjam.com/en-us/tickets/",
+          "note": {
+            "zh": "建議用官方日程搜尋「Miami / Fort Lauderdale」確認是否有場次。",
+            "en": "Check the official schedule for Miami/Fort Lauderdale to confirm a show.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "d3",
+      "month": 3,
+      "day": 9,
+      "label": "3/09 (Mon)",
+      "title": {
+        "zh": "Miami 海岸 + 前往 Orlando/Kissimmee",
+        "en": "Miami coast + drive to Orlando/Kissimmee",
+        "es": "",
+        "ko": "",
+        "vi": ""
       },
-
-      {
-        id:"d3", month:3, day:9, label:"3/09 (Mon)",
-        title:{ zh:"墨西哥灣暖流（Gulf Stream）體驗＋開去奧蘭多", en:"Gulf Stream experience + drive to Orlando", es:"", ko:"", vi:"" },
-        reminders:[
-          { level:"important", text:{ zh:"今天移動較多：建議早出發，晚上抵達 Orlando", en:"More driving today—start early and arrive in Orlando at night.", es:"", ko:"", vi:"" } },
-          { level:"info", text:{ zh:"Gulf Stream 最有感通常是 Palm Beach/Jupiter 一帶的海上活動", en:"Best Gulf Stream feel is usually via boat/snorkel around Palm Beach/Jupiter.", es:"", ko:"", vi:"" } }
-        ],
-        stops:[
-          { start:"09:00", end:"10:30", name:{ zh:"自駕：Miami → West Palm Beach", en:"Drive: Miami → West Palm Beach", es:"", ko:"", vi:"" },
-            address:"Miami to West Palm Beach", map:"https://maps.google.com/?q=Miami+to+West+Palm+Beach",
-            note:{ zh:"車程約 1.5 小時（看交通）。", en:"~1.5 hours depending on traffic.", es:"", ko:"", vi:"" }
-          },
-          { travel:"15–25 min", start:"11:30", end:"14:30", name:{ zh:"Gulf Stream 近海體驗（浮潛/出海，擇一）", en:"Nearshore Gulf Stream activity (snorkel/boat—pick one)", es:"", ko:"", vi:"" },
-            address:"Phil Foster Park / Peanut Island (Palm Beach)", map:"https://maps.google.com/?q=Phil+Foster+Park",
-            note:{ zh:"如果你指的是 Gulfstream Park（賽馬場/娛樂城），可改 Hallandale Beach。", en:"If you meant Gulfstream Park (racing/casino), swap to Hallandale Beach.", es:"", ko:"", vi:"" }
-          },
-          { travel:"2.5–3 hr", start:"16:30", end:"19:30", name:{ zh:"自駕：West Palm Beach → Orlando", en:"Drive: West Palm Beach → Orlando", es:"", ko:"", vi:"" },
-            address:"West Palm Beach to Orlando", map:"https://maps.google.com/?q=West+Palm+Beach+to+Orlando",
-            note:{ zh:"抵達後入住，為隔天樂園做準備。", en:"Check in and rest for the theme park day.", es:"", ko:"", vi:"" }
+      "reminders": [
+        {
+          "level": "important",
+          "text": {
+            "zh": "今天要移動到 Kissimmee：建議下午早點出發避免塞車",
+            "en": "Driving to Kissimmee today: leave earlier to avoid traffic.",
+            "es": "",
+            "ko": "",
+            "vi": ""
           }
-        ]
+        }
+      ],
+      "stops": [
+        {
+          "name": {
+            "zh": "上午：South Beach /（或）Gulf Stream 海岸",
+            "en": "Morning: South Beach (or Gulf Stream coast)",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "Miami Beach / Palm Beach area",
+          "map": "https://maps.google.com/?q=Miami+Beach",
+          "note": {
+            "zh": "看體力選一個海岸點就好。",
+            "en": "Pick one coastal spot based on energy.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "travel": "3–3.5 hr",
+          "name": {
+            "zh": "自駕：Miami → Orlando/Kissimmee",
+            "en": "Drive: Miami → Orlando/Kissimmee",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "Miami to Kissimmee",
+          "map": "https://maps.google.com/?q=Miami+to+Kissimmee",
+          "note": {
+            "zh": "抵達後入住，補給，早點休息。",
+            "en": "Check in, restock, and rest.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "d4",
+      "month": 3,
+      "day": 10,
+      "label": "3/10 (Tue)",
+      "title": {
+        "zh": "Universal Orlando（整天）",
+        "en": "Universal Orlando (full day)",
+        "es": "",
+        "ko": "",
+        "vi": ""
       },
-
-      {
-        id:"d4", month:3, day:10, label:"3/10 (Tue)",
-        title:{ zh:"環球影城 Universal Orlando（玩整天）", en:"Universal Orlando (full day)", es:"", ko:"", vi:"" },
-        reminders:[
-          { level:"important", text:{ zh:"想搭霍格華茲特快車需 Park-to-Park 票", en:"Hogwarts Express requires a Park-to-Park ticket.", es:"", ko:"", vi:"" } },
-          { level:"important", text:{ zh:"建議開園就到（排隊差很多）", en:"Arrive at rope drop—lines are much shorter.", es:"", ko:"", vi:"" } }
-        ],
-        stops:[
-          { start:"09:00", end:"19:00",
-            name:{ zh:"Universal Orlando Resort（Studios + Islands of Adventure）", en:"Universal Orlando Resort (Studios + Islands of Adventure)", es:"", ko:"", vi:"" },
-            address:"6000 Universal Blvd, Orlando, FL 32819", phone:"+1 407-363-8000",
-            map:"https://www.universalorlando.com/web/en/us",
-            note:{ zh:"兩園一日行程（可依需求調整）。", en:"Two-park day plan (adjust as needed).", es:"", ko:"", vi:"" }
+      "reminders": [
+        {
+          "level": "important",
+          "text": {
+            "zh": "想搭霍格華茲特快車需 Park-to-Park 票；建議開園就到",
+            "en": "Hogwarts Express requires Park-to-Park; arrive at rope drop.",
+            "es": "",
+            "ko": "",
+            "vi": ""
           }
-        ]
+        }
+      ],
+      "stops": [
+        {
+          "name": {
+            "zh": "Universal Studios + Islands of Adventure",
+            "en": "Universal Studios + Islands of Adventure",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "6000 Universal Blvd, Orlando, FL 32819",
+          "phone": "+1 407-363-8000",
+          "map": "https://www.universalorlando.com/web/en/us/tickets-packages/park-tickets",
+          "note": {
+            "zh": "營業時間參考：09:00–20:00（依日期）。停車可預付較便宜。",
+            "en": "Hours ~09:00–20:00 (date-based). Prepay parking can be cheaper.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "d5",
+      "month": 3,
+      "day": 11,
+      "label": "3/11 (Wed)",
+      "title": {
+        "zh": "Orlando 市區文化日（北 → 中心 → 南 → I-Drive）",
+        "en": "Orlando culture day (North → Central → South → I-Drive)",
+        "es": "",
+        "ko": "",
+        "vi": ""
       },
-
-      {
-        id:"d5", month:3, day:11, label:"3/11 (Wed)",
-        title:{ zh:"Epic Universe（玩整天）", en:"Epic Universe (full day)", es:"", ko:"", vi:"" },
-        reminders:[
-          { level:"important", text:{ zh:"新園區人潮很猛：rope drop（開園衝第一波）", en:"Crowds will be heavy—rope drop is key.", es:"", ko:"", vi:"" } }
-        ],
-        stops:[
-          { start:"09:00", end:"19:00",
-            name:{ zh:"Universal Epic Universe", en:"Universal Epic Universe", es:"", ko:"", vi:"" },
-            address:"Orlando, FL",
-            map:"https://www.universalorlando.com/web/en/us/theme-parks/epic-universe",
-            note:{ zh:"先排必玩：任天堂/魔法部等。", en:"Prioritize must-dos: Nintendo / Ministry of Magic, etc.", es:"", ko:"", vi:"" }
+      "reminders": [
+        {
+          "level": "info",
+          "text": {
+            "zh": "今天是輕鬆散步＋逛街日：不用排死時間，照動線走就順",
+            "en": "Easy stroll + shopping day. Follow the flow; no need to time-block every hour.",
+            "es": "",
+            "ko": "",
+            "vi": ""
           }
-        ]
+        }
+      ],
+      "stops": [
+        {
+          "name": {
+            "zh": "The Charles Hosmer Morse Museum",
+            "en": "The Charles Hosmer Morse Museum",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "445 N Park Ave, Winter Park, FL 32789",
+          "map": "https://maps.google.com/?q=Morse+Museum+Winter+Park",
+          "note": {
+            "zh": "營業時間參考：09:30–16:00；票價參考：成人 $8。",
+            "en": "Hours ~09:30–16:00; tickets ~ $8 adult.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "Harry P. Leu Gardens",
+            "en": "Harry P. Leu Gardens",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "1920 N Forest Ave, Orlando, FL 32803",
+          "map": "https://maps.google.com/?q=Harry+P.+Leu+Gardens",
+          "note": {
+            "zh": "營業時間參考：09:00–17:00；票價參考：成人 $15。",
+            "en": "Hours ~09:00–17:00; tickets ~ $15 adult.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "Lake Eola Park",
+            "en": "Lake Eola Park",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "512 E Washington St, Orlando, FL 32801",
+          "map": "https://maps.google.com/?q=Lake+Eola+Park",
+          "note": {
+            "zh": "營業時間參考：06:00–23:59。",
+            "en": "Hours ~06:00–23:59.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "Orlando International Premium Outlets",
+            "en": "Orlando International Premium Outlets",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "4951 International Dr, Orlando, FL 32819",
+          "map": "https://maps.google.com/?q=Orlando+International+Premium+Outlets",
+          "note": {
+            "zh": "營業時間參考：Mon–Sat 10:00–21:00 / Sun 11:00–19:00。",
+            "en": "Hours: Mon–Sat 10:00–21:00 / Sun 11:00–19:00.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "ICON Park（晚上）",
+            "en": "ICON Park (evening)",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "8375 International Dr, Orlando, FL 32819",
+          "map": "https://maps.google.com/?q=ICON+Park+Orlando",
+          "note": {
+            "zh": "營業時間參考：10:00–23:00。",
+            "en": "Hours ~10:00–23:00.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "d6",
+      "month": 3,
+      "day": 12,
+      "label": "3/12 (Thu)",
+      "title": {
+        "zh": "NASA（KSC）+ 教堂 + Disney Springs",
+        "en": "NASA (KSC) + Basilica + Disney Springs",
+        "es": "",
+        "ko": "",
+        "vi": ""
       },
-
-      {
-        id:"d6", month:3, day:12, label:"3/12 (Thu)",
-        title:{ zh:"肯尼迪航天中心 KSC（固定 3/12）", en:"Kennedy Space Center (fixed on 3/12)", es:"", ko:"", vi:"" },
-        reminders:[
-          { level:"important", text:{ zh:"Bus Tour 可能額滿：越早到越好", en:"Bus Tour can sell out—arrive as early as possible.", es:"", ko:"", vi:"" } }
-        ],
-        stops:[
-          { start:"08:30", end:"09:30", name:{ zh:"自駕：Orlando → Kennedy Space Center", en:"Drive: Orlando → Kennedy Space Center", es:"", ko:"", vi:"" },
-            address:"Orlando to Merritt Island", map:"https://maps.google.com/?q=Orlando+to+Kennedy+Space+Center",
-            note:{ zh:"車程約 1 小時（看交通）。", en:"~1 hour depending on traffic.", es:"", ko:"", vi:"" }
-          },
-          { start:"10:00", end:"17:00", name:{ zh:"Kennedy Space Center Visitor Complex", en:"Kennedy Space Center Visitor Complex", es:"", ko:"", vi:"" },
-            address:"Space Commerce Way, Merritt Island, FL 32953", phone:"+1 855-433-4210",
-            map:"https://www.kennedyspacecenter.com/",
-            note:{ zh:"Rocket Garden / Atlantis / Bus Tour（先搶 Bus Tour）。", en:"Rocket Garden / Atlantis / Bus Tour (secure Bus Tour first).", es:"", ko:"", vi:"" }
-          },
-          { travel:"1 hr", start:"17:30", end:"18:30", name:{ zh:"回 Orlando", en:"Return to Orlando", es:"", ko:"", vi:"" },
-            address:"Orlando, FL", map:"https://maps.google.com/?q=Orlando",
-            note:{ zh:"晚餐＋休息。", en:"Dinner + rest.", es:"", ko:"", vi:"" }
+      "reminders": [
+        {
+          "level": "important",
+          "text": {
+            "zh": "KSC 建議早到：Bus Tour 可能額滿",
+            "en": "Arrive early at KSC; Bus Tour can sell out.",
+            "es": "",
+            "ko": "",
+            "vi": ""
           }
-        ]
+        }
+      ],
+      "stops": [
+        {
+          "travel": "1 hr",
+          "name": {
+            "zh": "自駕：Orlando → Kennedy Space Center",
+            "en": "Drive: Orlando → Kennedy Space Center",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "Orlando to Merritt Island",
+          "map": "https://maps.google.com/?q=Orlando+to+Kennedy+Space+Center",
+          "note": {
+            "zh": "營業時間參考：09:00–17:00。",
+            "en": "Hours ~09:00–17:00.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "Kennedy Space Center Visitor Complex",
+            "en": "Kennedy Space Center Visitor Complex",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "Space Commerce Way, Merritt Island, FL 32953",
+          "phone": "+1 855-433-4210",
+          "map": "https://www.kennedyspacecenter.com/",
+          "note": {
+            "zh": "建議先搶 Bus Tour；官網票務顯示 2-day 成人票 $91（價格可能浮動）。",
+            "en": "Secure Bus Tour first. Official store shows 2-day adult $91 (pricing can change).",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "Basilica（晚點順路）",
+            "en": "Basilica (on the way / evening)",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "8300 Vineland Ave, Orlando, FL 32821",
+          "map": "https://maps.google.com/?q=Basilica+of+the+National+Shrine+of+Mary+Queen+of+the+Universe",
+          "note": {
+            "zh": "時間可依彌撒/活動調整。",
+            "en": "Timing depends on Mass/events.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "Disney Springs + Coca-Cola Store",
+            "en": "Disney Springs + Coca-Cola Store",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "1486 Buena Vista Dr, Orlando, FL 32830",
+          "map": "https://maps.google.com/?q=Disney+Springs",
+          "note": {
+            "zh": "營業時間參考：Disney Springs 10:00–23:00；Coca-Cola Store 10:00–22:00。",
+            "en": "Hours: Disney Springs 10:00–23:00; Coca-Cola Store 10:00–22:00.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "d7",
+      "month": 3,
+      "day": 13,
+      "label": "3/13 (Fri)",
+      "title": {
+        "zh": "Silver Springs + Florida Citrus Tower（加選項）",
+        "en": "Silver Springs + Florida Citrus Tower (optional add-ons)",
+        "es": "",
+        "ko": "",
+        "vi": ""
       },
-
-      {
-        id:"d7", month:3, day:13, label:"3/13 (Fri)",
-        title:{ zh:"Silver Springs（玻璃船/清泉）一日", en:"Silver Springs (glass-bottom boat / springs)", es:"", ko:"", vi:"" },
-        reminders:[
-          { level:"important", text:{ zh:"帶防蚊液；清泉區早晚溫差可帶薄外套", en:"Bring bug spray. Temperature can vary—pack a light jacket.", es:"", ko:"", vi:"" } }
-        ],
-        stops:[
-          { start:"09:00", end:"10:30", name:{ zh:"自駕：Orlando → Silver Springs State Park", en:"Drive: Orlando → Silver Springs State Park", es:"", ko:"", vi:"" },
-            address:"1425 NE 58th Ave, Ocala, FL 34470", phone:"+1 352-236-7148",
-            map:"https://maps.google.com/?q=Silver+Springs+State+Park",
-            note:{ zh:"車程約 1.5 小時。", en:"~1.5 hours drive.", es:"", ko:"", vi:"" }
-          },
-          { start:"11:00", end:"14:00", name:{ zh:"Glass Bottom Boat（玻璃船，建議）", en:"Glass-bottom boat (recommended)", es:"", ko:"", vi:"" },
-            address:"Silver Springs State Park", map:"https://maps.google.com/?q=Silver+Springs+Glass+Bottom+Boat",
-            note:{ zh:"依當天班次調整；也可加步道/划船。", en:"Adjust to schedule; add trails/kayak if you like.", es:"", ko:"", vi:"" }
-          },
-          { travel:"1.5 hr", start:"16:00", end:"17:30", name:{ zh:"回 Orlando（整理行李）", en:"Back to Orlando (pack up)", es:"", ko:"", vi:"" },
-            address:"Orlando, FL", map:"https://maps.google.com/?q=Orlando",
-            note:{ zh:"明天要飛，建議早睡。", en:"Flight tomorrow—sleep early.", es:"", ko:"", vi:"" }
+      "reminders": [
+        {
+          "level": "important",
+          "text": {
+            "zh": "Silver Springs 08:00–日落；帶防蚊液、薄外套",
+            "en": "Silver Springs 8am–sundown; bring bug spray + light jacket.",
+            "es": "",
+            "ko": "",
+            "vi": ""
           }
-        ]
+        }
+      ],
+      "stops": [
+        {
+          "travel": "1.5 hr",
+          "name": {
+            "zh": "自駕：Orlando → Silver Springs State Park",
+            "en": "Drive: Orlando → Silver Springs State Park",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "1425 NE 58th Ave, Ocala, FL 34470",
+          "phone": "+1 352-236-7148",
+          "map": "https://maps.google.com/?q=Silver+Springs+State+Park",
+          "note": {
+            "zh": "入園費參考：每車 $8（2–8 人）。",
+            "en": "Entrance fee: $8 per vehicle (2–8 people).",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "Glass Bottom Boat（推薦）",
+            "en": "Glass Bottom Boat (recommended)",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "Silver Springs State Park",
+          "map": "https://silversprings.com/plan-your-day/glass-bottom-boats/",
+          "note": {
+            "zh": "官網列：30 分成人 $17；90 分成人 $35（班次依當天）。",
+            "en": "Site lists: 30-min adult $17; 90-min adult $35 (schedule varies).",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "travel": "45–60 min",
+          "name": {
+            "zh": "Florida Citrus Tower（路上或回程插入）",
+            "en": "Florida Citrus Tower (en route)",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "141 N Hwy 27, Clermont, FL 34711",
+          "map": "https://maps.google.com/?q=Florida+Citrus+Tower",
+          "note": {
+            "zh": "日票參考：成人 $11。營業時間以官方公告為準。",
+            "en": "Day pass ~ $11 adult. Check official hours for your date.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "加選項（擇 1–2 個）",
+            "en": "Optional add-ons (pick 1–2)",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "WonderWorks / History Center / Mills 50",
+          "map": "https://maps.google.com/?q=WonderWorks+Orlando",
+          "note": {
+            "zh": "看體力決定，不用硬塞滿。",
+            "en": "Choose based on energy—don’t overpack the day.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "d8",
+      "month": 3,
+      "day": 14,
+      "label": "3/14 (Sat)",
+      "title": {
+        "zh": "回程：還車 → MCO → SAT",
+        "en": "Return: car drop-off → MCO → SAT",
+        "es": "",
+        "ko": "",
+        "vi": ""
       },
-
-      {
-        id:"d8", month:3, day:14, label:"3/14 (Sat)",
-        title:{ zh:"MCO → SAT 回程（還車＋登機）", en:"Fly home: MCO → SAT (return car + airport)", es:"", ko:"", vi:"" },
-        reminders:[
-          { level:"important", text:{ zh:"還車＋安檢要留緩衝（建議起飛前 2.5～3 小時到機場）", en:"Buffer time for car return + security (arrive 2.5–3 hours before departure).", es:"", ko:"", vi:"" } }
-        ],
-        stops:[
-          { start:"09:30", end:"11:00", name:{ zh:"Orlando International Airport（MCO）還車＋辦理登機", en:"MCO: return car + check-in", es:"", ko:"", vi:"" },
-            address:"1 Jeff Fuqua Blvd, Orlando, FL 32827", phone:"+1 407-825-2001",
-            map:"https://maps.google.com/?q=Orlando+International+Airport",
-            note:{ zh:"如果你最後要從 MIA 飛回，也可把這天改 Orlando → Miami 早移動。", en:"If flying out of MIA instead, change to an early Orlando → Miami drive.", es:"", ko:"", vi:"" }
-          },
-          { start:"12:00", end:"14:30", name:{ zh:"飛行：MCO → SAT", en:"Flight: MCO → SAT", es:"", ko:"", vi:"" },
-            address:"MCO → SAT", map:"https://maps.google.com/?q=San+Antonio+International+Airport",
-            note:{ zh:"時段依你的航班調整（這裡先放範例）。", en:"Adjust based on your actual flight (sample time shown).", es:"", ko:"", vi:"" }
+      "reminders": [
+        {
+          "level": "important",
+          "text": {
+            "zh": "11:00 前還車；安檢＋登機建議留 2.5–3 小時緩衝",
+            "en": "Return car by 11:00; arrive 2.5–3h early for security + check-in.",
+            "es": "",
+            "ko": "",
+            "vi": ""
           }
-        ]
-      }
-    ]
-  };
+        }
+      ],
+      "stops": [
+        {
+          "name": {
+            "zh": "前往 MCO 還車＋辦理登機",
+            "en": "MCO: return car + check-in",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "1 Jeff Fuqua Blvd, Orlando, FL 32827",
+          "phone": "+1 407-825-2001",
+          "map": "https://maps.google.com/?q=Orlando+International+Airport",
+          "note": {
+            "zh": "還車時間固定 11:00 前。",
+            "en": "Return by 11:00 (fixed).",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        },
+        {
+          "name": {
+            "zh": "飛行：MCO → SAT",
+            "en": "Flight: MCO → SAT",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          },
+          "address": "MCO → SAT",
+          "map": "https://maps.google.com/?q=San+Antonio+International+Airport",
+          "note": {
+            "zh": "依你的實際航班時間為準。",
+            "en": "Adjust to your actual flight time.",
+            "es": "",
+            "ko": "",
+            "vi": ""
+          }
+        }
+      ]
+    }
+  ]
+};
 
   // ===== Helpers =====
   function pad2(n){ return String(n).padStart(2,'0'); }
