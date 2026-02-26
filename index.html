@@ -55,6 +55,65 @@
 <main class="container mx-auto px-4 py-10 max-w-5xl">
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
 <!-- Info -->
+<!-- Lodging -->
+<div class="lg:col-span-3 mt-2 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-emerald-600" id="lodgingSection">
+  <div class="flex items-start justify-between gap-3 flex-wrap">
+    <div>
+      <h2 class="text-xl font-bold text-emerald-800 flex items-center gap-2" id="lodgingTitle">
+        <i class="fa-solid fa-bed"></i> 住宿資訊
+      </h2>
+      <p class="text-sm text-gray-600 mt-1" id="lodgingHint">你已訂住宿（含日期），點「導航」可直接開 Google Maps。</p>
+    </div>
+  </div>
+
+  <div class="mt-6 overflow-x-auto">
+    <table class="min-w-full text-sm">
+      <thead>
+        <tr class="text-left text-gray-500 border-b">
+          <th class="py-3 pr-4" id="lgCity">城市</th>
+          <th class="py-3 pr-4" id="lgDates">日期</th>
+          <th class="py-3 pr-4" id="lgPlace">住宿</th>
+          <th class="py-3 pr-4" id="lgLocation">位置</th>
+          <th class="py-3 pr-4" id="lgNav">導航</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y">
+        <tr class="align-top">
+          <td class="py-4 pr-4 font-medium" id="lod1city">Miami</td>
+          <td class="py-4 pr-4" id="lod1dates">3/7–3/9</td>
+          <td class="py-4 pr-4">
+            <div class="font-semibold" id="lod1name">Holiday Inn Express &amp; Suites Miami - Hialeah by IHG</div>
+          </td>
+          <td class="py-4 pr-4" id="lod1loc">Hialeah, Miami</td>
+          <td class="py-4 pr-4">
+            <a class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition"
+               target="_blank" rel="noopener"
+               href="https://www.google.com/maps/dir/?api=1&destination=Holiday%20Inn%20Express%20%26%20Suites%20Miami%20-%20Hialeah%20by%20IHG">
+              <i class="fa-solid fa-location-arrow"></i> <span class="navLabelLodging" id="lodNav1">導航</span>
+            </a>
+          </td>
+        </tr>
+
+        <tr class="align-top">
+          <td class="py-4 pr-4 font-medium" id="lod2city">Orlando</td>
+          <td class="py-4 pr-4" id="lod2dates">3/9–3/14</td>
+          <td class="py-4 pr-4">
+            <div class="font-semibold" id="lod2name">Airbnb – Kissimmee (Orlando Area)</div>
+          </td>
+          <td class="py-4 pr-4" id="lod2loc">28°19'36.5&quot;N 81°30'54.1&quot;W</td>
+          <td class="py-4 pr-4">
+            <a class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition"
+               target="_blank" rel="noopener"
+               href="https://www.google.com/maps/dir/?api=1&destination=28.3268056,-81.5150278">
+              <i class="fa-solid fa-location-arrow"></i> <span class="navLabelLodging" id="lodNav2">導航</span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
 <!-- Timeline -->
 <div class="lg:col-span-3 relative">
@@ -216,7 +275,23 @@
       ev3desc: "免費",
       ev1note: "官方：免費入場；多舞台音樂/藝術/美食攤位（依現場公告）",
       ev2note: "9:00–16:00；你 3/9 轉場日若想看，建議排上午/中午",
-      ev3note: "12:00；偏親子/展車體驗，適合還車前半天順路去"
+      ev3note: "12:00；偏親子/展車體驗，適合還車前半天順路去",
+      lodgingTitle: "住宿資訊",
+      lodgingHint: "你已訂住宿（含日期），點「導航」可直接開 Google Maps。",
+      lgCity: "城市",
+      lgDates: "日期",
+      lgPlace: "住宿",
+      lgLocation: "位置",
+      lgNav: "導航",
+      lod1city: "Miami",
+      lod1dates: "3/7–3/9",
+      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
+      lod1loc: "Hialeah, Miami",
+      lod2city: "Orlando",
+      lod2dates: "3/9–3/14",
+      lod2name: "Airbnb – Kissimmee（Orlando 周邊）",
+      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
+
 
     },
     en: {
@@ -277,7 +352,23 @@
       ev3desc: "free",
       ev1note: "Official: free admission; multiple stages for music/art + food vendors (check onsite updates).",
       ev2note: "9:00–16:00; if you want to catch it on 3/9 (transfer day), go in the morning/noon.",
-      ev3note: "12:00; family-friendly vehicle showcase—nice stop before returning the car."
+      ev3note: "12:00; family-friendly vehicle showcase—nice stop before returning the car.",
+      lodgingTitle: "Lodging",
+      lodgingHint: "Your booked stays (with dates). Tap “Navigate” to open Google Maps.",
+      lgCity: "City",
+      lgDates: "Dates",
+      lgPlace: "Stay",
+      lgLocation: "Location",
+      lgNav: "Navigate",
+      lod1city: "Miami",
+      lod1dates: "Mar 7–Mar 9",
+      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
+      lod1loc: "Hialeah, Miami",
+      lod2city: "Orlando",
+      lod2dates: "Mar 9–Mar 14",
+      lod2name: "Airbnb – Kissimmee (Orlando Area)",
+      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
+
 
     },
     es: {
@@ -338,7 +429,23 @@
       ev3desc: "gratis",
       ev1note: "Oficial: entrada gratuita; varios escenarios de música/arte + puestos de comida (según el lugar).",
       ev2note: "9:00–16:00; si quieres verlo el 3/9 (día de traslado), ve por la mañana/mediodía.",
-      ev3note: "12:00; exposición de vehículos para familias—ideal antes de devolver el auto."
+      ev3note: "12:00; exposición de vehículos para familias—ideal antes de devolver el auto.",
+      lodgingTitle: "Alojamiento",
+      lodgingHint: "Tus alojamientos reservados (con fechas). Pulsa “Navegar” para abrir Google Maps.",
+      lgCity: "Ciudad",
+      lgDates: "Fechas",
+      lgPlace: "Alojamiento",
+      lgLocation: "Ubicación",
+      lgNav: "Navegar",
+      lod1city: "Miami",
+      lod1dates: "7–9 Mar",
+      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
+      lod1loc: "Hialeah, Miami",
+      lod2city: "Orlando",
+      lod2dates: "9–14 Mar",
+      lod2name: "Airbnb – Kissimmee (zona de Orlando)",
+      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
+
 
     },
     ko: {
@@ -399,7 +506,23 @@
       ev3desc: "무료",
       ev1note: "공식: 무료 입장; 음악/예술 무대 + 푸드 부스(현장 공지 기준).",
       ev2note: "9:00–16:00; 3/9 이동일에 보고 싶다면 오전/점심 시간 추천.",
-      ev3note: "12:00; 가족 친화 전시(차량 체험)—차 반납 전 들르기 좋아요."
+      ev3note: "12:00; 가족 친화 전시(차량 체험)—차 반납 전 들르기 좋아요.",
+      lodgingTitle: "숙소 정보",
+      lodgingHint: "예약한 숙소(날짜 포함)입니다. “내비게이션”을 누르면 Google 지도 길안내가 열려요.",
+      lgCity: "도시",
+      lgDates: "날짜",
+      lgPlace: "숙소",
+      lgLocation: "위치",
+      lgNav: "내비게이션",
+      lod1city: "마이애미",
+      lod1dates: "3/7–3/9",
+      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
+      lod1loc: "하이얼리아(Hialeah), 마이애미",
+      lod2city: "올랜도",
+      lod2dates: "3/9–3/14",
+      lod2name: "Airbnb – 키시미(Kissimmee, 올랜도 인근)",
+      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
+
 
     },
     vi: {
@@ -460,7 +583,23 @@
       ev3desc: "miễn phí",
       ev1note: "Chính thức: vào cửa miễn phí; nhiều sân khấu âm nhạc/nghệ thuật + gian hàng đồ ăn (tùy thông báo tại chỗ).",
       ev2note: "9:00–16:00; nếu muốn xem vào 3/9 (ngày di chuyển), nên đi buổi sáng/trưa.",
-      ev3note: "12:00; trải nghiệm trưng bày xe thân thiện gia đình—hợp ghé trước khi trả xe."
+      ev3note: "12:00; trải nghiệm trưng bày xe thân thiện gia đình—hợp ghé trước khi trả xe.",
+      lodgingTitle: "Chỗ ở",
+      lodgingHint: "Chỗ ở bạn đã đặt (kèm ngày). Nhấn “Chỉ đường” để mở Google Maps.",
+      lgCity: "Thành phố",
+      lgDates: "Ngày",
+      lgPlace: "Chỗ ở",
+      lgLocation: "Vị trí",
+      lgNav: "Chỉ đường",
+      lod1city: "Miami",
+      lod1dates: "7–9/3",
+      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
+      lod1loc: "Hialeah, Miami",
+      lod2city: "Orlando",
+      lod2dates: "9–14/3",
+      lod2name: "Airbnb – Kissimmee (khu vực Orlando)",
+      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
+
 
     }
   };
@@ -1618,6 +1757,29 @@
     const ev1n = document.getElementById("ev1note"); if (ev1n) ev1n.textContent = t.ev1note;
     const ev2n = document.getElementById("ev2note"); if (ev2n) ev2n.textContent = t.ev2note;
     const ev3n = document.getElementById("ev3note"); if (ev3n) ev3n.textContent = t.ev3note;
+
+    
+    // Lodging section
+    const ltitle = document.getElementById("lodgingTitle"); if (ltitle) ltitle.innerHTML = `<i class="fa-solid fa-bed"></i> ${t.lodgingTitle}`;
+    const lhint = document.getElementById("lodgingHint"); if (lhint) lhint.textContent = t.lodgingHint;
+
+    const lgc = document.getElementById("lgCity"); if (lgc) lgc.textContent = t.lgCity;
+    const lgd = document.getElementById("lgDates"); if (lgd) lgd.textContent = t.lgDates;
+    const lgp = document.getElementById("lgPlace"); if (lgp) lgp.textContent = t.lgPlace;
+    const lgl = document.getElementById("lgLocation"); if (lgl) lgl.textContent = t.lgLocation;
+    const lgn = document.getElementById("lgNav"); if (lgn) lgn.textContent = t.lgNav;
+
+    const l1c = document.getElementById("lod1city"); if (l1c) l1c.textContent = t.lod1city;
+    const l1d = document.getElementById("lod1dates"); if (l1d) l1d.textContent = t.lod1dates;
+    const l1n = document.getElementById("lod1name"); if (l1n) l1n.textContent = t.lod1name;
+    const l1l = document.getElementById("lod1loc"); if (l1l) l1l.textContent = t.lod1loc;
+
+    const l2c = document.getElementById("lod2city"); if (l2c) l2c.textContent = t.lod2city;
+    const l2d = document.getElementById("lod2dates"); if (l2d) l2d.textContent = t.lod2dates;
+    const l2n = document.getElementById("lod2name"); if (l2n) l2n.textContent = t.lod2name;
+    const l2l = document.getElementById("lod2loc"); if (l2l) l2l.textContent = t.lod2loc;
+
+    document.querySelectorAll(".navLabelLodging").forEach(el => el.textContent = t.lgNav || t.navigate);
 
     document.querySelectorAll(".navLabel").forEach(el => el.textContent = t.navigate);
 
