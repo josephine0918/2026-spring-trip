@@ -42,7 +42,7 @@
 <option value="vi">Tiếng Việt</option>
 </select>
 <button class="bg-amber-500 hover:bg-amber-400 text-slate-900 p-2 rounded-lg text-sm transition" id="jumpSpecialBtn" title="跳到特殊免費活動">
-<i class="fa-solid fa-star"></i> <span class="hidden sm:inline">特殊活動</span>
+<i class="fa-solid fa-star"></i> <span class="hidden sm:inline" id="jumpSpecialLabel">特殊活動</span>
 </button>
 </div>
 </div>
@@ -80,59 +80,59 @@
   <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
     <h2 class="text-xl font-bold mb-2 flex items-center gap-2">
       <i class="fa-solid fa-star text-yellow-500"></i>
-      特殊免費活動（只列期間限定／非每日例行）
+      <span id="specialTitle">特殊免費活動（只列期間限定／非每日例行）</span>
     </h2>
     <p class="text-gray-600 text-sm mb-4">
-      篩選條件：<span class="font-medium">免費入場</span>、<span class="font-medium">在你停留日期內</span>、且屬於「節慶／大型活動／一次性活動」類型。
+      <span id="specialFilter">篩選條件：<span class="font-medium">免費入場</span>、<span class="font-medium">在你停留日期內</span>、且屬於「節慶／大型活動／一次性活動」類型。</span>
     </p>
 
     <div class="overflow-x-auto">
       <table class="min-w-full text-sm">
         <thead>
           <tr class="text-left text-gray-600 border-b">
-            <th class="py-3 pr-4">城市</th>
-            <th class="py-3 pr-4">日期</th>
-            <th class="py-3 pr-4">活動</th>
-            <th class="py-3 pr-4">地點</th>
-            <th class="py-3 pr-4">時間/備註</th>
-            <th class="py-3 pr-4">導航</th>
+            <th class="py-3 pr-4"><span id="seCity">城市</span></th>
+            <th class="py-3 pr-4"><span id="seDate">日期</span></th>
+            <th class="py-3 pr-4"><span id="seEvent">活動</span></th>
+            <th class="py-3 pr-4"><span id="seLocation">地點</span></th>
+            <th class="py-3 pr-4"><span id="seTime">時間/備註</span></th>
+            <th class="py-3 pr-4"><span id="seNav">導航</span></th>
           </tr>
         </thead>
         <tbody class="text-gray-800">
           <tr class="border-b">
-            <td class="py-3 pr-4 font-medium">Miami（Coral Gables）</td>
+            <td class="py-3 pr-4 font-medium"><span id="ev1city">Miami（Coral Gables）</span></td>
             <td class="py-3 pr-4">3/7–3/8</td>
-            <td class="py-3 pr-4">Carnaval on the Mile（免費街頭藝術音樂節）</td>
+            <td class="py-3 pr-4">Carnaval on the Mile（<span id="ev1desc">免費街頭藝術音樂節</span>）</td>
             <td class="py-3 pr-4">Miracle Mile, Coral Gables</td>
-            <td class="py-3 pr-4">官方：免費入場；多舞台音樂/藝術/美食攤位（依現場公告）</td>
+            <td class="py-3 pr-4"><span id="ev1note">官方：免費入場；多舞台音樂/藝術/美食攤位（依現場公告）</span></td>
           <td class="py-3 pr-4">
               <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
                  href="https://www.google.com/maps/dir/?api=1&destination=Miracle%20Mile%2C%20Coral%20Gables%2C%20FL" target="_blank" rel="noopener">
-                <i class="fa-solid fa-location-arrow"></i> 導航
+                <i class="fa-solid fa-location-arrow"></i> <span class="navLabel">導航</span>
               </a>
             </td></tr>
           <tr class="border-b">
-            <td class="py-3 pr-4 font-medium">Miami（Little Havana）</td>
+            <td class="py-3 pr-4 font-medium"><span id="ev2city">Miami（Little Havana）</span></td>
             <td class="py-3 pr-4">3/9（活動總期：3/9–3/11）</td>
-            <td class="py-3 pr-4">Carnaval Miami Domino Tournament（免費觀看）</td>
+            <td class="py-3 pr-4">Carnaval Miami Domino Tournament（<span id="ev2desc">免費觀看</span>）</td>
             <td class="py-3 pr-4">Domino Park（Little Havana）</td>
-            <td class="py-3 pr-4">9:00–16:00；你 3/9 轉場日若想看，建議排上午/中午</td>
+            <td class="py-3 pr-4"><span id="ev2note">9:00–16:00；你 3/9 轉場日若想看，建議排上午/中午</span></td>
           <td class="py-3 pr-4">
               <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
                  href="https://www.google.com/maps/dir/?api=1&destination=Domino%20Park%2C%20Little%20Havana%2C%20Miami%2C%20FL" target="_blank" rel="noopener">
-                <i class="fa-solid fa-location-arrow"></i> 導航
+                <i class="fa-solid fa-location-arrow"></i> <span class="navLabel">導航</span>
               </a>
             </td></tr>
           <tr>
-            <td class="py-3 pr-4 font-medium">Orlando（UCF）</td>
+            <td class="py-3 pr-4 font-medium"><span id="ev3city">Orlando（UCF）</span></td>
             <td class="py-3 pr-4">3/14</td>
-            <td class="py-3 pr-4">Touch-a-Truck（免費）</td>
+            <td class="py-3 pr-4">Touch-a-Truck（<span id="ev3desc">免費</span>）</td>
             <td class="py-3 pr-4">Addition Financial Arena</td>
-            <td class="py-3 pr-4">12:00；偏親子/展車體驗，適合還車前半天順路去</td>
+            <td class="py-3 pr-4"><span id="ev3note">12:00；偏親子/展車體驗，適合還車前半天順路去</span></td>
           <td class="py-3 pr-4">
               <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
                  href="https://www.google.com/maps/dir/?api=1&destination=Addition%20Financial%20Arena%2C%20Orlando%2C%20FL" target="_blank" rel="noopener">
-                <i class="fa-solid fa-location-arrow"></i> 導航
+                <i class="fa-solid fa-location-arrow"></i> <span class="navLabel">導航</span>
               </a>
             </td></tr>
         </tbody>
@@ -198,6 +198,26 @@
       warnAmount: "請填金額",
       warnPayer: "請選付款人",
       warnSplit: "至少勾選一位分攤對象"
+      ,specialBtn: "特殊活動",
+      specialTitle: "⭐ 特殊免費活動（只列期間限定／非每日例行）",
+      specialFilterText: "篩選條件：免費入場、在你停留日期內、且屬於「節慶／大型活動／一次性活動」類型。",
+      seCity: "城市",
+      seDate: "日期",
+      seEvent: "活動",
+      seLocation: "地點",
+      seTime: "時間/備註",
+      seNav: "導航",
+      navigate: "導航",
+      ev1city: "Miami（Coral Gables）",
+      ev2city: "Miami（Little Havana）",
+      ev3city: "Orlando（UCF）",
+      ev1desc: "免費街頭藝術音樂節",
+      ev2desc: "免費觀看",
+      ev3desc: "免費",
+      ev1note: "官方：免費入場；多舞台音樂/藝術/美食攤位（依現場公告）",
+      ev2note: "9:00–16:00；你 3/9 轉場日若想看，建議排上午/中午",
+      ev3note: "12:00；偏親子/展車體驗，適合還車前半天順路去"
+
     },
     en: {
       copyToday: "Copy today's plan",
@@ -239,6 +259,26 @@
       warnAmount: "Enter an amount",
       warnPayer: "Select a payer",
       warnSplit: "Select at least one participant"
+      ,specialBtn: "Special Events",
+      specialTitle: "⭐ Free Special Events (date-limited / not daily)",
+      specialFilterText: "Filter: free entry, within your travel dates, and festival/large one-off events only.",
+      seCity: "City",
+      seDate: "Date",
+      seEvent: "Event",
+      seLocation: "Location",
+      seTime: "Time / Notes",
+      seNav: "Navigate",
+      navigate: "Navigate",
+      ev1city: "Miami (Coral Gables)",
+      ev2city: "Miami (Little Havana)",
+      ev3city: "Orlando (UCF)",
+      ev1desc: "free street art & music festival",
+      ev2desc: "free to watch",
+      ev3desc: "free",
+      ev1note: "Official: free admission; multiple stages for music/art + food vendors (check onsite updates).",
+      ev2note: "9:00–16:00; if you want to catch it on 3/9 (transfer day), go in the morning/noon.",
+      ev3note: "12:00; family-friendly vehicle showcase—nice stop before returning the car."
+
     },
     es: {
       copyToday: "Copiar plan de hoy",
@@ -280,6 +320,26 @@
       warnAmount: "Ingresa un importe",
       warnPayer: "Selecciona un pagador",
       warnSplit: "Selecciona al menos un participante"
+      ,specialBtn: "Eventos Especiales",
+      specialTitle: "⭐ Eventos especiales gratis (por fechas / no diarios)",
+      specialFilterText: "Filtro: entrada gratis, dentro de tus fechas, y solo festivales/eventos puntuales.",
+      seCity: "Ciudad",
+      seDate: "Fecha",
+      seEvent: "Evento",
+      seLocation: "Lugar",
+      seTime: "Hora / Nota",
+      seNav: "Navegar",
+      navigate: "Navegar",
+      ev1city: "Miami (Coral Gables)",
+      ev2city: "Miami (Little Havana)",
+      ev3city: "Orlando (UCF)",
+      ev1desc: "festival gratuito de arte y música",
+      ev2desc: "gratis para ver",
+      ev3desc: "gratis",
+      ev1note: "Oficial: entrada gratuita; varios escenarios de música/arte + puestos de comida (según el lugar).",
+      ev2note: "9:00–16:00; si quieres verlo el 3/9 (día de traslado), ve por la mañana/mediodía.",
+      ev3note: "12:00; exposición de vehículos para familias—ideal antes de devolver el auto."
+
     },
     ko: {
       copyToday: "오늘 일정 복사",
@@ -321,6 +381,26 @@
       warnAmount: "금액을 입력하세요",
       warnPayer: "결제자를 선택하세요",
       warnSplit: "분할 대상을 1명 이상 선택하세요"
+      ,specialBtn: "특별 행사",
+      specialTitle: "⭐ 무료 특별 행사 (기간 한정 / 매일 상설 제외)",
+      specialFilterText: "조건: 무료 입장, 여행 기간 내, 축제/대형/일회성 행사만 포함.",
+      seCity: "도시",
+      seDate: "날짜",
+      seEvent: "행사",
+      seLocation: "장소",
+      seTime: "시간/비고",
+      seNav: "길찾기",
+      navigate: "길찾기",
+      ev1city: "마이애미(코럴 게이블스)",
+      ev2city: "마이애미(리틀 하바나)",
+      ev3city: "올랜도(UCF)",
+      ev1desc: "무료 거리예술·음악 축제",
+      ev2desc: "관람 무료",
+      ev3desc: "무료",
+      ev1note: "공식: 무료 입장; 음악/예술 무대 + 푸드 부스(현장 공지 기준).",
+      ev2note: "9:00–16:00; 3/9 이동일에 보고 싶다면 오전/점심 시간 추천.",
+      ev3note: "12:00; 가족 친화 전시(차량 체험)—차 반납 전 들르기 좋아요."
+
     },
     vi: {
       copyToday: "Sao chép lịch hôm nay",
@@ -362,6 +442,26 @@
       warnAmount: "Nhập số tiền",
       warnPayer: "Chọn người trả",
       warnSplit: "Chọn ít nhất 1 người"
+      ,specialBtn: "Sự kiện đặc biệt",
+      specialTitle: "⭐ Sự kiện miễn phí đặc biệt (theo ngày / không phải hằng ngày)",
+      specialFilterText: "Tiêu chí: miễn phí vào cửa, nằm trong lịch của bạn, và chỉ gồm lễ hội/sự kiện lớn/một lần.",
+      seCity: "Thành phố",
+      seDate: "Ngày",
+      seEvent: "Sự kiện",
+      seLocation: "Địa điểm",
+      seTime: "Giờ / Ghi chú",
+      seNav: "Chỉ đường",
+      navigate: "Chỉ đường",
+      ev1city: "Miami (Coral Gables)",
+      ev2city: "Miami (Little Havana)",
+      ev3city: "Orlando (UCF)",
+      ev1desc: "lễ hội nghệ thuật & âm nhạc miễn phí",
+      ev2desc: "xem miễn phí",
+      ev3desc: "miễn phí",
+      ev1note: "Chính thức: vào cửa miễn phí; nhiều sân khấu âm nhạc/nghệ thuật + gian hàng đồ ăn (tùy thông báo tại chỗ).",
+      ev2note: "9:00–16:00; nếu muốn xem vào 3/9 (ngày di chuyển), nên đi buổi sáng/trưa.",
+      ev3note: "12:00; trải nghiệm trưng bày xe thân thiện gia đình—hợp ghé trước khi trả xe."
+
     }
   };
 
@@ -1484,6 +1584,42 @@
 
     document.getElementById("itineraryTitle").textContent = t.itineraryTitle;
     document.getElementById("itineraryHint").textContent = t.itineraryHint;
+
+    // Special Events section
+    const jumpLbl = document.getElementById("jumpSpecialLabel");
+    if (jumpLbl) jumpLbl.textContent = t.specialBtn;
+
+    const st = document.getElementById("specialTitle");
+    if (st) st.textContent = t.specialTitle;
+
+    const sf = document.getElementById("specialFilter");
+    if (sf) sf.textContent = t.specialFilterText;
+
+    const thCity = document.getElementById("seCity");
+    if (thCity) thCity.textContent = t.seCity;
+    const thDate = document.getElementById("seDate");
+    if (thDate) thDate.textContent = t.seDate;
+    const thEvent = document.getElementById("seEvent");
+    if (thEvent) thEvent.textContent = t.seEvent;
+    const thLoc = document.getElementById("seLocation");
+    if (thLoc) thLoc.textContent = t.seLocation;
+    const thTime = document.getElementById("seTime");
+    if (thTime) thTime.textContent = t.seTime;
+    const thNav = document.getElementById("seNav");
+    if (thNav) thNav.textContent = t.seNav;
+
+    // Row translations
+    const ev1c = document.getElementById("ev1city"); if (ev1c) ev1c.textContent = t.ev1city;
+    const ev2c = document.getElementById("ev2city"); if (ev2c) ev2c.textContent = t.ev2city;
+    const ev3c = document.getElementById("ev3city"); if (ev3c) ev3c.textContent = t.ev3city;
+    const ev1d = document.getElementById("ev1desc"); if (ev1d) ev1d.textContent = t.ev1desc;
+    const ev2d = document.getElementById("ev2desc"); if (ev2d) ev2d.textContent = t.ev2desc;
+    const ev3d = document.getElementById("ev3desc"); if (ev3d) ev3d.textContent = t.ev3desc;
+    const ev1n = document.getElementById("ev1note"); if (ev1n) ev1n.textContent = t.ev1note;
+    const ev2n = document.getElementById("ev2note"); if (ev2n) ev2n.textContent = t.ev2note;
+    const ev3n = document.getElementById("ev3note"); if (ev3n) ev3n.textContent = t.ev3note;
+
+    document.querySelectorAll(".navLabel").forEach(el => el.textContent = t.navigate);
 
     document.getElementById("carTitle").innerHTML = `<i class="fa-solid fa-car-side"></i> ${t.carTitle}`;
     document.getElementById("carText").textContent = t.carText;
