@@ -6,7 +6,17 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Florida Trip 3/7–3/14</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com">
+  // Jump to Special Events
+  const jumpBtn = document.getElementById("jumpSpecialBtn");
+  if (jumpBtn) {
+    jumpBtn.addEventListener("click", () => {
+      const el = document.getElementById("specialEventsSection");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+</script>
 <style>
     iframe { pointer-events: auto; }
     .timeline-line { position:absolute; left:20px; top:0; bottom:0; width:2px; background:#e2e8f0; z-index:0; }
@@ -31,6 +41,9 @@
 <option value="ko">한국어</option>
 <option value="vi">Tiếng Việt</option>
 </select>
+<button class="bg-amber-500 hover:bg-amber-400 text-slate-900 p-2 rounded-lg text-sm transition" id="jumpSpecialBtn" title="跳到特殊免費活動">
+<i class="fa-solid fa-star"></i> <span class="hidden sm:inline">特殊活動</span>
+</button>
 </div>
 </div>
 </nav>
@@ -82,6 +95,7 @@
             <th class="py-3 pr-4">活動</th>
             <th class="py-3 pr-4">地點</th>
             <th class="py-3 pr-4">時間/備註</th>
+            <th class="py-3 pr-4">導航</th>
           </tr>
         </thead>
         <tbody class="text-gray-800">
@@ -91,21 +105,36 @@
             <td class="py-3 pr-4">Carnaval on the Mile（免費街頭藝術音樂節）</td>
             <td class="py-3 pr-4">Miracle Mile, Coral Gables</td>
             <td class="py-3 pr-4">官方：免費入場；多舞台音樂/藝術/美食攤位（依現場公告）</td>
-          </tr>
+          <td class="py-3 pr-4">
+              <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
+                 href="https://www.google.com/maps/dir/?api=1&destination=Miracle%20Mile%2C%20Coral%20Gables%2C%20FL" target="_blank" rel="noopener">
+                <i class="fa-solid fa-location-arrow"></i> 導航
+              </a>
+            </td></tr>
           <tr class="border-b">
             <td class="py-3 pr-4 font-medium">Miami（Little Havana）</td>
             <td class="py-3 pr-4">3/9（活動總期：3/9–3/11）</td>
             <td class="py-3 pr-4">Carnaval Miami Domino Tournament（免費觀看）</td>
             <td class="py-3 pr-4">Domino Park（Little Havana）</td>
             <td class="py-3 pr-4">9:00–16:00；你 3/9 轉場日若想看，建議排上午/中午</td>
-          </tr>
+          <td class="py-3 pr-4">
+              <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
+                 href="https://www.google.com/maps/dir/?api=1&destination=Domino%20Park%2C%20Little%20Havana%2C%20Miami%2C%20FL" target="_blank" rel="noopener">
+                <i class="fa-solid fa-location-arrow"></i> 導航
+              </a>
+            </td></tr>
           <tr>
             <td class="py-3 pr-4 font-medium">Orlando（UCF）</td>
             <td class="py-3 pr-4">3/14</td>
             <td class="py-3 pr-4">Touch-a-Truck（免費）</td>
             <td class="py-3 pr-4">Addition Financial Arena</td>
             <td class="py-3 pr-4">12:00；偏親子/展車體驗，適合還車前半天順路去</td>
-          </tr>
+          <td class="py-3 pr-4">
+              <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
+                 href="https://www.google.com/maps/dir/?api=1&destination=Addition%20Financial%20Arena%2C%20Orlando%2C%20FL" target="_blank" rel="noopener">
+                <i class="fa-solid fa-location-arrow"></i> 導航
+              </a>
+            </td></tr>
         </tbody>
       </table>
     </div>
@@ -1501,6 +1530,16 @@ langSelect.addEventListener("change", () => {
       applyLang(lang);
     });
   })();
+
+  // Jump to Special Events
+  const jumpBtn = document.getElementById("jumpSpecialBtn");
+  if (jumpBtn) {
+    jumpBtn.addEventListener("click", () => {
+      const el = document.getElementById("specialEventsSection");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
 </script>
 </body>
 </html>
