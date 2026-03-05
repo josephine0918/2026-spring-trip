@@ -1,217 +1,180 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Florida Trip 3/7–3/14</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com">
-  // Jump to Special Events
-  const jumpBtn = document.getElementById("jumpSpecialBtn");
-  if (jumpBtn) {
-    jumpBtn.addEventListener("click", () => {
-      const el = document.getElementById("specialEventsSection");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
-
-</script>
-<style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Florida Trip 3/7–3/14 · Final</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
     iframe { pointer-events: auto; }
     .timeline-line { position:absolute; left:20px; top:0; bottom:0; width:2px; background:#e2e8f0; z-index:0; }
   </style>
 </head>
+
 <body class="bg-slate-50 text-gray-900 font-sans">
-<!-- ===== Nav ===== -->
-<nav class="bg-indigo-900 text-white p-4 sticky top-0 z-50 shadow-md">
-<div class="container mx-auto flex flex-wrap justify-between items-center gap-3">
-<div>
-<h1 class="font-bold text-lg tracking-tight">Florida Trip 2026 🌴</h1>
-<p class="text-[10px] text-indigo-300 italic">March 07 - March 14 · SAT → MCO → MIA → ORL → MCO → SAT</p>
-</div>
-<div class="flex items-center gap-2">
-<button class="bg-emerald-600 hover:bg-emerald-500 p-2 rounded-lg text-sm transition" id="copyTodayBtn">
-<i class="fa-solid fa-copy"></i> <span id="copyTodayLabel">複製今天行程</span>
-</button>
-<select class="bg-indigo-800 border border-indigo-600 text-white text-sm rounded-lg px-3 py-2" id="langSelect">
-<option value="zh">中文</option>
-<option value="en">English</option>
-<option value="es">Español</option>
-<option value="ko">한국어</option>
-<option value="vi">Tiếng Việt</option>
-</select>
-<button class="bg-amber-500 hover:bg-amber-400 text-slate-900 p-2 rounded-lg text-sm transition" id="jumpSpecialBtn" title="跳到特殊免費活動">
-<i class="fa-solid fa-star"></i> <span class="hidden sm:inline" id="jumpSpecialLabel">特殊活動</span>
-</button>
-</div>
-</div>
-</nav>
-<!-- ===== Map ===== -->
-<div class="w-full h-72 md:h-96 bg-gray-200 border-b-4 border-indigo-900 shadow-inner">
-<iframe allowfullscreen="" height="100%" id="mapFrame" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3028207.819705539!2d-81.6!3d27.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-TW!2sus!4v1700000000000" style="border:0;" width="100%">
-</iframe>
-</div>
-<main class="container mx-auto px-4 py-10 max-w-5xl">
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-<!-- Info -->
-<!-- Lodging -->
-<div class="lg:col-span-3 mt-2 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-emerald-600" id="lodgingSection">
-  <div class="flex items-start justify-between gap-3 flex-wrap">
-    <div>
-      <h2 class="text-xl font-bold text-emerald-800 flex items-center gap-2" id="lodgingTitle">
-        <i class="fa-solid fa-bed"></i> 住宿資訊
-      </h2>
-      <p class="text-sm text-gray-600 mt-1" id="lodgingHint">你已訂住宿（含日期），點「導航」可直接開 Google Maps。</p>
+  <!-- ===== Nav ===== -->
+  <nav class="bg-indigo-900 text-white p-4 sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto flex flex-wrap justify-between items-center gap-3">
+      <div>
+        <h1 class="font-bold text-lg tracking-tight" id="navTitle">Florida Trip 2026 🌴</h1>
+        <p class="text-[10px] text-indigo-300 italic" id="navSubtitle">
+          March 07 - March 14 · SAT → MCO → MIA → ORL → TPA/Clearwater → MCO → AUS → (Bus) → SAT
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button class="bg-emerald-600 hover:bg-emerald-500 p-2 rounded-lg text-sm transition" id="copyTodayBtn">
+          <i class="fa-solid fa-copy"></i> <span id="copyTodayLabel">複製今天行程</span>
+        </button>
+
+        <select class="bg-indigo-800 border border-indigo-600 text-white text-sm rounded-lg px-3 py-2" id="langSelect">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="ko">한국어</option>
+          <option value="vi">Tiếng Việt</option>
+        </select>
+
+        <button class="bg-amber-500 hover:bg-amber-400 text-slate-900 p-2 rounded-lg text-sm transition" id="jumpLodgingBtn" title="跳到住宿">
+          <i class="fa-solid fa-bed"></i> <span class="hidden sm:inline" id="jumpLodgingLabel">住宿</span>
+        </button>
+
+        <button class="bg-amber-500 hover:bg-amber-400 text-slate-900 p-2 rounded-lg text-sm transition" id="jumpSpecialBtn" title="跳到特殊免費活動">
+          <i class="fa-solid fa-star"></i> <span class="hidden sm:inline" id="jumpSpecialLabel">特殊活動</span>
+        </button>
+      </div>
     </div>
+  </nav>
+
+  <!-- ===== Map ===== -->
+  <div class="w-full h-72 md:h-96 bg-gray-200 border-b-4 border-indigo-900 shadow-inner">
+    <iframe allowfullscreen="" height="100%" id="mapFrame" loading="lazy"
+      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3028207.819705539!2d-81.6!3d27.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1szh-TW!2sus!4v1700000000000"
+      style="border:0;" width="100%">
+    </iframe>
   </div>
 
-  <div class="mt-6 overflow-x-auto">
-    <table class="min-w-full text-sm">
-      <thead>
-        <tr class="text-left text-gray-500 border-b">
-          <th class="py-3 pr-4" id="lgCity">城市</th>
-          <th class="py-3 pr-4" id="lgDates">日期</th>
-          <th class="py-3 pr-4" id="lgPlace">住宿</th>
-          <th class="py-3 pr-4" id="lgLocation">位置</th>
-          <th class="py-3 pr-4" id="lgNav">導航</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y">
-        <tr class="align-top">
-          <td class="py-4 pr-4 font-medium" id="lod1city">Miami</td>
-          <td class="py-4 pr-4" id="lod1dates">3/7–3/9</td>
-          <td class="py-4 pr-4">
-            <div class="font-semibold" id="lod1name">Holiday Inn Express &amp; Suites Miami - Hialeah by IHG</div>
-          </td>
-          <td class="py-4 pr-4" id="lod1loc">Hialeah, Miami</td>
-          <td class="py-4 pr-4">
-            <a class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition"
-               target="_blank" rel="noopener"
-               href="https://www.google.com/maps/dir/?api=1&destination=Holiday%20Inn%20Express%20%26%20Suites%20Miami%20-%20Hialeah%20by%20IHG">
-              <i class="fa-solid fa-location-arrow"></i> <span class="navLabelLodging" id="lodNav1">導航</span>
-            </a>
-          </td>
-        </tr>
+  <main class="container mx-auto px-4 py-10 max-w-5xl">
+    <!-- ===== Lodging ===== -->
+    <section class="lg:col-span-3 mt-2 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-emerald-600" id="lodgingSection">
+      <div class="flex items-start justify-between gap-3 flex-wrap">
+        <div>
+          <h2 class="text-xl font-bold text-emerald-800 flex items-center gap-2" id="lodgingTitle">
+            <i class="fa-solid fa-bed"></i> 住宿資訊
+          </h2>
+          <p class="text-sm text-gray-600 mt-1" id="lodgingHint">你已訂住宿（含日期），點「導航」可直接開 Google Maps。</p>
+        </div>
+      </div>
 
-        <tr class="align-top">
-          <td class="py-4 pr-4 font-medium" id="lod2city">Orlando</td>
-          <td class="py-4 pr-4" id="lod2dates">3/9–3/14</td>
-          <td class="py-4 pr-4">
-            <div class="font-semibold" id="lod2name">Airbnb – Kissimmee (Orlando Area)</div>
-          </td>
-          <td class="py-4 pr-4" id="lod2loc">28°19'36.5&quot;N 81°30'54.1&quot;W</td>
-          <td class="py-4 pr-4">
-            <a class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition"
-               target="_blank" rel="noopener"
-               href="https://www.google.com/maps/dir/?api=1&destination=28.3268056,-81.5150278">
-              <i class="fa-solid fa-location-arrow"></i> <span class="navLabelLodging" id="lodNav2">導航</span>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+      <div class="mt-6 overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead>
+            <tr class="text-left text-gray-500 border-b">
+              <th class="py-3 pr-4" id="lgCity">城市</th>
+              <th class="py-3 pr-4" id="lgDates">日期</th>
+              <th class="py-3 pr-4" id="lgPlace">住宿</th>
+              <th class="py-3 pr-4" id="lgLocation">位置</th>
+              <th class="py-3 pr-4" id="lgNav">導航</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y">
+            <tr class="align-top">
+              <td class="py-4 pr-4 font-medium" id="lod1city">Miami</td>
+              <td class="py-4 pr-4" id="lod1dates">3/7–3/9</td>
+              <td class="py-4 pr-4">
+                <div class="font-semibold" id="lod1name">Holiday Inn Express &amp; Suites Miami - Hialeah by IHG</div>
+              </td>
+              <td class="py-4 pr-4" id="lod1loc">Hialeah, Miami</td>
+              <td class="py-4 pr-4">
+                <a class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition"
+                   target="_blank" rel="noopener"
+                   href="https://www.google.com/maps/dir/?api=1&destination=Holiday%20Inn%20Express%20%26%20Suites%20Miami%20-%20Hialeah%20by%20IHG">
+                  <i class="fa-solid fa-location-arrow"></i> <span id="lodNav1">導航</span>
+                </a>
+              </td>
+            </tr>
 
+            <tr class="align-top">
+              <td class="py-4 pr-4 font-medium" id="lod2city">Orlando</td>
+              <td class="py-4 pr-4" id="lod2dates">3/9–3/14</td>
+              <td class="py-4 pr-4">
+                <div class="font-semibold" id="lod2name">Airbnb – Kissimmee (Orlando Area)</div>
+              </td>
+              <td class="py-4 pr-4" id="lod2loc">28°19'36.5&quot;N 81°30'54.1&quot;W</td>
+              <td class="py-4 pr-4">
+                <a class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition"
+                   target="_blank" rel="noopener"
+                   href="https://www.google.com/maps/dir/?api=1&destination=28.3268056,-81.5150278">
+                  <i class="fa-solid fa-location-arrow"></i> <span id="lodNav2">導航</span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-<!-- Timeline -->
-<div class="lg:col-span-3 relative">
-<div class="timeline-line hidden md:block"></div>
-<div class="flex items-center justify-between mb-4">
-<h2 class="text-xl font-bold text-indigo-900" id="itineraryTitle">📌 行程（點每天可收合）</h2>
-<div class="text-xs text-gray-500" id="itineraryHint">提示：點 Day 標題可收合；今天會自動高亮；IMPORTANT 會自動提亮。</div>
-</div>
-<div class="space-y-4 relative z-10" id="daysContainer"></div>
-</div>
-</div>
-<div class="mt-10 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-indigo-600">
-<h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2 text-lg" id="carTitle">
-<i class="fa-solid fa-car-side"></i> 租車與交通提醒
+    <!-- ===== Timeline ===== -->
+    <section class="mt-8 lg:col-span-3 relative">
+      <div class="timeline-line hidden md:block"></div>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-bold text-indigo-900" id="itineraryTitle">📌 行程（點每天可收合）</h2>
+        <div class="text-xs text-gray-500" id="itineraryHint">提示：點 Day 標題可收合；今天會自動高亮；IMPORTANT 會自動提亮。</div>
+      </div>
+      <div class="space-y-4 relative z-10" id="daysContainer"></div>
+    </section>
+
+    <!-- ===== Car tips ===== -->
+    <div class="mt-10 p-8 bg-white rounded-3xl border border-slate-200 shadow-sm border-t-4 border-t-indigo-600">
+      <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2 text-lg" id="carTitle">
+        <i class="fa-solid fa-car-side"></i> 租車與交通提醒
       </h3>
-<p class="text-gray-600 text-sm leading-relaxed" id="carText">
-        建議：MIA 取車、MCO 還車（one-way）。Miami 停車貴、Orlando 樂園停車固定；3/12 去 KSC 建議早到搶 Bus Tour。
+      <p class="text-gray-600 text-sm leading-relaxed" id="carText">
+        Miami 停車較貴；Orlando 樂園多為固定停車費。建議一開始就確認租車的 toll（SunPass / plate billing）方案。
       </p>
-</div>
-
-<!-- ===== Special Free Events (Only) ===== -->
-<section class="mt-10" id="specialEventsSection">
-  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-    <h2 class="text-xl font-bold mb-2 flex items-center gap-2">
-      <i class="fa-solid fa-star text-yellow-500"></i>
-      <span id="specialTitle">特殊免費活動（只列期間限定／非每日例行）</span>
-    </h2>
-    <p class="text-gray-600 text-sm mb-4">
-      <span id="specialFilter">篩選條件：<span class="font-medium">免費入場</span>、<span class="font-medium">在你停留日期內</span>、且屬於「節慶／大型活動／一次性活動」類型。</span>
-    </p>
-
-    <div class="overflow-x-auto">
-      <table class="min-w-full text-sm">
-        <thead>
-          <tr class="text-left text-gray-600 border-b">
-            <th class="py-3 pr-4"><span id="seCity">城市</span></th>
-            <th class="py-3 pr-4"><span id="seDate">日期</span></th>
-            <th class="py-3 pr-4"><span id="seEvent">活動</span></th>
-            <th class="py-3 pr-4"><span id="seLocation">地點</span></th>
-            <th class="py-3 pr-4"><span id="seTime">時間/備註</span></th>
-            <th class="py-3 pr-4"><span id="seNav">導航</span></th>
-          </tr>
-        </thead>
-        <tbody class="text-gray-800">
-          <tr class="border-b">
-            <td class="py-3 pr-4 font-medium"><span id="ev1city">Miami（Coral Gables）</span></td>
-            <td class="py-3 pr-4">3/7–3/8</td>
-            <td class="py-3 pr-4">Carnaval on the Mile（<span id="ev1desc">免費街頭藝術音樂節</span>）</td>
-            <td class="py-3 pr-4">Miracle Mile, Coral Gables</td>
-            <td class="py-3 pr-4"><span id="ev1note">官方：免費入場；多舞台音樂/藝術/美食攤位（依現場公告）</span></td>
-          <td class="py-3 pr-4">
-              <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
-                 href="https://www.google.com/maps/dir/?api=1&destination=Miracle%20Mile%2C%20Coral%20Gables%2C%20FL" target="_blank" rel="noopener">
-                <i class="fa-solid fa-location-arrow"></i> <span class="navLabel">導航</span>
-              </a>
-            </td></tr>
-          <tr class="border-b">
-            <td class="py-3 pr-4 font-medium"><span id="ev2city">Miami（Little Havana）</span></td>
-            <td class="py-3 pr-4">3/9（活動總期：3/9–3/11）</td>
-            <td class="py-3 pr-4">Carnaval Miami Domino Tournament（<span id="ev2desc">免費觀看</span>）</td>
-            <td class="py-3 pr-4">Domino Park（Little Havana）</td>
-            <td class="py-3 pr-4"><span id="ev2note">9:00–16:00；你 3/9 轉場日若想看，建議排上午/中午</span></td>
-          <td class="py-3 pr-4">
-              <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
-                 href="https://www.google.com/maps/dir/?api=1&destination=Domino%20Park%2C%20Little%20Havana%2C%20Miami%2C%20FL" target="_blank" rel="noopener">
-                <i class="fa-solid fa-location-arrow"></i> <span class="navLabel">導航</span>
-              </a>
-            </td></tr>
-          <tr>
-            <td class="py-3 pr-4 font-medium"><span id="ev3city">Orlando（UCF）</span></td>
-            <td class="py-3 pr-4">3/14</td>
-            <td class="py-3 pr-4">Touch-a-Truck（<span id="ev3desc">免費</span>）</td>
-            <td class="py-3 pr-4">Addition Financial Arena</td>
-            <td class="py-3 pr-4"><span id="ev3note">12:00；偏親子/展車體驗，適合還車前半天順路去</span></td>
-          <td class="py-3 pr-4">
-              <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
-                 href="https://www.google.com/maps/dir/?api=1&destination=Addition%20Financial%20Arena%2C%20Orlando%2C%20FL" target="_blank" rel="noopener">
-                <i class="fa-solid fa-location-arrow"></i> <span class="navLabel">導航</span>
-              </a>
-            </td></tr>
-        </tbody>
-      </table>
     </div>
-  </div>
-</section>
 
-</main>
+    <!-- ===== Special Free Events (Only) ===== -->
+    <section class="mt-10" id="specialEventsSection">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 class="text-xl font-bold mb-2 flex items-center gap-2">
+          <i class="fa-solid fa-star text-yellow-500"></i>
+          <span id="specialTitle">特殊免費活動（只列期間限定／非每日例行）</span>
+        </h2>
+        <p class="text-gray-600 text-sm mb-4" id="specialFilter">
+          篩選條件：<span class="font-medium">免費入場</span>、<span class="font-medium">在你停留日期內</span>、且屬於「節慶／大型活動／一次性活動」類型。
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead>
+              <tr class="text-left text-gray-600 border-b">
+                <th class="py-3 pr-4" id="seCity">城市</th>
+                <th class="py-3 pr-4" id="seDate">日期</th>
+                <th class="py-3 pr-4" id="seEvent">活動</th>
+                <th class="py-3 pr-4" id="seLocation">地點</th>
+                <th class="py-3 pr-4" id="seTime">時間/備註</th>
+                <th class="py-3 pr-4" id="seNav">導航</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-800" id="specialEventsBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
 <script>
   // ===== Settings =====
   const TRIP_YEAR = 2026;
-  const LAST_UPDATED_ISO = "2026-02-10T00:00:00-06:00";
+  const LAST_UPDATED_ISO = "2026-03-04T00:00:00-06:00";
 
   // ===== Helper: content i18n getter =====
-  // 你之後新增翻譯：只要在對應欄位補上 es/ko/vi 即可
-  // 現在預設：如果 es/ko/vi 沒填，會 fallback 英文（再不行才中文）
   function getL(obj, lang) {
     if (!obj) return "";
-    if (typeof obj === "string") return obj; // 兼容
+    if (typeof obj === "string") return obj;
     return obj[lang] || obj.en || obj.zh || "";
   }
 
@@ -219,25 +182,8 @@
   const I18N = {
     zh: {
       copyToday: "複製今天行程",
-      tripInfo: "行程資訊",
-      infoDate: "日期",
-      infoRoute: "路線",
-      infoMust: "必去",
-      infoCar: "租車建議",
-      expenses: "Expenses（多人分帳）",
-      open: "展開",
-      close: "收合",
-      members: "成員",
-      membersHint: "新增參與分帳的人",
-      addExpense: "新增花費",
-      amount: "金額",
-      payer: "付款人",
-      category: "分類",
-      day: "日期",
-      splitWith: "分攤給誰（可複選；只有參與的人才勾）",
-      expenseList: "花費明細",
-      settlement: "結算建議（誰欠誰）",
-      localSave: "會自動存到本機（同一台裝置/瀏覽器有效）。",
+      alertCopied: "已複製！",
+      alertCopiedToday: "已複製今天行程！",
       itineraryTitle: "📌 行程（點每天可收合）",
       itineraryHint: "提示：點 Day 標題可收合；今天會自動高亮；IMPORTANT 會自動提亮。",
       reminderTitle: "重點提醒",
@@ -251,70 +197,25 @@
       travel: "交通時間",
       lastUpdatedPrefix: "最後更新：",
       carTitle: "租車與交通提醒",
-      carText: "建議：MIA 取車、MCO 還車（one-way）。Miami 停車貴、Orlando 樂園停車固定；3/12 去 KSC 建議早到搶 Bus Tour。",
-      alertCopied: "已複製！",
-      alertCopiedToday: "已複製今天行程！",
-      warnAmount: "請填金額",
-      warnPayer: "請選付款人",
-      warnSplit: "至少勾選一位分攤對象"
-      ,specialBtn: "特殊活動",
-      specialTitle: "⭐ 特殊免費活動（只列期間限定／非每日例行）",
+      carText: "Miami 停車較貴；Orlando 樂園多為固定停車費。建議一開始就確認租車的 toll（SunPass / plate billing）方案。",
+      specialBtn: "特殊活動",
+      lodgingBtn: "住宿",
+      // Special section
+      specialTitle: "特殊免費活動（只列期間限定／非每日例行）",
       specialFilterText: "篩選條件：免費入場、在你停留日期內、且屬於「節慶／大型活動／一次性活動」類型。",
-      seCity: "城市",
-      seDate: "日期",
-      seEvent: "活動",
-      seLocation: "地點",
-      seTime: "時間/備註",
-      seNav: "導航",
+      seCity: "城市", seDate:"日期", seEvent:"活動", seLocation:"地點", seTime:"時間/備註", seNav:"導航",
       navigate: "導航",
-      ev1city: "Miami（Coral Gables）",
-      ev2city: "Miami（Little Havana）",
-      ev3city: "Orlando（UCF）",
-      ev1desc: "免費街頭藝術音樂節",
-      ev2desc: "免費觀看",
-      ev3desc: "免費",
-      ev1note: "官方：免費入場；多舞台音樂/藝術/美食攤位（依現場公告）",
-      ev2note: "9:00–16:00；你 3/9 轉場日若想看，建議排上午/中午",
-      ev3note: "12:00；偏親子/展車體驗，適合還車前半天順路去",
+      // Lodging section
       lodgingTitle: "住宿資訊",
       lodgingHint: "你已訂住宿（含日期），點「導航」可直接開 Google Maps。",
-      lgCity: "城市",
-      lgDates: "日期",
-      lgPlace: "住宿",
-      lgLocation: "位置",
-      lgNav: "導航",
-      lod1city: "Miami",
-      lod1dates: "3/7–3/9",
-      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
-      lod1loc: "Hialeah, Miami",
-      lod2city: "Orlando",
-      lod2dates: "3/9–3/14",
-      lod2name: "Airbnb – Kissimmee（Orlando 周邊）",
-      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
-
-
+      lgCity:"城市", lgDates:"日期", lgPlace:"住宿", lgLocation:"位置", lgNav:"導航",
+      // Labels
+      todayTag: "Today"
     },
     en: {
       copyToday: "Copy today's plan",
-      tripInfo: "Trip Info",
-      infoDate: "Dates",
-      infoRoute: "Route",
-      infoMust: "Must-go",
-      infoCar: "Car rental",
-      expenses: "Expenses (Group Split)",
-      open: "Open",
-      close: "Close",
-      members: "Members",
-      membersHint: "Add participants",
-      addExpense: "Add expense",
-      amount: "Amount",
-      payer: "Payer",
-      category: "Category",
-      day: "Day",
-      splitWith: "Split with (select participants)",
-      expenseList: "Expense list",
-      settlement: "Settlement (who owes who)",
-      localSave: "Saved locally in this browser/device.",
+      alertCopied: "Copied!",
+      alertCopiedToday: "Copied today's plan!",
       itineraryTitle: "📌 Itinerary (tap to expand/collapse)",
       itineraryHint: "Tip: tap Day title; Today highlighted; IMPORTANT emphasized.",
       reminderTitle: "Key reminders",
@@ -328,147 +229,51 @@
       travel: "Travel time",
       lastUpdatedPrefix: "Last updated: ",
       carTitle: "Car & Transit Tips",
-      carText: "Suggestion: pick up at MIA and return at MCO (one-way). Parking is pricey in Miami; theme parks have fixed parking fees. For KSC on 3/12, arrive early for the Bus Tour.",
-      alertCopied: "Copied!",
-      alertCopiedToday: "Copied today's plan!",
-      warnAmount: "Enter an amount",
-      warnPayer: "Select a payer",
-      warnSplit: "Select at least one participant"
-      ,specialBtn: "Special Events",
-      specialTitle: "⭐ Free Special Events (date-limited / not daily)",
+      carText: "Parking is pricier in Miami; theme parks often have fixed parking fees. Confirm your rental toll setup (SunPass / plate billing) early.",
+      specialBtn: "Special Events",
+      lodgingBtn: "Lodging",
+      specialTitle: "Free Special Events (date-limited / not daily)",
       specialFilterText: "Filter: free entry, within your travel dates, and festival/large one-off events only.",
-      seCity: "City",
-      seDate: "Date",
-      seEvent: "Event",
-      seLocation: "Location",
-      seTime: "Time / Notes",
-      seNav: "Navigate",
+      seCity: "City", seDate:"Date", seEvent:"Event", seLocation:"Location", seTime:"Time / Notes", seNav:"Navigate",
       navigate: "Navigate",
-      ev1city: "Miami (Coral Gables)",
-      ev2city: "Miami (Little Havana)",
-      ev3city: "Orlando (UCF)",
-      ev1desc: "free street art & music festival",
-      ev2desc: "free to watch",
-      ev3desc: "free",
-      ev1note: "Official: free admission; multiple stages for music/art + food vendors (check onsite updates).",
-      ev2note: "9:00–16:00; if you want to catch it on 3/9 (transfer day), go in the morning/noon.",
-      ev3note: "12:00; family-friendly vehicle showcase—nice stop before returning the car.",
       lodgingTitle: "Lodging",
       lodgingHint: "Your booked stays (with dates). Tap “Navigate” to open Google Maps.",
-      lgCity: "City",
-      lgDates: "Dates",
-      lgPlace: "Stay",
-      lgLocation: "Location",
-      lgNav: "Navigate",
-      lod1city: "Miami",
-      lod1dates: "Mar 7–Mar 9",
-      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
-      lod1loc: "Hialeah, Miami",
-      lod2city: "Orlando",
-      lod2dates: "Mar 9–Mar 14",
-      lod2name: "Airbnb – Kissimmee (Orlando Area)",
-      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
-
-
+      lgCity:"City", lgDates:"Dates", lgPlace:"Stay", lgLocation:"Location", lgNav:"Navigate",
+      todayTag: "Today"
     },
     es: {
       copyToday: "Copiar plan de hoy",
-      tripInfo: "Info del viaje",
-      infoDate: "Fechas",
-      infoRoute: "Ruta",
-      infoMust: "Imprescindibles",
-      infoCar: "Alquiler de coche",
-      expenses: "Gastos (división grupal)",
-      open: "Abrir",
-      close: "Cerrar",
-      members: "Miembros",
-      membersHint: "Añadir participantes",
-      addExpense: "Añadir gasto",
-      amount: "Importe",
-      payer: "Pagador",
-      category: "Categoría",
-      day: "Día",
-      splitWith: "Repartir con (selecciona)",
-      expenseList: "Lista de gastos",
-      settlement: "Liquidación (quién debe a quién)",
-      localSave: "Guardado localmente en este navegador/dispositivo.",
-      itineraryTitle: "📌 Itinerario (toca para desplegar/plegar)",
+      alertCopied: "¡Copiado!",
+      alertCopiedToday: "¡Copiado el plan de hoy!",
+      itineraryTitle: "📌 Itinerario (toca para abrir/cerrar)",
       itineraryHint: "Consejo: toca el título del día; Hoy resaltado; IMPORTANT enfatizado.",
       reminderTitle: "Recordatorios",
       copyDay: "Copiar día",
-      expand: "Desplegar",
-      collapse: "Plegar",
+      expand: "Abrir",
+      collapse: "Cerrar",
       openMap: "Abrir mapa",
       address: "Dirección",
       phone: "Teléfono",
       note: "Nota",
       travel: "Tiempo de traslado",
       lastUpdatedPrefix: "Última actualización: ",
-      carTitle: "Consejos de coche y transporte",
-      carText: "Sugerencia: recoger en MIA y devolver en MCO (solo ida). El estacionamiento es caro en Miami; los parques tienen tarifa fija. Para KSC el 3/12, llega temprano para el Bus Tour.",
-      alertCopied: "¡Copiado!",
-      alertCopiedToday: "¡Copiado el plan de hoy!",
-      warnAmount: "Ingresa un importe",
-      warnPayer: "Selecciona un pagador",
-      warnSplit: "Selecciona al menos un participante"
-      ,specialBtn: "Eventos Especiales",
-      specialTitle: "⭐ Eventos especiales gratis (por fechas / no diarios)",
+      carTitle: "Consejos de coche/transporte",
+      carText: "El aparcamiento es más caro en Miami; los parques suelen tener tarifa fija. Confirma el sistema de peajes del alquiler (SunPass / matrícula).",
+      specialBtn: "Eventos Especiales",
+      lodgingBtn: "Alojamiento",
+      specialTitle: "Eventos especiales gratis (por fechas / no diarios)",
       specialFilterText: "Filtro: entrada gratis, dentro de tus fechas, y solo festivales/eventos puntuales.",
-      seCity: "Ciudad",
-      seDate: "Fecha",
-      seEvent: "Evento",
-      seLocation: "Lugar",
-      seTime: "Hora / Nota",
-      seNav: "Navegar",
+      seCity: "Ciudad", seDate:"Fecha", seEvent:"Evento", seLocation:"Lugar", seTime:"Hora / Nota", seNav:"Navegar",
       navigate: "Navegar",
-      ev1city: "Miami (Coral Gables)",
-      ev2city: "Miami (Little Havana)",
-      ev3city: "Orlando (UCF)",
-      ev1desc: "festival gratuito de arte y música",
-      ev2desc: "gratis para ver",
-      ev3desc: "gratis",
-      ev1note: "Oficial: entrada gratuita; varios escenarios de música/arte + puestos de comida (según el lugar).",
-      ev2note: "9:00–16:00; si quieres verlo el 3/9 (día de traslado), ve por la mañana/mediodía.",
-      ev3note: "12:00; exposición de vehículos para familias—ideal antes de devolver el auto.",
       lodgingTitle: "Alojamiento",
       lodgingHint: "Tus alojamientos reservados (con fechas). Pulsa “Navegar” para abrir Google Maps.",
-      lgCity: "Ciudad",
-      lgDates: "Fechas",
-      lgPlace: "Alojamiento",
-      lgLocation: "Ubicación",
-      lgNav: "Navegar",
-      lod1city: "Miami",
-      lod1dates: "7–9 Mar",
-      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
-      lod1loc: "Hialeah, Miami",
-      lod2city: "Orlando",
-      lod2dates: "9–14 Mar",
-      lod2name: "Airbnb – Kissimmee (zona de Orlando)",
-      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
-
-
+      lgCity:"Ciudad", lgDates:"Fechas", lgPlace:"Alojamiento", lgLocation:"Ubicación", lgNav:"Navegar",
+      todayTag: "Hoy"
     },
     ko: {
       copyToday: "오늘 일정 복사",
-      tripInfo: "여행 정보",
-      infoDate: "기간",
-      infoRoute: "경로",
-      infoMust: "필수 방문",
-      infoCar: "렌터카",
-      expenses: "지출(그룹 정산)",
-      open: "열기",
-      close: "닫기",
-      members: "멤버",
-      membersHint: "참여자 추가",
-      addExpense: "지출 추가",
-      amount: "금액",
-      payer: "결제자",
-      category: "카테고리",
-      day: "날짜",
-      splitWith: "분할 대상(선택)",
-      expenseList: "지출 내역",
-      settlement: "정산(누가 누구에게)",
-      localSave: "이 브라우저/기기 로컬에 저장됩니다.",
+      alertCopied: "복사됨!",
+      alertCopiedToday: "오늘 일정 복사됨!",
       itineraryTitle: "📌 일정 (눌러서 펼치기/접기)",
       itineraryHint: "팁: Day 제목을 눌러 토글; 오늘 강조; IMPORTANT 더 강조.",
       reminderTitle: "중요 알림",
@@ -482,70 +287,22 @@
       travel: "이동 시간",
       lastUpdatedPrefix: "마지막 업데이트: ",
       carTitle: "렌터카/이동 팁",
-      carText: "추천: MIA 픽업, MCO 반납(편도). 마이애미 주차비가 비싸고, 테마파크는 고정 주차요금. 3/12 KSC는 버스투어 위해 일찍 도착.",
-      alertCopied: "복사됨!",
-      alertCopiedToday: "오늘 일정 복사됨!",
-      warnAmount: "금액을 입력하세요",
-      warnPayer: "결제자를 선택하세요",
-      warnSplit: "분할 대상을 1명 이상 선택하세요"
-      ,specialBtn: "특별 행사",
+      carText: "마이애미 주차비가 비싸고, 테마파크는 고정 주차요금이 많아요. 렌터카 toll 설정(SunPass/번호판 청구)을 미리 확인하세요.",
+      specialBtn: "특별 행사",
+      lodgingBtn: "숙소",
       specialTitle: "⭐ 무료 특별 행사 (기간 한정 / 매일 상설 제외)",
       specialFilterText: "조건: 무료 입장, 여행 기간 내, 축제/대형/일회성 행사만 포함.",
-      seCity: "도시",
-      seDate: "날짜",
-      seEvent: "행사",
-      seLocation: "장소",
-      seTime: "시간/비고",
-      seNav: "길찾기",
+      seCity: "도시", seDate:"날짜", seEvent:"행사", seLocation:"장소", seTime:"시간/비고", seNav:"길찾기",
       navigate: "길찾기",
-      ev1city: "마이애미(코럴 게이블스)",
-      ev2city: "마이애미(리틀 하바나)",
-      ev3city: "올랜도(UCF)",
-      ev1desc: "무료 거리예술·음악 축제",
-      ev2desc: "관람 무료",
-      ev3desc: "무료",
-      ev1note: "공식: 무료 입장; 음악/예술 무대 + 푸드 부스(현장 공지 기준).",
-      ev2note: "9:00–16:00; 3/9 이동일에 보고 싶다면 오전/점심 시간 추천.",
-      ev3note: "12:00; 가족 친화 전시(차량 체험)—차 반납 전 들르기 좋아요.",
       lodgingTitle: "숙소 정보",
       lodgingHint: "예약한 숙소(날짜 포함)입니다. “내비게이션”을 누르면 Google 지도 길안내가 열려요.",
-      lgCity: "도시",
-      lgDates: "날짜",
-      lgPlace: "숙소",
-      lgLocation: "위치",
-      lgNav: "내비게이션",
-      lod1city: "마이애미",
-      lod1dates: "3/7–3/9",
-      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
-      lod1loc: "하이얼리아(Hialeah), 마이애미",
-      lod2city: "올랜도",
-      lod2dates: "3/9–3/14",
-      lod2name: "Airbnb – 키시미(Kissimmee, 올랜도 인근)",
-      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
-
-
+      lgCity:"도시", lgDates:"날짜", lgPlace:"숙소", lgLocation:"위치", lgNav:"내비게이션",
+      todayTag: "오늘"
     },
     vi: {
       copyToday: "Sao chép lịch hôm nay",
-      tripInfo: "Thông tin chuyến đi",
-      infoDate: "Ngày",
-      infoRoute: "Tuyến",
-      infoMust: "Điểm phải đi",
-      infoCar: "Thuê xe",
-      expenses: "Chi phí (chia nhóm)",
-      open: "Mở",
-      close: "Đóng",
-      members: "Thành viên",
-      membersHint: "Thêm người tham gia",
-      addExpense: "Thêm chi phí",
-      amount: "Số tiền",
-      payer: "Người trả",
-      category: "Danh mục",
-      day: "Ngày",
-      splitWith: "Chia cho ai (chọn)",
-      expenseList: "Danh sách chi phí",
-      settlement: "Quyết toán (ai nợ ai)",
-      localSave: "Lưu cục bộ trên trình duyệt/thiết bị này.",
+      alertCopied: "Đã sao chép!",
+      alertCopiedToday: "Đã sao chép lịch hôm nay!",
       itineraryTitle: "📌 Lịch trình (chạm để mở/đóng)",
       itineraryHint: "Mẹo: chạm tiêu đề ngày; Hôm nay được tô sáng; IMPORTANT được nhấn mạnh.",
       reminderTitle: "Nhắc nhở",
@@ -559,738 +316,327 @@
       travel: "Thời gian di chuyển",
       lastUpdatedPrefix: "Cập nhật lần cuối: ",
       carTitle: "Mẹo thuê xe/di chuyển",
-      carText: "Gợi ý: nhận xe ở MIA và trả ở MCO (một chiều). Đỗ xe ở Miami khá đắt; công viên có phí cố định. Đi KSC ngày 3/12 nên đến sớm để kịp Bus Tour.",
-      alertCopied: "Đã sao chép!",
-      alertCopiedToday: "Đã sao chép lịch hôm nay!",
-      warnAmount: "Nhập số tiền",
-      warnPayer: "Chọn người trả",
-      warnSplit: "Chọn ít nhất 1 người"
-      ,specialBtn: "Sự kiện đặc biệt",
+      carText: "Đỗ xe ở Miami thường đắt hơn; công viên giải trí hay có phí cố định. Hãy xác nhận cấu hình thu phí đường (SunPass / tính theo biển số).",
+      specialBtn: "Sự kiện đặc biệt",
+      lodgingBtn: "Chỗ ở",
       specialTitle: "⭐ Sự kiện miễn phí đặc biệt (theo ngày / không phải hằng ngày)",
       specialFilterText: "Tiêu chí: miễn phí vào cửa, nằm trong lịch của bạn, và chỉ gồm lễ hội/sự kiện lớn/một lần.",
-      seCity: "Thành phố",
-      seDate: "Ngày",
-      seEvent: "Sự kiện",
-      seLocation: "Địa điểm",
-      seTime: "Giờ / Ghi chú",
-      seNav: "Chỉ đường",
+      seCity: "Thành phố", seDate:"Ngày", seEvent:"Sự kiện", seLocation:"Địa điểm", seTime:"Giờ / Ghi chú", seNav:"Chỉ đường",
       navigate: "Chỉ đường",
-      ev1city: "Miami (Coral Gables)",
-      ev2city: "Miami (Little Havana)",
-      ev3city: "Orlando (UCF)",
-      ev1desc: "lễ hội nghệ thuật & âm nhạc miễn phí",
-      ev2desc: "xem miễn phí",
-      ev3desc: "miễn phí",
-      ev1note: "Chính thức: vào cửa miễn phí; nhiều sân khấu âm nhạc/nghệ thuật + gian hàng đồ ăn (tùy thông báo tại chỗ).",
-      ev2note: "9:00–16:00; nếu muốn xem vào 3/9 (ngày di chuyển), nên đi buổi sáng/trưa.",
-      ev3note: "12:00; trải nghiệm trưng bày xe thân thiện gia đình—hợp ghé trước khi trả xe.",
       lodgingTitle: "Chỗ ở",
       lodgingHint: "Chỗ ở bạn đã đặt (kèm ngày). Nhấn “Chỉ đường” để mở Google Maps.",
-      lgCity: "Thành phố",
-      lgDates: "Ngày",
-      lgPlace: "Chỗ ở",
-      lgLocation: "Vị trí",
-      lgNav: "Chỉ đường",
-      lod1city: "Miami",
-      lod1dates: "7–9/3",
-      lod1name: "Holiday Inn Express & Suites Miami - Hialeah by IHG",
-      lod1loc: "Hialeah, Miami",
-      lod2city: "Orlando",
-      lod2dates: "9–14/3",
-      lod2name: "Airbnb – Kissimmee (khu vực Orlando)",
-      lod2loc: "28°19'36.5\"N 81°30'54.1\"W"
-
-
+      lgCity:"Thành phố", lgDates:"Ngày", lgPlace:"Chỗ ở", lgLocation:"Vị trí", lgNav:"Chỉ đường",
+      todayTag: "Hôm nay"
     }
   };
 
-  // ===== Trip content (你之後要新增翻譯：補 es/ko/vi 即可) =====
-  // 目前：es/ko/vi 先給空字串會 fallback 英文
-  const tripData = {
-  "days": [
+  // ===== Special events data (i18n) =====
+  const specialEvents = [
     {
-      "id": "d1",
-      "month": 3,
-      "day": 7,
-      "label": "3/07 (Sat)",
-      "title": {
-        "zh": "SAT → Orlando（MCO）→ 自駕到 Miami",
-        "en": "SAT → Orlando (MCO) → drive to Miami",
-        "es": "",
-        "ko": "",
-        "vi": ""
+      city: { zh: "Miami（Coral Gables）", en: "Miami (Coral Gables)", es: "Miami (Coral Gables)", ko: "마이애미(코럴 게이블스)", vi: "Miami (Coral Gables)" },
+      date: { zh: "3/7–3/8", en: "Mar 7–8", es: "7–8 mar", ko: "3/7–3/8", vi: "3/7–3/8" },
+      event: {
+        zh: "Carnaval on the Mile（免費街頭藝術音樂節）",
+        en: "Carnaval on the Mile (free street art & music festival)",
+        es: "Carnaval on the Mile (festival gratis de arte y música)",
+        ko: "Carnaval on the Mile(무료 거리 예술/음악 축제)",
+        vi: "Carnaval on the Mile (lễ hội nghệ thuật & âm nhạc miễn phí)"
       },
-      "reminders": [
-        {
-          "level": "important",
-          "text": {
-            "zh": "固定：06:00–09:00 SAT→MCO；11:00 取車（3/7 11:00 – 3/14 11:00）",
-            "en": "Fixed: 06:00–09:00 SAT→MCO; pick up car at 11:00 (3/7 11:00 – 3/14 11:00).",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "level": "info",
-          "text": {
-            "zh": "今天主要是長途移動日：MCO → Miami 約 3.5–4 小時（Florida Turnpike）",
-            "en": "Mainly a travel day: MCO → Miami ~3.5–4 hours via Florida Turnpike.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ],
-      "stops": [
-        {
-          "start": "06:00",
-          "end": "09:00",
-          "name": {
-            "zh": "飛行：SAT → MCO",
-            "en": "Flight: SAT → MCO",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "SAT → MCO",
-          "map": "https://maps.google.com/?q=Orlando+International+Airport",
-          "note": {
-            "zh": "固定時段（依你的實際航班可微調）。",
-            "en": "Fixed window (adjust to your actual flight if needed).",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "travel": "1–2 hr",
-          "name": {
-            "zh": "取行李＋機場接駁＋取車",
-            "en": "Baggage + shuttle + pick up rental car",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "Orlando International Airport (MCO)",
-          "map": "https://maps.google.com/?q=Orlando+International+Airport",
-          "note": {
-            "zh": "取車時間固定 11:00；確認 toll / SunPass 設定。",
-            "en": "Car pick-up fixed at 11:00; confirm toll/SunPass settings.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "travel": "3.5–4 hr",
-          "name": {
-            "zh": "自駕：MCO → Miami（可停 Turnpike Service Plaza）",
-            "en": "Drive: MCO → Miami (optional service plaza stops)",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "Orlando to Miami",
-          "map": "https://maps.google.com/?q=Orlando+to+Miami",
-          "note": {
-            "zh": "推薦停靠：Turkey Lake / Fort Drum / Fort Pierce / West Palm。",
-            "en": "Suggested stops: Turkey Lake / Fort Drum / Fort Pierce / West Palm.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "晚上：South Beach + Ocean Drive",
-            "en": "Evening: South Beach + Ocean Drive",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "Ocean Dr, Miami Beach, FL 33139",
-          "map": "https://maps.google.com/?q=South+Beach+Miami",
-          "note": {
-            "zh": "South Beach 24H；餐廳多到 22:00 後。停車費偏貴。",
-            "en": "South Beach is 24h; many restaurants open past 10pm. Parking is pricey.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ]
+      location: { zh: "Miracle Mile, Coral Gables", en: "Miracle Mile, Coral Gables", es: "Miracle Mile, Coral Gables", ko: "미라클 마일(코럴 게이블스)", vi: "Miracle Mile, Coral Gables" },
+      note: {
+        zh: "官方：免費入場；多舞台音樂/藝術/美食攤位（依現場公告）",
+        en: "Official: free entry; multiple stages + art + food vendors (check onsite updates).",
+        es: "Oficial: entrada gratis; varios escenarios + arte + comida (según el evento).",
+        ko: "공식: 무료 입장; 여러 무대/예술/푸드 부스(현장 공지 확인).",
+        vi: "Chính thức: vào cửa miễn phí; nhiều sân khấu + nghệ thuật + quầy đồ ăn (theo thông báo tại chỗ)."
+      },
+      nav: "https://www.google.com/maps/dir/?api=1&destination=Miracle%20Mile%2C%20Coral%20Gables%2C%20FL"
     },
     {
-      "id": "d2",
-      "month": 3,
-      "day": 8,
-      "label": "3/08 (Sun)",
-      "title": {
-        "zh": "Everglades（Shark Valley）+ 夜間活動",
-        "en": "Everglades (Shark Valley) + night event",
-        "es": "",
-        "ko": "",
-        "vi": ""
+      city: { zh: "Miami（Little Havana）", en: "Miami (Little Havana)", es: "Miami (Little Havana)", ko: "마이애미(리틀 하바나)", vi: "Miami (Little Havana)" },
+      date: { zh: "3/9（活動總期：3/9–3/11）", en: "Mar 9 (event runs Mar 9–11)", es: "9 mar (evento 9–11 mar)", ko: "3/9(행사: 3/9–3/11)", vi: "3/9 (diễn ra: 3/9–3/11)" },
+      event: {
+        zh: "Carnaval Miami Domino Tournament（免費觀看）",
+        en: "Carnaval Miami Domino Tournament (free to watch)",
+        es: "Torneo de dominó Carnaval Miami (gratis para ver)",
+        ko: "카르나발 마이애미 도미노 대회(관람 무료)",
+        vi: "Giải Domino Carnaval Miami (xem miễn phí)"
       },
-      "reminders": [
-        {
-          "level": "important",
-          "text": {
-            "zh": "Shark Valley 08:30–17:00；防曬＋水＋帽子",
-            "en": "Shark Valley 08:30–17:00; sunscreen + water + hat.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "level": "info",
-          "text": {
-            "zh": "晚上：Monster Jam / Demolition Derby（通常 19:00–19:30 起；依城市與日期）",
-            "en": "Night: Monster Jam / Demolition Derby (often 7:00–7:30pm; varies by city/date).",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ],
-      "stops": [
-        {
-          "name": {
-            "zh": "Everglades – Shark Valley Visitor Center",
-            "en": "Everglades – Shark Valley Visitor Center",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "36000 SW 8th St, Miami, FL 33194",
-          "phone": "+1 305-221-8776",
-          "map": "https://maps.google.com/?q=Shark+Valley+Visitor+Center",
-          "note": {
-            "zh": "可租腳踏車或搭 Tram；很容易看到鱷魚。營業時間 08:30–17:00。",
-            "en": "Rent bikes or take the tram; alligators are common. Hours 08:30–17:00.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "晚上活動（選擇性）",
-            "en": "Night event (optional)",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "Miami / nearby venue (TBD)",
-          "map": "https://www.monsterjam.com/en-us/tickets/",
-          "note": {
-            "zh": "建議用官方日程搜尋「Miami / Fort Lauderdale」確認是否有場次。",
-            "en": "Check the official schedule for Miami/Fort Lauderdale to confirm a show.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ]
+      location: { zh: "Domino Park（Little Havana）", en: "Domino Park (Little Havana)", es: "Domino Park (Little Havana)", ko: "도미노 파크(리틀 하바나)", vi: "Domino Park (Little Havana)" },
+      note: {
+        zh: "9:00–16:00；你 3/9 轉場日若想看，建議排上午/中午",
+        en: "9:00–16:00; if you're driving out on 3/9, do a quick morning/noon stop.",
+        es: "9:00–16:00; si sales el 3/9, haz una parada rápida por la mañana/mediodía.",
+        ko: "9:00–16:00; 3/9 이동일이면 오전/점심에 짧게 들르기 추천.",
+        vi: "9:00–16:00; nếu bạn di chuyển ngày 3/9, nên ghé nhanh buổi sáng/trưa."
+      },
+      nav: "https://www.google.com/maps/dir/?api=1&destination=Domino%20Park%2C%20Little%20Havana%2C%20Miami%2C%20FL"
     },
     {
-      "id": "d3",
-      "month": 3,
-      "day": 9,
-      "label": "3/09 (Mon)",
-      "title": {
-        "zh": "Miami 海岸 + 前往 Orlando/Kissimmee",
-        "en": "Miami coast + drive to Orlando/Kissimmee",
-        "es": "",
-        "ko": "",
-        "vi": ""
+      city: { zh: "Orlando（UCF）", en: "Orlando (UCF)", es: "Orlando (UCF)", ko: "올랜도(UCF)", vi: "Orlando (UCF)" },
+      date: { zh: "3/14", en: "Mar 14", es: "14 mar", ko: "3/14", vi: "3/14" },
+      event: {
+        zh: "Touch-a-Truck（免費）",
+        en: "Touch-a-Truck (free)",
+        es: "Touch-a-Truck (gratis)",
+        ko: "Touch-a-Truck(무료)",
+        vi: "Touch-a-Truck (miễn phí)"
       },
-      "reminders": [
-        {
-          "level": "important",
-          "text": {
-            "zh": "今天要移動到 Kissimmee：建議下午早點出發避免塞車",
-            "en": "Driving to Kissimmee today: leave earlier to avoid traffic.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ],
-      "stops": [
-        {
-          "name": {
-            "zh": "上午：South Beach /（或）Gulf Stream 海岸",
-            "en": "Morning: South Beach (or Gulf Stream coast)",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "Miami Beach / Palm Beach area",
-          "map": "https://maps.google.com/?q=Miami+Beach",
-          "note": {
-            "zh": "看體力選一個海岸點就好。",
-            "en": "Pick one coastal spot based on energy.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "travel": "3–3.5 hr",
-          "name": {
-            "zh": "自駕：Miami → Orlando/Kissimmee",
-            "en": "Drive: Miami → Orlando/Kissimmee",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "Miami to Kissimmee",
-          "map": "https://maps.google.com/?q=Miami+to+Kissimmee",
-          "note": {
-            "zh": "抵達後入住，補給，早點休息。",
-            "en": "Check in, restock, and rest.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ]
-    },
-    {
-      "id": "d4",
-      "month": 3,
-      "day": 10,
-      "label": "3/10 (Tue)",
-      "title": {
-        "zh": "Universal Orlando（整天）",
-        "en": "Universal Orlando (full day)",
-        "es": "",
-        "ko": "",
-        "vi": ""
+      location: { zh: "Addition Financial Arena", en: "Addition Financial Arena", es: "Addition Financial Arena", ko: "애디션 파이낸셜 아레나", vi: "Addition Financial Arena" },
+      note: {
+        zh: "12:00；偏親子/展車體驗，適合還車前半天順路去",
+        en: "12:00; family-friendly vehicle showcase—nice stop before returning the car.",
+        es: "12:00; exhibición de vehículos para familias—buena parada antes de devolver el coche.",
+        ko: "12:00; 가족 친화 전시—차 반납 전 들르기 좋아요.",
+        vi: "12:00; trải nghiệm trưng bày xe thân thiện gia đình—hợp để ghé trước khi trả xe."
       },
-      "reminders": [
-        {
-          "level": "important",
-          "text": {
-            "zh": "想搭霍格華茲特快車需 Park-to-Park 票；建議開園就到",
-            "en": "Hogwarts Express requires Park-to-Park; arrive at rope drop.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ],
-      "stops": [
-        {
-          "name": {
-            "zh": "Universal Studios + Islands of Adventure",
-            "en": "Universal Studios + Islands of Adventure",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "6000 Universal Blvd, Orlando, FL 32819",
-          "phone": "+1 407-363-8000",
-          "map": "https://www.universalorlando.com/web/en/us/tickets-packages/park-tickets",
-          "note": {
-            "zh": "營業時間參考：09:00–20:00（依日期）。停車可預付較便宜。",
-            "en": "Hours ~09:00–20:00 (date-based). Prepay parking can be cheaper.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ]
-    },
-    {
-      "id": "d5",
-      "month": 3,
-      "day": 11,
-      "label": "3/11 (Wed)",
-      "title": {
-        "zh": "Orlando 市區文化日（北 → 中心 → 南 → I-Drive）",
-        "en": "Orlando culture day (North → Central → South → I-Drive)",
-        "es": "",
-        "ko": "",
-        "vi": ""
-      },
-      "reminders": [
-        {
-          "level": "info",
-          "text": {
-            "zh": "今天是輕鬆散步＋逛街日：不用排死時間，照動線走就順",
-            "en": "Easy stroll + shopping day. Follow the flow; no need to time-block every hour.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ],
-      "stops": [
-        {
-          "name": {
-            "zh": "The Charles Hosmer Morse Museum",
-            "en": "The Charles Hosmer Morse Museum",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "445 N Park Ave, Winter Park, FL 32789",
-          "map": "https://maps.google.com/?q=Morse+Museum+Winter+Park",
-          "note": {
-            "zh": "營業時間參考：09:30–16:00；票價參考：成人 $8。",
-            "en": "Hours ~09:30–16:00; tickets ~ $8 adult.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "Harry P. Leu Gardens",
-            "en": "Harry P. Leu Gardens",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "1920 N Forest Ave, Orlando, FL 32803",
-          "map": "https://maps.google.com/?q=Harry+P.+Leu+Gardens",
-          "note": {
-            "zh": "營業時間參考：09:00–17:00；票價參考：成人 $15。",
-            "en": "Hours ~09:00–17:00; tickets ~ $15 adult.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "Lake Eola Park",
-            "en": "Lake Eola Park",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "512 E Washington St, Orlando, FL 32801",
-          "map": "https://maps.google.com/?q=Lake+Eola+Park",
-          "note": {
-            "zh": "營業時間參考：06:00–23:59。",
-            "en": "Hours ~06:00–23:59.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "Orlando International Premium Outlets",
-            "en": "Orlando International Premium Outlets",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "4951 International Dr, Orlando, FL 32819",
-          "map": "https://maps.google.com/?q=Orlando+International+Premium+Outlets",
-          "note": {
-            "zh": "營業時間參考：Mon–Sat 10:00–21:00 / Sun 11:00–19:00。",
-            "en": "Hours: Mon–Sat 10:00–21:00 / Sun 11:00–19:00.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "ICON Park（晚上）",
-            "en": "ICON Park (evening)",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "8375 International Dr, Orlando, FL 32819",
-          "map": "https://maps.google.com/?q=ICON+Park+Orlando",
-          "note": {
-            "zh": "營業時間參考：10:00–23:00。",
-            "en": "Hours ~10:00–23:00.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ]
-    },
-    {
-      "id": "d6",
-      "month": 3,
-      "day": 12,
-      "label": "3/12 (Thu)",
-      "title": {
-        "zh": "NASA（KSC）+ 教堂 + Disney Springs",
-        "en": "NASA (KSC) + Basilica + Disney Springs",
-        "es": "",
-        "ko": "",
-        "vi": ""
-      },
-      "reminders": [
-        {
-          "level": "important",
-          "text": {
-            "zh": "KSC 建議早到：Bus Tour 可能額滿",
-            "en": "Arrive early at KSC; Bus Tour can sell out.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ],
-      "stops": [
-        {
-          "travel": "1 hr",
-          "name": {
-            "zh": "自駕：Orlando → Kennedy Space Center",
-            "en": "Drive: Orlando → Kennedy Space Center",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "Orlando to Merritt Island",
-          "map": "https://maps.google.com/?q=Orlando+to+Kennedy+Space+Center",
-          "note": {
-            "zh": "營業時間參考：09:00–17:00。",
-            "en": "Hours ~09:00–17:00.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "Kennedy Space Center Visitor Complex",
-            "en": "Kennedy Space Center Visitor Complex",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "Space Commerce Way, Merritt Island, FL 32953",
-          "phone": "+1 855-433-4210",
-          "map": "https://www.kennedyspacecenter.com/",
-          "note": {
-            "zh": "建議先搶 Bus Tour；官網票務顯示 2-day 成人票 $91（價格可能浮動）。",
-            "en": "Secure Bus Tour first. Official store shows 2-day adult $91 (pricing can change).",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "Basilica（晚點順路）",
-            "en": "Basilica (on the way / evening)",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "8300 Vineland Ave, Orlando, FL 32821",
-          "map": "https://maps.google.com/?q=Basilica+of+the+National+Shrine+of+Mary+Queen+of+the+Universe",
-          "note": {
-            "zh": "時間可依彌撒/活動調整。",
-            "en": "Timing depends on Mass/events.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "Disney Springs + Coca-Cola Store",
-            "en": "Disney Springs + Coca-Cola Store",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "1486 Buena Vista Dr, Orlando, FL 32830",
-          "map": "https://maps.google.com/?q=Disney+Springs",
-          "note": {
-            "zh": "營業時間參考：Disney Springs 10:00–23:00；Coca-Cola Store 10:00–22:00。",
-            "en": "Hours: Disney Springs 10:00–23:00; Coca-Cola Store 10:00–22:00.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ]
-    },
-    {
-      "id": "d7",
-      "month": 3,
-      "day": 13,
-      "label": "3/13 (Fri)",
-      "title": {
-        "zh": "Silver Springs + Florida Citrus Tower（加選項）",
-        "en": "Silver Springs + Florida Citrus Tower (optional add-ons)",
-        "es": "",
-        "ko": "",
-        "vi": ""
-      },
-      "reminders": [
-        {
-          "level": "important",
-          "text": {
-            "zh": "Silver Springs 08:00–日落；帶防蚊液、薄外套",
-            "en": "Silver Springs 8am–sundown; bring bug spray + light jacket.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ],
-      "stops": [
-        {
-          "travel": "1.5 hr",
-          "name": {
-            "zh": "自駕：Orlando → Silver Springs State Park",
-            "en": "Drive: Orlando → Silver Springs State Park",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "1425 NE 58th Ave, Ocala, FL 34470",
-          "phone": "+1 352-236-7148",
-          "map": "https://maps.google.com/?q=Silver+Springs+State+Park",
-          "note": {
-            "zh": "入園費參考：每車 $8（2–8 人）。",
-            "en": "Entrance fee: $8 per vehicle (2–8 people).",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "Glass Bottom Boat（推薦）",
-            "en": "Glass Bottom Boat (recommended)",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "Silver Springs State Park",
-          "map": "https://silversprings.com/plan-your-day/glass-bottom-boats/",
-          "note": {
-            "zh": "官網列：30 分成人 $17；90 分成人 $35（班次依當天）。",
-            "en": "Site lists: 30-min adult $17; 90-min adult $35 (schedule varies).",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "travel": "45–60 min",
-          "name": {
-            "zh": "Florida Citrus Tower（路上或回程插入）",
-            "en": "Florida Citrus Tower (en route)",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "141 N Hwy 27, Clermont, FL 34711",
-          "map": "https://maps.google.com/?q=Florida+Citrus+Tower",
-          "note": {
-            "zh": "日票參考：成人 $11。營業時間以官方公告為準。",
-            "en": "Day pass ~ $11 adult. Check official hours for your date.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "加選項（擇 1–2 個）",
-            "en": "Optional add-ons (pick 1–2)",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "WonderWorks / History Center / Mills 50",
-          "map": "https://maps.google.com/?q=WonderWorks+Orlando",
-          "note": {
-            "zh": "看體力決定，不用硬塞滿。",
-            "en": "Choose based on energy—don’t overpack the day.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ]
-    },
-    {
-      "id": "d8",
-      "month": 3,
-      "day": 14,
-      "label": "3/14 (Sat)",
-      "title": {
-        "zh": "回程：還車 → MCO → SAT",
-        "en": "Return: car drop-off → MCO → SAT",
-        "es": "",
-        "ko": "",
-        "vi": ""
-      },
-      "reminders": [
-        {
-          "level": "important",
-          "text": {
-            "zh": "11:00 前還車；安檢＋登機建議留 2.5–3 小時緩衝",
-            "en": "Return car by 11:00; arrive 2.5–3h early for security + check-in.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ],
-      "stops": [
-        {
-          "name": {
-            "zh": "前往 MCO 還車＋辦理登機",
-            "en": "MCO: return car + check-in",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "1 Jeff Fuqua Blvd, Orlando, FL 32827",
-          "phone": "+1 407-825-2001",
-          "map": "https://maps.google.com/?q=Orlando+International+Airport",
-          "note": {
-            "zh": "還車時間固定 11:00 前。",
-            "en": "Return by 11:00 (fixed).",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        },
-        {
-          "name": {
-            "zh": "飛行：MCO → SAT",
-            "en": "Flight: MCO → SAT",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          },
-          "address": "MCO → SAT",
-          "map": "https://maps.google.com/?q=San+Antonio+International+Airport",
-          "note": {
-            "zh": "依你的實際航班時間為準。",
-            "en": "Adjust to your actual flight time.",
-            "es": "",
-            "ko": "",
-            "vi": ""
-          }
-        }
-      ]
+      nav: "https://www.google.com/maps/dir/?api=1&destination=Addition%20Financial%20Arena%2C%20Orlando%2C%20FL"
     }
-  ]
-};
+  ];
+
+  function renderSpecialEvents(lang) {
+    const t = I18N[lang] || I18N.zh;
+    const tbody = document.getElementById("specialEventsBody");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+    specialEvents.forEach((ev, i) => {
+      const tr = document.createElement("tr");
+      tr.className = i < specialEvents.length - 1 ? "border-b" : "";
+      tr.innerHTML = `
+        <td class="py-3 pr-4 font-medium">${getL(ev.city, lang)}</td>
+        <td class="py-3 pr-4">${getL(ev.date, lang)}</td>
+        <td class="py-3 pr-4">${getL(ev.event, lang)}</td>
+        <td class="py-3 pr-4">${getL(ev.location, lang)}</td>
+        <td class="py-3 pr-4">${getL(ev.note, lang)}</td>
+        <td class="py-3 pr-4">
+          <a class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition"
+             href="${ev.nav}" target="_blank" rel="noopener">
+            <i class="fa-solid fa-location-arrow"></i> <span class="navLabel">${t.navigate}</span>
+          </a>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+
+  // ===== Trip content =====
+  const tripData = {
+    days: [
+      {
+        id: "d1",
+        month: 3, day: 7,
+        label: "3/07 (Sat)",
+        title: { zh: "SAT → MCO → 取車 → 自駕到 Miami（South Beach 區夜晚）", en: "SAT → MCO → pick up car → drive to Miami (South Beach night)" },
+        reminders: [
+          { level: "important", text: { zh: "固定：06:00–09:00 SAT→MCO；11:00 取車（3/7 11:00 – 3/14 11:00）", en: "Fixed: 06:00–09:00 SAT→MCO; pick up car at 11:00 (3/7 11:00 – 3/14 11:00)." } },
+          { level: "info", text: { zh: "長途移動日：MCO → Miami 約 3.5–4 小時（Turnpike）。沿途 Service Plaza 可休息。", en: "Travel day: MCO → Miami ~3.5–4 hours (Turnpike). Use service plazas for breaks." } }
+        ],
+        stops: [
+          { start:"06:00", end:"09:00", name:{zh:"飛行：SAT → MCO", en:"Flight: SAT → MCO"}, address:"SAT → MCO", map:"https://maps.google.com/?q=Orlando+International+Airport",
+            note:{zh:"固定時段。", en:"Fixed time window."} },
+          { travel:"1–2 hr", name:{zh:"取行李＋機場接駁＋取車", en:"Baggage + shuttle + pick up rental car"}, address:"Orlando International Airport (MCO)", map:"https://maps.google.com/?q=Orlando+International+Airport",
+            note:{zh:"取車時間固定 11:00；確認 toll / SunPass。", en:"Car pick-up fixed at 11:00; confirm toll/SunPass."} },
+          { travel:"3.5–4 hr", name:{zh:"自駕：MCO → Miami（Turnpike）", en:"Drive: MCO → Miami (Turnpike)"}, address:"Orlando → Miami", map:"https://maps.google.com/?q=Orlando+to+Miami",
+            note:{zh:"沿途可停：Turkey Lake / Fort Drum / Fort Pierce / West Palm。", en:"Optional stops: Turkey Lake / Fort Drum / Fort Pierce / West Palm."} },
+
+          { name:{zh:"晚上主線（同區走路串）：South Beach → South Pointe → Art Deco（Ocean Drive）→ Lincoln Road（看體力）",
+                  en:"Night flow (walkable): South Beach → South Pointe → Art Deco (Ocean Drive) → Lincoln Road (optional)"},
+            address:"South Beach / Ocean Drive area", map:"https://maps.google.com/?q=South+Beach+Miami",
+            note:{zh:"South Beach：可泡海灘/散步；你提供椅/傘參考 $20/小時 或 $50/天（以現場為準）。South Pointe：夕陽很強、免門票；停車常見付費（你提供平日約 $2/小時，以現場為準）。Art Deco：建議 Ocean Drive 5 街→15 街；黃昏/晚上霓虹最有感。Lincoln Road：逛街吃飯收尾。",
+                  en:"South Beach for beach time; chair/umbrella rentals vary. South Pointe is great for sunset (paid parking nearby). Art Deco: Ocean Drive 5th→15th St; best at dusk/night. Lincoln Road for dinner & shopping (optional)."} },
+
+          { name:{zh:"加選（不必）：Wynwood Walls / Rio Grande（餐廳）/ Vizcaya / Patch of Heaven（若時間太趕可移到 3/8 下午）",
+                  en:"Optional add-ons: Wynwood Walls / Rio Grande (food) / Vizcaya / Patch of Heaven (move to 3/8 afternoon if rushed)"},
+            address:"Miami", map:"https://maps.google.com/?q=Wynwood+Walls",
+            note:{zh:"不用硬塞，今天以 South Beach 區夜晚為主。", en:"Don’t overpack—prioritize South Beach area tonight."} }
+        ]
+      },
+
+      {
+        id: "d2",
+        month: 3, day: 8,
+        label: "3/08 (Sun)",
+        title: { zh: "Everglades（Shark Valley）＋（可選）晚間活動", en: "Everglades (Shark Valley) + optional night event" },
+        reminders: [
+          { level: "important", text: { zh: "防曬＋水＋帽子；在 Shark Valley 很容易看到鱷魚。", en: "Sunscreen + water + hat. Alligators are common at Shark Valley." } },
+          { level: "info", text: { zh: "（可選）晚上 Monster Jam / Demolition Derby：依城市與日期為準。", en: "(Optional) Monster Jam / Demolition Derby: depends on city/date." } }
+        ],
+        stops: [
+          { name:{zh:"Everglades – Shark Valley Visitor Center", en:"Everglades – Shark Valley Visitor Center"},
+            address:"36000 SW 8th St, Miami, FL 33194", phone:"+1 305-221-8776",
+            map:"https://maps.google.com/?q=Shark+Valley+Visitor+Center",
+            note:{zh:"可租腳踏車或搭 Tram；停入口停車場後再進 loop。", en:"Bike rental or tram available; park at the entrance then enter the loop."} },
+
+          { name:{zh:"下午加選（擇一即可）：Vizcaya / Patch of Heaven / Wynwood（如果 3/7 沒去）", en:"Afternoon optional (pick one): Vizcaya / Patch of Heaven / Wynwood (if not done on 3/7)"},
+            address:"Miami (optional)", map:"https://maps.google.com/?q=Vizcaya+Museum+and+Gardens",
+            note:{zh:"不用全去，挑一個就很夠。", en:"No need to do all—choose one."} },
+
+          { name:{zh:"晚上活動（選擇性）", en:"Night event (optional)"},
+            address:"Miami / nearby venue (TBD)", map:"https://www.monsterjam.com/en-us/tickets/",
+            note:{zh:"若太累可直接取消，不影響行程完整度。", en:"Skip it if tired—won’t hurt the trip."} }
+        ]
+      },
+
+      {
+        id:"d3",
+        month:3, day:9,
+        label:"3/09 (Mon)",
+        title:{ zh:"Miami 收尾＋前往 Orlando/Kissimmee 入住", en:"Wrap up Miami + drive to Orlando/Kissimmee" },
+        reminders:[
+          { level:"important", text:{ zh:"建議下午早點離開，轉場日保留體力。", en:"Leave earlier in the afternoon—save energy for the next days." } }
+        ],
+        stops:[
+          { name:{zh:"上午：South Beach（補拍）/（或）Domino Tournament（免費觀看，可選）", en:"Morning: South Beach (photos) / or Domino Tournament (free to watch, optional)"},
+            address:"Miami Beach / Little Havana", map:"https://maps.google.com/?q=Domino+Park+Little+Havana",
+            note:{zh:"你若想看 Domino Tournament，建議上午/中午短停；不想看就直接海邊收尾。", en:"If you want Domino Tournament, do a quick stop in the morning/noon; otherwise just finish at the beach."} },
+
+          { travel:"3–3.5 hr", name:{zh:"自駕：Miami → Orlando/Kissimmee", en:"Drive: Miami → Orlando/Kissimmee"},
+            address:"Miami → Kissimmee", map:"https://maps.google.com/?q=Miami+to+Kissimmee",
+            note:{zh:"入住 Airbnb、補給、早點休息。", en:"Check in, restock, and rest."} },
+
+          { name:{zh:"晚上加選（不用硬排）：ICON Park / Premium Outlets（若想補貨）", en:"Evening optional: ICON Park / Premium Outlets (if you want shopping)"},
+            address:"International Dr, Orlando", map:"https://maps.google.com/?q=ICON+Park+Orlando",
+            note:{zh:"轉場日看體力，想放空就吃飯休息。", en:"Depends on energy—rest is fine."} }
+        ]
+      },
+
+      {
+        id:"d4",
+        month:3, day:10,
+        label:"3/10 (Tue)",
+        title:{ zh:"Universal Orlando（一日雙園）", en:"Universal Orlando (two parks in one day)" },
+        reminders:[
+          { level:"important", text:{ zh:"想搭 Hogwarts Express 通常需要 Park-to-Park 票；建議開園就到。", en:"Hogwarts Express typically requires Park-to-Park; arrive at rope drop." } }
+        ],
+        stops:[
+          { name:{zh:"Universal Studios + Islands of Adventure", en:"Universal Studios + Islands of Adventure"},
+            address:"6000 Universal Blvd, Orlando, FL 32819", phone:"+1 407-363-8000",
+            map:"https://www.universalorlando.com/web/en/us/tickets-packages/park-tickets",
+            note:{zh:"停車費通常是當天大筆固定成本；若能預付通常較省。", en:"Parking is often a big fixed cost for the day; prepay can be cheaper."} }
+        ]
+      },
+
+      {
+        id:"d5",
+        month:3, day:11,
+        label:"3/11 (Wed)",
+        title:{ zh:"Tampa + Clearwater（12:00 從 Orlando 出發）", en:"Tampa + Clearwater (depart Orlando ~12:00)" },
+        reminders:[
+          { level:"important", text:{ zh:"Clearwater Beach 一定要；把夕陽留給 Clearwater（最值得）。", en:"Clearwater Beach is a must—save sunset time there." } },
+          { level:"info", text:{ zh:"我保留兩個 Plan（A 最穩、B 含 Tarpon 較趕）。", en:"Two plans included (A is safer; B includes Tarpon but tighter)." } }
+        ],
+        stops:[
+          { travel:"~2 hr", name:{zh:"自駕：Orlando（12:00）→ Clearwater Beach", en:"Drive: Orlando (~12:00) → Clearwater Beach"},
+            address:"Orlando → Clearwater Beach", map:"https://maps.google.com/?q=Clearwater+Beach",
+            note:{zh:"中午出發通常比早晚尖峰好，但 I-4 仍可能塞車。", en:"Noon is often better than rush hour, but I-4 can still be slow."} },
+
+          { name:{zh:"✅ Plan A（推薦）：Clearwater Beach（下午＋夕陽）→ Tampa（晚上）", en:"✅ Plan A (recommended): Clearwater Beach (afternoon + sunset) → Tampa (evening)"},
+            address:"Clearwater Beach → Tampa", map:"https://maps.google.com/?q=Clearwater+Beach+Florida",
+            note:{zh:"下午到海邊放鬆＋等夕陽；想看海豚才加 Little Toot（不一定）。夕陽後再去 Tampa（Ybor City / Riverwalk 擇 1–2）。",
+                 en:"Relax at the beach and catch sunset. Add Little Toot only if you want dolphins. After sunset, head to Tampa (pick 1–2: Ybor City / Riverwalk)."} },
+
+          { name:{zh:"（可選）Little Toot Dolphin Adventure", en:"(Optional) Little Toot Dolphin Adventure"},
+            address:"Clearwater Beach Marina area", map:"https://maps.google.com/?q=Little+Toot+Dolphin+Adventure+Clearwater",
+            note:{zh:"不一定要搭；若要搭，選下午班次最順。", en:"Optional—afternoon departures fit best."} },
+
+          { name:{zh:"✅ Plan B（較趕）：Clearwater → Tarpon Springs（可選）→ 回 Clearwater 夕陽 → Tampa", en:"✅ Plan B (tighter): Clearwater → Tarpon Springs (optional) → back for sunset → Tampa"},
+            address:"Tarpon Springs Sponge Docks", map:"https://maps.google.com/?q=Tarpon+Springs+Sponge+Docks",
+            note:{zh:"Tarpon Springs：希臘文化＋海綿港口＋希臘餐。此 Plan 會壓縮海邊時間，遇塞車就容易趕。", en:"Tarpon Springs: Greek heritage + sponge docks + Greek food. This plan is tighter; traffic can make it rushed."} },
+
+          { name:{zh:"Tampa 晚上推薦：Ybor City（古巴小鎮）/ Riverwalk / Armature Works（擇 1–2）", en:"Tampa night picks: Ybor City / Riverwalk / Armature Works (choose 1–2)"},
+            address:"Ybor City / Tampa Riverwalk", map:"https://maps.google.com/?q=Ybor+City+Tampa",
+            note:{zh:"Ybor：拉丁街區＋雪茄文化＋夜生活最有感。", en:"Ybor: Latin quarter + cigar heritage + best nightlife vibe."} }
+        ]
+      },
+
+      {
+        id:"d6",
+        month:3, day:12,
+        label:"3/12 (Thu)",
+        title:{ zh:"NASA（KSC）＋教堂＋Disney Springs", en:"NASA (KSC) + Basilica + Disney Springs" },
+        reminders:[
+          { level:"important", text:{ zh:"KSC 建議早到：Bus Tour 可能額滿。", en:"Arrive early at KSC; Bus Tour can sell out." } }
+        ],
+        stops:[
+          { travel:"~1 hr", name:{zh:"自駕：Orlando → Kennedy Space Center", en:"Drive: Orlando → Kennedy Space Center"},
+            address:"Orlando → Merritt Island", map:"https://maps.google.com/?q=Orlando+to+Kennedy+Space+Center",
+            note:{zh:"這天偏長，早出發會舒服很多。", en:"This is a long day—earlier start helps."} },
+
+          { name:{zh:"Kennedy Space Center Visitor Complex", en:"Kennedy Space Center Visitor Complex"},
+            address:"Space Commerce Way, Merritt Island, FL 32953", phone:"+1 855-433-4210",
+            map:"https://maps.google.com/?q=Kennedy+Space+Center+Visitor+Complex",
+            note:{zh:"先把 Bus Tour/想看的展館順序定好，避免現場亂掉。", en:"Plan the Bus Tour and key exhibits first to avoid chaos."} },
+
+          { name:{zh:"Basilica（順路放鬆點）", en:"Basilica (a calm stop)"},
+            address:"8300 Vineland Ave, Orlando, FL 32821",
+            map:"https://maps.google.com/?q=Basilica+of+the+National+Shrine+of+Mary+Queen+of+the+Universe",
+            note:{zh:"用來降速休息很剛好。", en:"Great for a slower-paced break."} },
+
+          { name:{zh:"Disney Springs + Coca-Cola Store（晚上收尾）", en:"Disney Springs + Coca-Cola Store (evening)"},
+            address:"1486 Buena Vista Dr, Orlando, FL 32830",
+            map:"https://maps.google.com/?q=Disney+Springs",
+            note:{zh:"不是每個人都要買園區票也能玩：逛街、吃飯、看氣氛。", en:"No park ticket needed—shopping, dining, and vibes."} }
+        ]
+      },
+
+      {
+        id:"d7",
+        month:3, day:13,
+        label:"3/13 (Fri)",
+        title:{ zh:"Plan A：Silver Springs + Citrus Tower｜Plan B：Disney 分流｜Plan C：Orlando 文化（擇）", en:"Plan A: Silver Springs + Citrus Tower | Plan B: Disney split | Plan C: Orlando culture (pick)" },
+        reminders:[
+          { level:"important", text:{ zh:"今天請用 Plan A/B/C 擇一或分流，不要硬塞滿。", en:"Pick one plan (A/B/C) or split the group—don’t cram everything." } }
+        ],
+        stops:[
+          { name:{zh:"Plan A（自然日）：Silver Springs State Park + Glass Bottom Boat（可選）", en:"Plan A (nature): Silver Springs State Park + Glass Bottom Boat (optional)"},
+            address:"1425 NE 58th Ave, Ocala, FL 34470",
+            map:"https://maps.google.com/?q=Silver+Springs+State+Park",
+            note:{zh:"玻璃船很熱門，想搭就盡量早到。", en:"Glass-bottom boats can sell out—arrive early if you want it."} },
+
+          { name:{zh:"Plan A：Florida Citrus Tower（順路小點）", en:"Plan A: Florida Citrus Tower (quick stop)"},
+            address:"141 N Hwy 27, Clermont, FL 34711",
+            map:"https://maps.google.com/?q=Florida+Citrus+Tower",
+            note:{zh:"適合當回程路上的小景點。", en:"Nice quick stop on the way back."} },
+
+          { name:{zh:"✅ Plan B（Disney 分流）：B1 進園區（想玩的人）/ B2 不進園區（Disney Springs 或 resort hop）", en:"✅ Plan B (Disney split): B1 park-goers / B2 non-park (Disney Springs or resort hop)"},
+            address:"Walt Disney World area",
+            map:"https://maps.google.com/?q=Walt+Disney+World",
+            note:{zh:"你要求：即使有人不去園區，也可以排 Disney Springs 當集合/吃飯點。", en:"As requested: Disney Springs can be the meetup/dining spot even if not everyone enters a park."} },
+
+          { name:{zh:"Plan C（文化備案/補舊行程）：Morse Museum / Leu Gardens / Lake Eola（挑 1–2）", en:"Plan C (culture backup): Morse Museum / Leu Gardens / Lake Eola (pick 1–2)"},
+            address:"Winter Park / Downtown Orlando",
+            map:"https://maps.google.com/?q=Morse+Museum+Winter+Park",
+            note:{zh:"適合有人不想跑遠或不想去 Disney/自然時使用。", en:"Perfect if some people don’t want a long drive or skip Disney/nature."} }
+        ]
+      },
+
+      {
+        id:"d8",
+        month:3, day:14,
+        label:"3/14 (Sat)",
+        title:{ zh:"回程：還車 → MCO → AUS → 公車到 SA Downtown → Uber 回學校", en:"Return: car drop-off → MCO → AUS → bus to SA Downtown → Uber to campus" },
+        reminders:[
+          { level:"important", text:{ zh:"11:00 前還車；建議中午前後就到機場（還車接駁＋安檢）。", en:"Return car by 11:00; get to the airport around noon for shuttle + security." } },
+          { level:"info", text:{ zh:"航班：MCO→AUS 15:17–17:19；19:40 公車到 SA Downtown，再 Uber 回學校。", en:"Flight: MCO→AUS 15:17–17:19; 19:40 bus to SA Downtown, then Uber to campus." } }
+        ],
+        stops:[
+          { name:{zh:"MCO：11:00 前還車＋辦理登機", en:"MCO: return car by 11:00 + check-in"},
+            address:"1 Jeff Fuqua Blvd, Orlando, FL 32827", phone:"+1 407-825-2001",
+            map:"https://maps.google.com/?q=Orlando+International+Airport",
+            note:{zh:"建議中午前後到航廈，行李/安檢都需要時間。", en:"Arrive around noon—bags & security take time."} },
+
+          { start:"15:17", end:"17:19", name:{zh:"飛行：MCO → AUS", en:"Flight: MCO → AUS"},
+            address:"MCO → AUS", map:"https://maps.google.com/?q=Austin-Bergstrom+International+Airport",
+            note:{zh:"飛行時間 3:02。", en:"Flight time 3:02."} },
+
+          { start:"19:40", name:{zh:"公車：AUS/市區 → San Antonio Downtown", en:"Bus: AUS/City → San Antonio Downtown"},
+            address:"Bus to San Antonio Downtown", map:"https://maps.google.com/?q=San+Antonio+Downtown",
+            note:{zh:"到 downtown 後再 Uber 回學校。", en:"Uber from downtown to campus."} }
+        ]
+      }
+    ]
+  };
 
   // ===== Helpers =====
   function pad2(n){ return String(n).padStart(2,'0'); }
@@ -1302,6 +648,7 @@
       return `${t.lastUpdatedPrefix}${stamp}`;
     } catch { return `${t.lastUpdatedPrefix}—`; }
   }
+
   function getTodayKey() {
     const now = new Date();
     return { year: now.getFullYear(), month: now.getMonth()+1, day: now.getDate() };
@@ -1314,8 +661,9 @@
     const [eh, em] = end.split(":").map(Number);
     return (eh*60+em) - (sh*60+sm);
   }
-  function humanMins(mins){
+  function humanMins(mins, lang){
     if (!Number.isFinite(mins) || mins<=0) return "";
+    if (lang === "en" || lang === "es") return `${mins} min`;
     return `${mins} 分鐘`;
   }
 
@@ -1330,6 +678,7 @@
       if (s.travel) lines.push(`🚗 ${t.travel}: ${s.travel}`);
       const nm = getL(s.name, lang);
       if (s.start && s.end) lines.push(`${s.start}-${s.end} ${nm}`);
+      else if (s.start) lines.push(`${s.start} ${nm}`);
       else lines.push(`${nm}`);
       if (s.address) lines.push(`  📍 ${s.address}`);
       if (s.map) lines.push(`  🗺 ${s.map}`);
@@ -1371,7 +720,7 @@
         <div class="relative z-10">
           <div class="flex items-center gap-2 mb-2">
             <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">${d.label}</span>
-            ${isToday ? `<span class="text-[11px] bg-amber-100 text-amber-800 px-2 py-1 rounded-full"><i class="fa-solid fa-star"></i> Today</span>` : ""}
+            ${isToday ? `<span class="text-[11px] bg-amber-100 text-amber-800 px-2 py-1 rounded-full"><i class="fa-solid fa-star"></i> ${t.todayTag}</span>` : ""}
           </div>
           <h3 class="text-xl font-bold text-slate-800">${getL(d.title, lang)}</h3>
           <div class="mt-2 flex flex-wrap gap-2">
@@ -1432,7 +781,7 @@
         const stopCard = document.createElement("div");
         stopCard.className = "bg-white rounded-2xl border border-slate-100 shadow-sm p-4";
 
-        const mapBtn = s.map ? `<a href="${s.map}" target="_blank" class="text-indigo-700 font-semibold hover:underline"><i class="fa-solid fa-location-dot"></i> ${t.openMap}</a>` : "";
+        const mapBtn = s.map ? `<a href="${s.map}" target="_blank" rel="noopener" class="text-indigo-700 font-semibold hover:underline"><i class="fa-solid fa-location-dot"></i> ${t.openMap}</a>` : "";
         const phoneLine = s.phone ? `
           <div class="text-xs text-gray-600">
             <span class="font-semibold">${t.phone}:</span>
@@ -1443,7 +792,7 @@
           <div class="flex items-start justify-between gap-2">
             <div>
               <div class="text-xs text-gray-500">
-                ${s.start && s.end ? `<span class="font-semibold">${s.start}–${s.end}</span> ${stayMins ? `· ${humanMins(stayMins)}` : ""}` : ""}
+                ${s.start && s.end ? `<span class="font-semibold">${s.start}–${s.end}</span> ${stayMins ? `· ${humanMins(stayMins, lang)}` : ""}` : (s.start ? `<span class="font-semibold">${s.start}</span>` : "")}
               </div>
               <div class="font-bold text-indigo-900">${getL(s.name, lang)}</div>
             </div>
@@ -1489,355 +838,76 @@
     });
   }
 
-  // ===== Multi-split expenses (Splitwise-like, partial participants) =====
-  const SPLIT_LS_KEY = "trip_split_v2";
-
-  function loadSplitState() {
-    try {
-      const raw = localStorage.getItem(SPLIT_LS_KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (e) {}
-    return { currency: "USD", members: ["Me"], expenses: [] };
-  }
-  function saveSplitState(state) {
-    try { localStorage.setItem(SPLIT_LS_KEY, JSON.stringify(state)); } catch(e) {}
-  }
-  function uid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
-  function money(n) { const v = Number(n || 0); return (Math.round(v * 100) / 100).toFixed(2); }
-
-  function renderSplitUI(lang) {
-    const state = loadSplitState();
-
-    // day options
-    const expDay = document.getElementById("expDay");
-    expDay.innerHTML = tripData.days.map(d => `<option value="${d.id}">${d.label} · ${getL(d.title, "zh")}</option>`).join("");
-
-    // payer options
-    const expPayer = document.getElementById("expPayer");
-    expPayer.innerHTML = state.members.map(m => `<option value="${m}">${m}</option>`).join("");
-
-    // members chips
-    const membersList = document.getElementById("membersList");
-    membersList.innerHTML = state.members.map(m => `
-      <span class="bg-indigo-50 border border-indigo-200 text-indigo-900 px-3 py-1 rounded-full text-sm flex items-center gap-2">
-        ${m}
-        ${state.members.length > 1 ? `<button class="removeMemberBtn text-indigo-700 hover:text-red-600" data-name="${m}" title="remove">✕</button>` : ""}
-      </span>
-    `).join("");
-
-    // splitWith checkboxes (default: all checked)
-    const splitBox = document.getElementById("splitWithBox");
-    splitBox.innerHTML = state.members.map(m => `
-      <label class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-full px-3 py-1 text-sm cursor-pointer">
-        <input type="checkbox" class="splitWithChk" value="${m}" checked>
-        <span>${m}</span>
-      </label>
-    `).join("");
-
-    // expense list
-    const list = document.getElementById("expenseList");
-    list.innerHTML = state.expenses
-      .slice()
-      .sort((a,b)=> (b.ts||0)-(a.ts||0))
-      .map(e => {
-        const dayObj = tripData.days.find(d => d.id === e.dayId);
-        const dayLabel = dayObj ? dayObj.label : e.dayId;
-        return `
-          <div class="border border-slate-200 rounded-xl p-3 flex items-start justify-between gap-2">
-            <div>
-              <div class="text-xs text-gray-500">${dayLabel} · ${e.category}</div>
-              <div class="font-semibold text-slate-800">${e.payer} 付 ${state.currency} ${money(e.amount)}</div>
-              <div class="text-xs text-gray-600">分攤：${(e.splitWith||[]).join(", ") || "—"}</div>
-              ${e.note ? `<div class="text-xs text-gray-600 mt-1">備註：${e.note}</div>` : ""}
-            </div>
-            <button class="removeExpenseBtn text-sm text-red-600 hover:underline" data-id="${e.id}">刪除</button>
-          </div>
-        `;
-      }).join("");
-
-    renderSettlement(state);
-
-    // remove member
-    membersList.querySelectorAll(".removeMemberBtn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const name = btn.dataset.name;
-        const st = loadSplitState();
-        if (st.members.length <= 1) return;
-        st.members = st.members.filter(x => x !== name);
-        st.expenses = st.expenses.filter(e => e.payer !== name && !(e.splitWith||[]).includes(name));
-        saveSplitState(st);
-        // renderSplitUI removed
-});
-    });
-
-    // remove expense
-    list.querySelectorAll(".removeExpenseBtn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.id;
-        const st = loadSplitState();
-        st.expenses = st.expenses.filter(e => e.id !== id);
-        saveSplitState(st);
-        // renderSplitUI removed
-});
-    });
-  }
-
-  function computeBalances(state) {
-    const bal = {};
-    state.members.forEach(m => bal[m] = 0);
-
-    for (const e of state.expenses) {
-      const amt = Number(e.amount || 0);
-      const payer = e.payer;
-      const splitWith = (e.splitWith && e.splitWith.length) ? e.splitWith : [];
-      const people = splitWith.length;
-
-      if (!(payer in bal)) bal[payer] = 0;
-      bal[payer] += amt;
-
-      if (people > 0) {
-        const share = amt / people;
-        for (const p of splitWith) {
-          if (!(p in bal)) bal[p] = 0;
-          bal[p] -= share;
-        }
-      }
-    }
-
-    for (const k of Object.keys(bal)) bal[k] = Math.round(bal[k] * 100) / 100;
-    return bal;
-  }
-
-  function suggestTransfers(balances) {
-    const creditors = [];
-    const debtors = [];
-    for (const [name, val] of Object.entries(balances)) {
-      if (val > 0.009) creditors.push([name, val]);
-      else if (val < -0.009) debtors.push([name, -val]);
-    }
-    creditors.sort((a,b)=> b[1]-a[1]);
-    debtors.sort((a,b)=> b[1]-a[1]);
-
-    const transfers = [];
-    let i=0, j=0;
-    while (i < debtors.length && j < creditors.length) {
-      const [dName, dAmt] = debtors[i];
-      const [cName, cAmt] = creditors[j];
-      const pay = Math.min(dAmt, cAmt);
-
-      transfers.push({ from: dName, to: cName, amount: Math.round(pay*100)/100 });
-
-      debtors[i][1] = Math.round((dAmt - pay)*100)/100;
-      creditors[j][1] = Math.round((cAmt - pay)*100)/100;
-
-      if (debtors[i][1] <= 0.009) i++;
-      if (creditors[j][1] <= 0.009) j++;
-    }
-    return transfers;
-  }
-
-  function renderSettlement(state) {
-    const balances = computeBalances(state);
-    const transfers = suggestTransfers(balances);
-    const box = document.getElementById("settlementList");
-
-    if (!state.expenses.length) {
-      box.innerHTML = `<div class="text-gray-500">目前還沒有花費明細。</div>`;
-      return;
-    }
-
-    const currency = state.currency || "USD";
-    const lines = [];
-    lines.push(`<div class="text-xs text-gray-500 mb-2">正數＝應收 / 負數＝應付（每筆只在「勾選分攤的人」之間平均分）</div>`);
-    lines.push(`<div class="text-sm">${Object.entries(balances).map(([n,v]) => `${n}: <b>${currency} ${money(v)}</b>`).join(" · ")}</div>`);
-    lines.push(`<div class="mt-2 font-semibold">建議轉帳：</div>`);
-
-    if (!transfers.length) {
-      lines.push(`<div class="text-emerald-700 font-semibold">已結清 ✅</div>`);
-    } else {
-      lines.push(`<ul class="list-disc pl-5 space-y-1">` + transfers.map(tr =>
-        `<li><b>${tr.from}</b> → <b>${tr.to}</b>：${currency} ${money(tr.amount)}</li>`
-      ).join("") + `</ul>`);
-    }
-
-    box.innerHTML = lines.join("");
-  }
-
-  function initSplitHandlers(lang) {
-    document.getElementById("addMemberBtn").addEventListener("click", () => {
-      const name = (document.getElementById("memberNameInput").value || "").trim();
-      if (!name) return;
-      const st = loadSplitState();
-      if (st.members.includes(name)) return;
-      st.members.push(name);
-      saveSplitState(st);
-      document.getElementById("memberNameInput").value = "";
-      // renderSplitUI removed
-});
-
-    document.getElementById("addExpenseBtn").addEventListener("click", () => {
-      const t = I18N[lang] || I18N.zh;
-      const st = loadSplitState();
-
-      const amount = Number(document.getElementById("expAmount").value || 0);
-      const payer = document.getElementById("expPayer").value;
-      const category = document.getElementById("expCategory").value;
-      const dayId = document.getElementById("expDay").value;
-      const note = (document.getElementById("expNote").value || "").trim();
-
-      const splitWith = Array.from(document.querySelectorAll(".splitWithChk"))
-        .filter(chk => chk.checked)
-        .map(chk => chk.value);
-
-      if (!amount || amount <= 0) return alert(t.warnAmount);
-      if (!payer) return alert(t.warnPayer);
-      if (!splitWith.length) return alert(t.warnSplit);
-
-      st.expenses.push({ id: uid(), dayId, amount, payer, splitWith, category, note, ts: Date.now() });
-      saveSplitState(st);
-
-      document.getElementById("expAmount").value = "";
-      document.getElementById("expNote").value = "";
-      // renderSplitUI removed
-});
-  }
-
-  function initExpensesAccordion(lang) {
-    const btn = document.getElementById("toggleExpensesBtn");
-    const panel = document.getElementById("expensesPanel");
-    const label = document.getElementById("toggleExpensesLabel");
-
-    btn.addEventListener("click", () => {
-      const willOpen = panel.classList.contains("hidden");
-      panel.classList.toggle("hidden");
-      const t = I18N[lang] || I18N.zh;
-      label.innerText = willOpen ? t.close : t.open;
-    });
-  }
-
-  function applyLang(lang) {
+  // ===== Apply UI i18n =====
+  function applyUI(lang) {
     const t = I18N[lang] || I18N.zh;
+    document.getElementById("copyTodayLabel").innerText = t.copyToday;
+    document.getElementById("itineraryTitle").innerText = t.itineraryTitle;
+    document.getElementById("itineraryHint").innerText = t.itineraryHint;
+    document.getElementById("carTitle").innerText = t.carTitle;
+    document.getElementById("carText").innerText = t.carText;
 
-    document.getElementById("copyTodayLabel").textContent = t.copyToday;
-    // Trip Info & Expenses blocks removed
+    document.getElementById("jumpSpecialLabel").innerText = t.specialBtn;
+    document.getElementById("jumpLodgingLabel").innerText = t.lodgingBtn;
 
-    document.getElementById("itineraryTitle").textContent = t.itineraryTitle;
-    document.getElementById("itineraryHint").textContent = t.itineraryHint;
+    // Lodging section labels
+    document.getElementById("lodgingTitle").innerHTML = `<i class="fa-solid fa-bed"></i> ${t.lodgingTitle}`;
+    document.getElementById("lodgingHint").innerText = t.lodgingHint;
+    document.getElementById("lgCity").innerText = t.lgCity;
+    document.getElementById("lgDates").innerText = t.lgDates;
+    document.getElementById("lgPlace").innerText = t.lgPlace;
+    document.getElementById("lgLocation").innerText = t.lgLocation;
+    document.getElementById("lgNav").innerText = t.lgNav;
+    document.getElementById("lodNav1").innerText = t.navigate;
+    document.getElementById("lodNav2").innerText = t.navigate;
 
-    // Special Events section
-    const jumpLbl = document.getElementById("jumpSpecialLabel");
-    if (jumpLbl) jumpLbl.textContent = t.specialBtn;
+    // Special section
+    document.getElementById("specialTitle").innerText = t.specialTitle;
+    document.getElementById("specialFilter").innerText = t.specialFilterText;
+    document.getElementById("seCity").innerText = t.seCity;
+    document.getElementById("seDate").innerText = t.seDate;
+    document.getElementById("seEvent").innerText = t.seEvent;
+    document.getElementById("seLocation").innerText = t.seLocation;
+    document.getElementById("seTime").innerText = t.seTime;
+    document.getElementById("seNav").innerText = t.seNav;
 
-    const st = document.getElementById("specialTitle");
-    if (st) st.textContent = t.specialTitle;
-
-    const sf = document.getElementById("specialFilter");
-    if (sf) sf.textContent = t.specialFilterText;
-
-    const thCity = document.getElementById("seCity");
-    if (thCity) thCity.textContent = t.seCity;
-    const thDate = document.getElementById("seDate");
-    if (thDate) thDate.textContent = t.seDate;
-    const thEvent = document.getElementById("seEvent");
-    if (thEvent) thEvent.textContent = t.seEvent;
-    const thLoc = document.getElementById("seLocation");
-    if (thLoc) thLoc.textContent = t.seLocation;
-    const thTime = document.getElementById("seTime");
-    if (thTime) thTime.textContent = t.seTime;
-    const thNav = document.getElementById("seNav");
-    if (thNav) thNav.textContent = t.seNav;
-
-    // Row translations
-    const ev1c = document.getElementById("ev1city"); if (ev1c) ev1c.textContent = t.ev1city;
-    const ev2c = document.getElementById("ev2city"); if (ev2c) ev2c.textContent = t.ev2city;
-    const ev3c = document.getElementById("ev3city"); if (ev3c) ev3c.textContent = t.ev3city;
-    const ev1d = document.getElementById("ev1desc"); if (ev1d) ev1d.textContent = t.ev1desc;
-    const ev2d = document.getElementById("ev2desc"); if (ev2d) ev2d.textContent = t.ev2desc;
-    const ev3d = document.getElementById("ev3desc"); if (ev3d) ev3d.textContent = t.ev3desc;
-    const ev1n = document.getElementById("ev1note"); if (ev1n) ev1n.textContent = t.ev1note;
-    const ev2n = document.getElementById("ev2note"); if (ev2n) ev2n.textContent = t.ev2note;
-    const ev3n = document.getElementById("ev3note"); if (ev3n) ev3n.textContent = t.ev3note;
-
-    
-    // Lodging section
-    const ltitle = document.getElementById("lodgingTitle"); if (ltitle) ltitle.innerHTML = `<i class="fa-solid fa-bed"></i> ${t.lodgingTitle}`;
-    const lhint = document.getElementById("lodgingHint"); if (lhint) lhint.textContent = t.lodgingHint;
-
-    const lgc = document.getElementById("lgCity"); if (lgc) lgc.textContent = t.lgCity;
-    const lgd = document.getElementById("lgDates"); if (lgd) lgd.textContent = t.lgDates;
-    const lgp = document.getElementById("lgPlace"); if (lgp) lgp.textContent = t.lgPlace;
-    const lgl = document.getElementById("lgLocation"); if (lgl) lgl.textContent = t.lgLocation;
-    const lgn = document.getElementById("lgNav"); if (lgn) lgn.textContent = t.lgNav;
-
-    const l1c = document.getElementById("lod1city"); if (l1c) l1c.textContent = t.lod1city;
-    const l1d = document.getElementById("lod1dates"); if (l1d) l1d.textContent = t.lod1dates;
-    const l1n = document.getElementById("lod1name"); if (l1n) l1n.textContent = t.lod1name;
-    const l1l = document.getElementById("lod1loc"); if (l1l) l1l.textContent = t.lod1loc;
-
-    const l2c = document.getElementById("lod2city"); if (l2c) l2c.textContent = t.lod2city;
-    const l2d = document.getElementById("lod2dates"); if (l2d) l2d.textContent = t.lod2dates;
-    const l2n = document.getElementById("lod2name"); if (l2n) l2n.textContent = t.lod2name;
-    const l2l = document.getElementById("lod2loc"); if (l2l) l2l.textContent = t.lod2loc;
-
-    document.querySelectorAll(".navLabelLodging").forEach(el => el.textContent = t.lgNav || t.navigate);
-
-    document.querySelectorAll(".navLabel").forEach(el => el.textContent = t.navigate);
-
-    document.getElementById("carTitle").innerHTML = `<i class="fa-solid fa-car-side"></i> ${t.carTitle}`;
-    document.getElementById("carText").textContent = t.carText;
-    // lastUpdatedBadge removed
-    // expenses toggle label removed
-
-    // Google Maps embed UI language (地名不保證全翻)
-    const mapFrame = document.getElementById("mapFrame");
-    if (mapFrame) {
-      try {
-        const url = new URL(mapFrame.src);
-        const hl = (lang === "zh") ? "zh-TW" : lang;
-        url.searchParams.set("hl", hl);
-        mapFrame.src = url.toString();
-      } catch {}
-    }
-
-    renderDays(lang);
-    // renderSplitUI removed
-}
-
-  function initCopyToday(lang) {
-    document.getElementById("copyTodayBtn").addEventListener("click", async () => {
-      const t = I18N[lang] || I18N.zh;
-      const d = getTodayOrFirstTripDay();
-      await copyTextToClipboard(buildDayText(d, lang));
-      alert(t.alertCopiedToday);
-    });
+    document.querySelectorAll(".navLabel").forEach(el => el.innerText = t.navigate);
+    renderSpecialEvents(lang);
   }
+
+  // ===== Events =====
+  document.getElementById("jumpSpecialBtn").addEventListener("click", () => {
+    const el = document.getElementById("specialEventsSection");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  document.getElementById("jumpLodgingBtn").addEventListener("click", () => {
+    const el = document.getElementById("lodgingSection");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  document.getElementById("langSelect").addEventListener("change", (e) => {
+    const lang = e.target.value;
+    applyUI(lang);
+    renderDays(lang);
+    localStorage.setItem("trip_lang", lang);
+  });
+
+  document.getElementById("copyTodayBtn").addEventListener("click", async () => {
+    const lang = document.getElementById("langSelect").value || "zh";
+    const todayObj = getTodayOrFirstTripDay();
+    await copyTextToClipboard(buildDayText(todayObj, lang));
+    alert((I18N[lang]||I18N.zh).alertCopiedToday);
+  });
 
   // ===== Init =====
-  (function init() {
-    const langSelect = document.getElementById("langSelect");
-    const savedLang = localStorage.getItem("trip_lang") || "zh";
-    langSelect.value = savedLang;
-
-    applyLang(savedLang);
-    initCopyToday(savedLang);
-    // initSplitHandlers removed
-// initExpensesAccordion removed
-langSelect.addEventListener("change", () => {
-      const lang = langSelect.value;
-      localStorage.setItem("trip_lang", lang);
-      applyLang(lang);
-    });
+  (function init(){
+    const saved = localStorage.getItem("trip_lang");
+    const lang = saved || "zh";
+    document.getElementById("langSelect").value = lang;
+    applyUI(lang);
+    renderDays(lang);
   })();
-
-  // Jump to Special Events
-  const jumpBtn = document.getElementById("jumpSpecialBtn");
-  if (jumpBtn) {
-    jumpBtn.addEventListener("click", () => {
-      const el = document.getElementById("specialEventsSection");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
-
 </script>
 </body>
 </html>
