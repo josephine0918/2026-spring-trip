@@ -448,7 +448,12 @@
 
           { name:{zh:"加選（不必）：Wynwood Walls / Rio Grande（餐廳）/ Vizcaya / Patch of Heaven（若時間太趕可移到 3/8 下午）",
                   en:"Optional add-ons: Wynwood Walls / Rio Grande (food) / Vizcaya / Patch of Heaven (move to 3/8 afternoon if rushed)"},
-            address:"Miami", map:"https://maps.google.com/?q=Wynwood+Walls",
+            address:"Miami", map: [
+              { label:{zh:"Wynwood Walls", en:"Wynwood Walls", es:"Wynwood Walls", ko:"윈우드 월스", vi:"Wynwood Walls"}, url:"https://maps.google.com/?q=Wynwood+Walls" },
+              { label:{zh:"Rio Grande（餐廳）", en:"Rio Grande (restaurant)", es:"Rio Grande (restaurante)", ko:"Rio Grande(식당)", vi:"Rio Grande (nhà hàng)"}, url:"https://maps.google.com/?q=Rio+Grande+Restaurant+Miami+FL" },
+              { label:{zh:"Vizcaya", en:"Vizcaya", es:"Vizcaya", ko:"비즈카야", vi:"Vizcaya"}, url:"https://maps.google.com/?q=Vizcaya+Museum+and+Gardens" },
+              { label:{zh:"Patch of Heaven", en:"Patch of Heaven", es:"Patch of Heaven", ko:"Patch of Heaven", vi:"Patch of Heaven"}, url:"https://maps.google.com/?q=Patch+of+Heaven+Sanctuary+Miami+FL" }
+            ],
             note:{zh:"不用硬塞，今天以 South Beach 區夜晚為主。", en:"Don’t overpack—prioritize South Beach area tonight."} }
         ]
       },
@@ -496,7 +501,10 @@
             note:{zh:"入住 Airbnb、補給、早點休息。", en:"Check in, restock, and rest."} },
 
           { name:{zh:"晚上加選（不用硬排）：ICON Park / Premium Outlets（若想補貨）", en:"Evening optional: ICON Park / Premium Outlets (if you want shopping)"},
-            address:"International Dr, Orlando", map:"https://maps.google.com/?q=ICON+Park+Orlando",
+            address:"International Dr, Orlando", map: [
+              { label:{zh:"ICON Park", en:"ICON Park", es:"ICON Park", ko:"아이콘 파크", vi:"ICON Park"}, url:"https://maps.google.com/?q=ICON+Park+Orlando" },
+              { label:{zh:"Premium Outlets", en:"Premium Outlets", es:"Premium Outlets", ko:"프리미엄 아울렛", vi:"Premium Outlets"}, url:"https://maps.google.com/?q=Orlando+International+Premium+Outlets" }
+            ],
             note:{zh:"轉場日看體力，想放空就吃飯休息。", en:"Depends on energy—rest is fine."} }
         ]
       },
@@ -545,7 +553,11 @@
             note:{zh:"Tarpon Springs：希臘文化＋海綿港口＋希臘餐。此 Plan 會壓縮海邊時間，遇塞車就容易趕。", en:"Tarpon Springs: Greek heritage + sponge docks + Greek food. This plan is tighter; traffic can make it rushed."} },
 
           { name:{zh:"Tampa 晚上推薦：Ybor City（古巴小鎮）/ Riverwalk / Armature Works（擇 1–2）", en:"Tampa night picks: Ybor City / Riverwalk / Armature Works (choose 1–2)"},
-            address:"Ybor City / Tampa Riverwalk", map:"https://maps.google.com/?q=Ybor+City+Tampa",
+            address:"Ybor City / Tampa Riverwalk", map: [
+              { label:{zh:"Ybor City", en:"Ybor City", es:"Ybor City", ko:"이보르 시티", vi:"Ybor City"}, url:"https://maps.google.com/?q=Ybor+City+Tampa" },
+              { label:{zh:"Tampa Riverwalk", en:"Tampa Riverwalk", es:"Tampa Riverwalk", ko:"탬파 리버워크", vi:"Tampa Riverwalk"}, url:"https://maps.google.com/?q=Tampa+Riverwalk" },
+              { label:{zh:"Armature Works", en:"Armature Works", es:"Armature Works", ko:"아마추어 웍스", vi:"Armature Works"}, url:"https://maps.google.com/?q=Armature+Works+Tampa" }
+            ],
             note:{zh:"Ybor：拉丁街區＋雪茄文化＋夜生活最有感。", en:"Ybor: Latin quarter + cigar heritage + best nightlife vibe."} }
         ]
       },
@@ -606,7 +618,11 @@
 
           { name:{zh:"Plan C（文化備案/補舊行程）：Morse Museum / Leu Gardens / Lake Eola（挑 1–2）", en:"Plan C (culture backup): Morse Museum / Leu Gardens / Lake Eola (pick 1–2)"},
             address:"Winter Park / Downtown Orlando",
-            map:"https://maps.google.com/?q=Morse+Museum+Winter+Park",
+            map: [
+              { label:{zh:"Morse Museum", en:"Morse Museum", es:"Museo Morse", ko:"모스 박물관", vi:"Bảo tàng Morse"}, url:"https://maps.google.com/?q=Morse+Museum+Winter+Park" },
+              { label:{zh:"Leu Gardens", en:"Leu Gardens", es:"Jardines Leu", ko:"류 가든", vi:"Vườn Leu"}, url:"https://maps.google.com/?q=Harry+P+Leu+Gardens" },
+              { label:{zh:"Lake Eola Park", en:"Lake Eola Park", es:"Parque Lake Eola", ko:"레이크 이올라 파크", vi:"Công viên Lake Eola"}, url:"https://maps.google.com/?q=Lake+Eola+Park" }
+            ],
             note:{zh:"適合有人不想跑遠或不想去 Disney/自然時使用。", en:"Perfect if some people don’t want a long drive or skip Disney/nature."} }
         ]
       },
@@ -681,7 +697,18 @@
       else if (s.start) lines.push(`${s.start} ${nm}`);
       else lines.push(`${nm}`);
       if (s.address) lines.push(`  📍 ${s.address}`);
-      if (s.map) lines.push(`  🗺 ${s.map}`);
+      if (s.map) {
+        if (Array.isArray(s.map)) {
+          s.map.forEach((m) => {
+            if (!m) return;
+            const url = (typeof m === "string") ? m : m.url;
+            const lbl = (typeof m === "string") ? t.openMap : getL(m.label || { zh: t.openMap, en: t.openMap, es: t.openMap, ko: t.openMap, vi: t.openMap }, lang);
+            if (url) lines.push(`  🗺 ${lbl}: ${url}`);
+          });
+        } else if (typeof s.map === "string") {
+          lines.push(`  🗺 ${s.map}`);
+        }
+      }
       if (s.phone) lines.push(`  ☎ ${s.phone}`);
       if (s.note) lines.push(`  📝 ${getL(s.note, lang)}`);
       lines.push("");
@@ -781,7 +808,20 @@
         const stopCard = document.createElement("div");
         stopCard.className = "bg-white rounded-2xl border border-slate-100 shadow-sm p-4";
 
-        const mapBtn = s.map ? `<a href="${s.map}" target="_blank" rel="noopener" class="text-indigo-700 font-semibold hover:underline"><i class="fa-solid fa-location-dot"></i> ${t.openMap}</a>` : "";
+        const mapLinks = [];
+        if (Array.isArray(s.map)) {
+          s.map.forEach((m) => {
+            if (!m) return;
+            const url = (typeof m === "string") ? m : m.url;
+            const lbl = (typeof m === "string") ? t.openMap : getL(m.label || { zh: t.openMap, en: t.openMap, es: t.openMap, ko: t.openMap, vi: t.openMap }, lang);
+            if (url) mapLinks.push({ url, lbl });
+          });
+        } else if (typeof s.map === "string" && s.map) {
+          mapLinks.push({ url: s.map, lbl: t.openMap });
+        }
+        const mapBtn = mapLinks.length
+          ? mapLinks.map(x => `<a href="${x.url}" target="_blank" rel="noopener" class="text-indigo-700 font-semibold hover:underline inline-flex items-center gap-1"><i class="fa-solid fa-location-dot"></i> ${x.lbl}</a>`).join(`<span class="text-gray-300 mx-1">·</span>`)
+          : "";
         const phoneLine = s.phone ? `
           <div class="text-xs text-gray-600">
             <span class="font-semibold">${t.phone}:</span>
